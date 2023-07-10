@@ -1,5 +1,6 @@
 import { useRoutes } from 'react-router-dom';
 
+import { AppProvider } from './contexts';
 import { AppLayout } from './layouts';
 import { NotFoundPage } from './pages';
 
@@ -19,5 +20,9 @@ export const AppRoutes = () => {
     },
   ]);
 
-  return <AppLayout>{routes}</AppLayout>;
+  return (
+    <AppProvider>
+      <AppLayout>{routes}</AppLayout>
+    </AppProvider>
+  );
 };
