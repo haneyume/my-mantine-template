@@ -1,5 +1,11 @@
 # my-mantine-template
 
+## 🔥 Installation
+
+```sh
+yarn install
+```
+
 ## 🔥 Installed Packages
 
 ### 📦 UI Components, Icons, and Styling
