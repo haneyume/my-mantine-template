@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Navbar, NavLink, Badge, Stack, Tooltip } from '@mantine/core';
 import { IconHome, IconSettings } from '@tabler/icons-react';
 
 export const AppNavbar = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const links = [
     {
@@ -29,10 +31,10 @@ export const AppNavbar = () => {
             const Icon = link.icon;
 
             return (
-              <Tooltip key={index} label={link.label} position="bottom">
+              <Tooltip key={index} label={t(link.label)} position="bottom">
                 <NavLink
                   icon={<Icon size={18} />}
-                  label={link.label}
+                  label={t(link.label)}
                   onClick={() => navigate(link.path)}
                   active={link.path === window.location.pathname}
                   rightSection={

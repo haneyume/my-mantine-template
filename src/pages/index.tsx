@@ -1,4 +1,4 @@
 export { HomePage } from './HomePage';
-export { SettingPage } from './SettingPage';
+export { SettingsPage } from './SettingsPage';
 
 export { NotFoundPage } from './NotFoundPage';

@@ -57,13 +57,19 @@ yarn add react-json-view
 ### 📦 Management
 
 ```sh
-# React Router (https://reactrouter.com/en/main)
+# react-router-dom (https://reactrouter.com/en/main)
 yarn add react-router-dom
 ```
 
 ```sh
-# React Hook Form (https://react-hook-form.com/)
+# react-hook-form (https://react-hook-form.com/)
 yarn add react-hook-form
+```
+
+```sh
+# i18next (https://www.i18next.com/)
+yarn add i18next
+yarn add react-i18next
 ```
 
 ### 📦 Utilities

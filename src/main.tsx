@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 
 import { App } from './App.tsx';
 
+import './utils/i18n.tsx';
+
 import './index.css';
 import 'allotment/dist/style.css';
 
