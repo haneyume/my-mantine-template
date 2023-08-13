@@ -19,7 +19,7 @@ export const AppFooter = () => {
         <Text fz="xs">{`${t('Version')} ${VERSION}`}</Text>
 
         <ActionIcon onClick={() => window.open(GITHUB_URL)}>
-          <IconBrandGithub size="16px" />
+          <IconBrandGithub data-cy={`AppFooter-github`} size="16px" />
         </ActionIcon>
       </div>
     </Footer>

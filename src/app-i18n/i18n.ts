@@ -6,6 +6,13 @@ import resources from './resources.json';
 // import Backend from 'i18next-http-backend';
 // import LanguageDetector from 'i18next-browser-languagedetector';
 
+export const languages = [
+  { label: 'English', value: 'en' },
+  { label: '日本語', value: 'ja' },
+  { label: '繁體中文', value: 'zhHant' },
+  { label: '简体中文', value: 'zhHans' },
+];
+
 i18n
   .use(initReactI18next)
   .init({

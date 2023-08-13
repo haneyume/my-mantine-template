@@ -24,7 +24,7 @@ export const AppNavbar = () => {
   ];
 
   return (
-    <Navbar width={{ base: 250 }}>
+    <Navbar width={{ base: 50 }}>
       <Navbar.Section>
         <Stack className="my-5" spacing={5}>
           {links.map((link, index) => {
@@ -33,6 +33,7 @@ export const AppNavbar = () => {
             return (
               <Tooltip key={index} label={t(link.label)} position="bottom">
                 <NavLink
+                  data-cy={`AppNavbar-${link.label}`}
                   icon={<Icon size={18} />}
                   label={t(link.label)}
                   onClick={() => navigate(link.path)}

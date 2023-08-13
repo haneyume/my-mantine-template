@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -9,27 +8,28 @@ import {
   useMantineColorScheme,
 } from '@mantine/core';
 
-import { AppContext } from '../contexts';
+import { languages } from '../app-i18n/i18n';
 
 export const SettingsPage = () => {
-  const appCtx = useContext(AppContext);
   const { t, i18n } = useTranslation();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
   return (
-    <Stack>
+    <Stack p="md">
       <Card className="overflow-visible" withBorder>
         <Stack>
           <Title order={3}>{t('Settings')}</Title>
 
           <Select
+            variant="filled"
             label={t('Language')}
-            data={appCtx.languages}
+            data={languages}
             value={i18n.language}
             onChange={(value) => i18n.changeLanguage(value!)}
           />
 
           <Select
+            variant="filled"
             label={t('Color Scheme')}
             data={[
               { label: t('light'), value: 'light' },

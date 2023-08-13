@@ -12,9 +12,6 @@ export interface AppContextProps {
 
   userId: string;
   setUserId: React.Dispatch<React.SetStateAction<string>>;
-
-  themes: Array<{ label: string; value: string }>;
-  languages: Array<{ label: string; value: string }>;
 }
 
 export const AppContext = createContext<AppContextProps>(undefined!);
@@ -43,18 +40,6 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
         userId,
         setUserId,
-
-        themes: [
-          { label: 'Light', value: 'light' },
-          { label: 'Dark', value: 'dark' },
-        ],
-
-        languages: [
-          { label: 'English', value: 'en' },
-          { label: '日本語', value: 'ja' },
-          { label: '繁體中文', value: 'zhHant' },
-          { label: '简体中文', value: 'zhHans' },
-        ],
       }}
     >
       {children}
