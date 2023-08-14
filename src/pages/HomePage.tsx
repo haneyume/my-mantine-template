@@ -1,18 +1,28 @@
-// @ts-ignore
-import { Allotment } from 'allotment';
+import { Card, Stack, Title, Text } from '@mantine/core';
 
-import { EditorSidebar, EditorContent } from '../sections';
+import { useGetPostsQuery } from '@/app-redux';
 
 export const HomePage = () => {
-  return (
-    <Allotment>
-      <Allotment.Pane preferredSize={250}>
-        <EditorSidebar />
-      </Allotment.Pane>
+  const { data, isLoading, error } = useGetPostsQuery();
 
-      <Allotment.Pane>
-        <EditorContent />
-      </Allotment.Pane>
-    </Allotment>
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error</div>;
+  }
+
+  return (
+    <Stack>
+      {data?.map((post) => (
+        <Card key={post.id}>
+          <Stack>
+            <Title order={3}>{post.title}</Title>
+            <Text>{post.body}</Text>
+          </Stack>
+        </Card>
+      ))}
+    </Stack>
   );
 };

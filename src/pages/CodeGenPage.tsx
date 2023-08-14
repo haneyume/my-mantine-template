@@ -1,18 +1,17 @@
-// @ts-ignore
-import { Allotment } from 'allotment';
+import { Stack } from '@mantine/core';
 
-import { EditorSidebar, EditorContent } from '../sections';
+import { TextareaWithLLM } from '@/buttons/TextareaWithLLM';
 
 export const CodeGenPage = () => {
   return (
-    <Allotment>
-      <Allotment.Pane preferredSize={250}>
-        <EditorSidebar />
-      </Allotment.Pane>
-
-      <Allotment.Pane>
-        <EditorContent />
-      </Allotment.Pane>
-    </Allotment>
+    <Stack p="md">
+      <TextareaWithLLM
+        label="Test"
+        minRows={10}
+        autosize
+        systemPrompt=""
+        userPrompt=""
+      />
+    </Stack>
   );
 };

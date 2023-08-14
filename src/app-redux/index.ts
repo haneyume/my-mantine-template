@@ -42,3 +42,10 @@ export {
 //
 // --------------------------------------------------
 export { userApi, useGetUsersQuery, useGetUserByIdQuery } from './apis/userApi';
+
+export {
+  postsApi,
+  useGetPostsQuery,
+  useGetPostByIdQuery,
+  useCreatePostMutation,
+} from './apis/postsApi';

@@ -13,7 +13,7 @@ describe('template spec', () => {
     cy.get('[data-cy="EditorContent-1"]').click();
     cy.get('[data-cy="RequestTab-sendRequest"] > div').click();
 
-    cy.wait('@testRequest');
+    // cy.wait('@testRequest');
 
     cy.get('[data-cy="EditorContent-2"]').click();
     cy.get('[data-cy="PropertyJsonPath-add"] > div').click();

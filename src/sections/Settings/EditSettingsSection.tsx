@@ -10,7 +10,7 @@ import {
 
 import { languages } from '../../app-i18n/i18n';
 
-export const SettingsSection = () => {
+export const EditSettingsSection = () => {
   const { t, i18n } = useTranslation();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 

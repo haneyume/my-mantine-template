@@ -1,18 +1,13 @@
-// @ts-ignore
-import { Allotment } from 'allotment';
+import { Stack } from '@mantine/core';
 
-import { EditorSidebar, EditorContent } from '../sections';
+import { EditProfileSection } from '../sections/Profile/EditProfileSection';
+import { SignOutSection } from '../sections/Profile/SignOutSection';
 
 export const ProfilePage = () => {
   return (
-    <Allotment>
-      <Allotment.Pane preferredSize={250}>
-        <EditorSidebar />
-      </Allotment.Pane>
-
-      <Allotment.Pane>
-        <EditorContent />
-      </Allotment.Pane>
-    </Allotment>
+    <Stack p="md">
+      <EditProfileSection />
+      <SignOutSection />
+    </Stack>
   );
 };
