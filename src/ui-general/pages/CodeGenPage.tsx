@@ -1,6 +1,6 @@
 import { Stack } from '@mantine/core';
 
-import { TextareaWithLLM } from '@/buttons/TextareaWithLLM';
+import { TextareaWithLLM } from '@/ui-shared/buttons/TextareaWithLLM';
 
 export const CodeGenPage = () => {
   return (

@@ -21,7 +21,7 @@ import {
   useAppDispatch,
   setAllApiItems,
   selectApiItem,
-} from '../app-redux';
+} from '@/app-redux';
 
 import { NewFolderButton, NewItemButton } from '../modals';
 

@@ -9,8 +9,8 @@ import {
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 
-import { ReduxProvider, store } from './app-redux';
-import { AppRoutes } from './AppRoutes';
+import { ReduxProvider, store } from '@/app-redux';
+import { AppRoutes } from '@/AppRoutes';
 
 export const App = () => {
   const [colorScheme, setColorScheme] = useState<ColorScheme>('dark');

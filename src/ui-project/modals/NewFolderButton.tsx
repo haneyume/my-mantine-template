@@ -1,7 +1,7 @@
 import { ActionIcon, Tooltip } from '@mantine/core';
 import { IconFolderPlus } from '@tabler/icons-react';
 
-import { useAppDispatch, addOneApiItem } from '../app-redux';
+import { useAppDispatch, addOneApiItem } from '@/app-redux';
 
 export const NewFolderButton = () => {
   const dispatch = useAppDispatch();

@@ -15,9 +15,13 @@ import { IconGripVertical, IconX } from '@tabler/icons-react';
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-import type { ApiItem } from '../app-redux/types';
+import type { ApiItem } from '../../app-redux/types';
 
-import { useAppSelector, useAppDispatch, updateOneApiItem } from '../app-redux';
+import {
+  useAppSelector,
+  useAppDispatch,
+  updateOneApiItem,
+} from '../../app-redux';
 
 export const PropertyListItems = ({
   label,

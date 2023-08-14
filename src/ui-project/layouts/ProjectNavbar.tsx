@@ -10,7 +10,7 @@ import {
   IconApi,
 } from '@tabler/icons-react';
 
-export const AppNavbar = () => {
+export const ProjectNavbar = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 

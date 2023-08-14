@@ -16,11 +16,11 @@ import {
 import axios from 'axios';
 import ReactJson from 'react-json-view';
 
-import { useAppSelector, useAppDispatch, updateOneApiItem } from '../app-redux';
+import { useAppSelector, useAppDispatch, updateOneApiItem } from '@/app-redux';
 
 // import { Test } from './property/PropertyUIs';
-import { PropertyListItems } from '../property-uis/PropertyListItems';
-import { PropertyJsonPath } from '../property-uis/PropertyJsonPath';
+import { PropertyListItems } from '@/ui-shared/property-uis/PropertyListItems';
+import { PropertyJsonPath } from '@/ui-shared/property-uis/PropertyJsonPath';
 
 export const EditorContent = () => {
   const currentItem = useAppSelector((state) => state.apiItems.currentItem);

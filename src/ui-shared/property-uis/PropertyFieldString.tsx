@@ -1,11 +1,11 @@
 import { Text, TextInput } from '@mantine/core';
 
-import { useAppSelector } from '../app-redux';
+import { useAppSelector } from '../../app-redux';
 
-import { store } from '../app-redux';
-import type { RootState } from '../app-redux';
+import { store } from '../../app-redux';
+import type { RootState } from '../../app-redux';
 
-import { ApiItem } from '../app-redux/types';
+import { ApiItem } from '../../app-redux/types';
 
 type ItemField = {
   apiItems: ApiItem;

@@ -17,7 +17,11 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import jsonpath from 'jsonpath';
 
-import { useAppSelector, useAppDispatch, updateOneApiItem } from '../app-redux';
+import {
+  useAppSelector,
+  useAppDispatch,
+  updateOneApiItem,
+} from '../../app-redux';
 
 export const PropertyJsonPath = () => {
   const field = 'jsonPathList';

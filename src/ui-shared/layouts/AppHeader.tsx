@@ -22,7 +22,7 @@ export const AppHeader = () => {
           data-cy={`AppHeader-title`}
           onClick={() => navigate('/')}
         >
-          <Title order={3}>my-mantine-template</Title>
+          <Title order={3}>{import.meta.env.VITE_APP_NAME}</Title>
         </UnstyledButton>
 
         <div className="flex-1" />
