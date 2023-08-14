@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Header, Title, UnstyledButton } from '@mantine/core';
 import { IconBrandReact } from '@tabler/icons-react';
 
-// import { AppContext } from '../contexts';
 // import { ThemeButton, UserButton } from '../buttons';
 
 export const AppHeader = () => {

@@ -8,6 +8,27 @@ yarn install
 
 ## 🔥 Installed Packages
 
+### 📦 State Management
+
+```sh
+yarn add @reduxjs/toolkit
+yarn add react-redux
+yarn add redux-undo
+```
+
+### 📦 Unit Testing & E2E Testing
+
+```sh
+yarn add -D @types/jest
+
+yarn add -D vitest
+yarn add -D @vitest/ui
+
+yarn add -D cypress
+
+yarn add -D msw
+```
+
 ### 📦 UI Components, Icons, and Styling
 
 ```sh
@@ -15,6 +36,7 @@ yarn install
 yarn add @emotion/react
 yarn add @mantine/core
 yarn add @mantine/hooks
+yarn add @mantine/form
 yarn add @mantine/modals
 yarn add @mantine/notifications
 yarn add @mantine/carousel
@@ -59,11 +81,6 @@ yarn add react-json-view
 ```sh
 # react-router-dom (https://reactrouter.com/en/main)
 yarn add react-router-dom
-```
-
-```sh
-# react-hook-form (https://react-hook-form.com/)
-yarn add react-hook-form
 ```
 
 ```sh

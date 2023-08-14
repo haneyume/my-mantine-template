@@ -1,6 +1,6 @@
 import { useRoutes } from 'react-router-dom';
 
-import { AppProvider } from './contexts';
+import { AppProvider, RecordProvider } from './contexts';
 import { AppLayout } from './layouts';
 import { HomePage, SettingsPage, NotFoundPage } from './pages';
 
@@ -22,7 +22,9 @@ export const AppRoutes = () => {
 
   return (
     <AppProvider>
-      <AppLayout>{routes}</AppLayout>
+      <RecordProvider>
+        <AppLayout>{routes}</AppLayout>
+      </RecordProvider>
     </AppProvider>
   );
 };
