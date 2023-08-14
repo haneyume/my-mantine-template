@@ -11,11 +11,13 @@ import 'allotment/dist/style.css';
 if (import.meta.env.VITE_MOCK_API === 'true') {
   import('./api-mocking/browser.ts').then(({ worker }) => {
     worker.start();
-  });
-}
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  // <React.StrictMode>
-  <App />,
-  // </React.StrictMode>,
-);
+    ReactDOM.createRoot(document.getElementById('root')!).render(<App />);
+  });
+} else {
+  ReactDOM.createRoot(document.getElementById('root')!).render(
+    // <React.StrictMode>
+    <App />,
+    // </React.StrictMode>,
+  );
+}

@@ -11,7 +11,7 @@ interface Post {
 export const postsApi = createApi({
   reducerPath: 'postsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: '/',
+    baseUrl: import.meta.env.VITE_API_URL + '/api/',
   }),
   tagTypes: ['posts'],
   endpoints: (builder) => ({

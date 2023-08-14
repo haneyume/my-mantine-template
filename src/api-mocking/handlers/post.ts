@@ -18,4 +18,7 @@ db.posts.create({
   commentCount: 1,
 });
 
-export const handlers = db.posts.toHandlers('rest');
+export const handlers = db.posts.toHandlers(
+  'rest',
+  import.meta.env.VITE_API_URL + '/api',
+);
