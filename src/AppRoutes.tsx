@@ -8,10 +8,20 @@ import { NotFoundPage } from '@/ui-shared/pages';
 import { GeneralLayout } from '@/ui-general/layouts';
 import {
   HomePage,
+  ProjectsPage,
   CodeGenPage,
   ProfilePage,
   SettingsPage,
 } from '@/ui-general/pages';
+
+import { OrganizationLayout } from '@/ui-organization/layouts';
+import {
+  SettingsPage as OrganizationSettingsPage,
+  MembersPage,
+  PlanPage,
+  PaymentMethodsPage,
+  InvoicesPage,
+} from '@/ui-organization/pages';
 
 import { ProjectLayout } from '@/ui-project/layouts';
 import { ApiItemsPage } from '@/ui-project/pages';
@@ -21,6 +31,14 @@ const GeneralLayoutBase = () => {
     <GeneralLayout>
       <Outlet />
     </GeneralLayout>
+  );
+};
+
+const OrganizationLayoutBase = () => {
+  return (
+    <OrganizationLayout>
+      <Outlet />
+    </OrganizationLayout>
   );
 };
 
@@ -43,6 +61,10 @@ export const AppRoutes = () => {
           element: <HomePage />,
         },
         {
+          path: 'projects',
+          element: <ProjectsPage />,
+        },
+        {
           path: 'codegen',
           element: <CodeGenPage />,
         },
@@ -53,6 +75,32 @@ export const AppRoutes = () => {
         {
           path: 'settings',
           element: <SettingsPage />,
+        },
+      ],
+    },
+    {
+      path: '/organization/:id',
+      element: <OrganizationLayoutBase />,
+      children: [
+        {
+          path: 'settings',
+          element: <OrganizationSettingsPage />,
+        },
+        {
+          path: 'members',
+          element: <MembersPage />,
+        },
+        {
+          path: 'plan',
+          element: <PlanPage />,
+        },
+        {
+          path: 'payment-methods',
+          element: <PaymentMethodsPage />,
+        },
+        {
+          path: 'invoices',
+          element: <InvoicesPage />,
         },
       ],
     },

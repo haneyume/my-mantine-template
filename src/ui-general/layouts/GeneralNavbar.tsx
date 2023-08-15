@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { Navbar, NavLink, Badge, Stack, Tooltip } from '@mantine/core';
 import {
   IconHome,
+  IconBox,
   IconCode,
   IconUser,
   IconSettings,
-  IconApi,
 } from '@tabler/icons-react';
 
 export const GeneralNavbar = () => {
@@ -19,6 +19,12 @@ export const GeneralNavbar = () => {
       icon: IconHome,
       label: 'Home',
       path: '/',
+      notifications: 0,
+    },
+    {
+      icon: IconBox,
+      label: 'Projects',
+      path: '/projects',
       notifications: 0,
     },
     {
@@ -39,16 +45,10 @@ export const GeneralNavbar = () => {
       path: '/settings',
       notifications: 0,
     },
-    {
-      icon: IconApi,
-      label: 'ApiItems',
-      path: '/api-items',
-      notifications: 0,
-    },
   ];
 
   return (
-    <Navbar width={{ base: 50 }}>
+    <Navbar width={{ base: 200 }}>
       <Navbar.Section>
         <Stack className="my-5" spacing={5}>
           {links.map((link, index) => {

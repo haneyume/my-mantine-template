@@ -5,7 +5,7 @@ import { KeySettingSection } from '../sections/Settings/KeySettingSection';
 
 export const SettingsPage = () => {
   return (
-    <Stack p="md">
+    <Stack>
       <EditSettingsSection />
       <KeySettingSection />
     </Stack>

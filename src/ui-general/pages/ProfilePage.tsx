@@ -5,7 +5,7 @@ import { SignOutSection } from '../sections/Profile/SignOutSection';
 
 export const ProfilePage = () => {
   return (
-    <Stack p="md">
+    <Stack>
       <EditProfileSection />
       <SignOutSection />
     </Stack>

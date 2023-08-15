@@ -5,13 +5,13 @@ import { AppShell } from '@mantine/core';
 import { AppHeader } from '@/ui-shared/layouts/AppHeader';
 import { AppFooter } from '@/ui-shared/layouts/AppFooter';
 
-import { GeneralNavbar } from './GeneralNavbar';
+import { OrganizationNavbar } from './OrganizationNavbar';
 
-export const GeneralLayout = ({ children }: { children: ReactNode }) => {
+export const OrganizationLayout = ({ children }: { children: ReactNode }) => {
   return (
     <AppShell
       header={<AppHeader />}
-      navbar={<GeneralNavbar />}
+      navbar={<OrganizationNavbar />}
       footer={<AppFooter />}
     >
       {children}
