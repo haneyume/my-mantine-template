@@ -1,6 +1,6 @@
 import { setupWorker } from 'msw';
 import { handlers } from './handlers/handlers';
 
-import { handlers as postHandlers } from './handlers/post';
+import { dbHandlers } from './handlers/dbHandlers';
 
-export const worker = setupWorker(...handlers, ...postHandlers);
+export const worker = setupWorker(...handlers, ...dbHandlers);

@@ -5,6 +5,8 @@ import apiItemReducer from '../features/apiItems/apiItemsSlice';
 import usersSlice from '../features/users/usersSlice';
 
 import { userApi } from '../apis/userApi';
+import { organizationsApi } from '../apis/organizationsApi';
+import { projectsApi } from '../apis/projectsApi';
 import { postsApi } from '../apis/postsApi';
 
 export const store = configureStore({
@@ -13,10 +15,17 @@ export const store = configureStore({
     apiItems: apiItemReducer,
     users: usersSlice,
     [userApi.reducerPath]: userApi.reducer,
+    [organizationsApi.reducerPath]: organizationsApi.reducer,
+    [projectsApi.reducerPath]: projectsApi.reducer,
     [postsApi.reducerPath]: postsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([userApi.middleware, postsApi.middleware]),
+    getDefaultMiddleware().concat([
+      userApi.middleware,
+      organizationsApi.middleware,
+      projectsApi.middleware,
+      postsApi.middleware,
+    ]),
   devTools: import.meta.env.DEV,
 });
 

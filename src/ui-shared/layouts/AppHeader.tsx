@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Header, Title, UnstyledButton } from '@mantine/core';
 import { IconBrandReact } from '@tabler/icons-react';
 
-// import { ThemeButton, UserButton } from '../buttons';
+import { ThemeButton, UserButton } from '../buttons';
 
 export const AppHeader = () => {
   const navigate = useNavigate();
@@ -27,13 +27,13 @@ export const AppHeader = () => {
 
         <div className="flex-1" />
 
-        {/* <ThemeButton />
+        <ThemeButton />
 
         <UserButton
           name={'User'}
           email={'user@test.com'}
           onClick={() => navigate('/profile')}
-        /> */}
+        />
       </div>
     </Header>
   );

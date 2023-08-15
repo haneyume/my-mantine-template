@@ -8,7 +8,7 @@ export const SignOutSection = () => {
   return (
     <Card withBorder>
       <Stack>
-        <Title order={2}>Sign Out</Title>
+        <Title order={3}>Sign Out</Title>
 
         <Button
           className="w-full"

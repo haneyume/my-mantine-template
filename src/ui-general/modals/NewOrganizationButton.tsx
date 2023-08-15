@@ -1,15 +1,42 @@
-import { Stack, Card, TextInput, Textarea, Button, Title } from '@mantine/core';
+import {
+  Modal,
+  Stack,
+  Button,
+  ActionIcon,
+  TextInput,
+  Textarea,
+} from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { useForm, isNotEmpty } from '@mantine/form';
+import { IconPlus } from '@tabler/icons-react';
 
-export const EditOrganizationSection = () => {
+export const NewOrganizationButton = () => {
+  const [opened, { open, close }] = useDisclosure(false);
+
+  return (
+    <>
+      <ActionIcon variant="default" size={18} onClick={open}>
+        <IconPlus size={12} stroke={1.5} />
+      </ActionIcon>
+
+      <ModalInstance opened={opened} close={close} />
+    </>
+  );
+};
+
+const ModalInstance = ({
+  opened,
+  close,
+}: {
+  opened: boolean;
+  close: () => void;
+}) => {
   const form = useForm({
     initialValues: {
-      id: '',
       name: '',
       description: '',
     },
     validate: {
-      id: isNotEmpty('Organization ID is required'),
       name: isNotEmpty('Organization name is required'),
     },
   });
@@ -19,19 +46,9 @@ export const EditOrganizationSection = () => {
   });
 
   return (
-    <Card withBorder>
+    <Modal opened={opened} onClose={close} title="New Organization" centered>
       <form onSubmit={onSubmit}>
         <Stack>
-          <Title order={3}>Edit Organization</Title>
-
-          <TextInput
-            variant="filled"
-            label="Organization ID"
-            placeholder="Organization ID"
-            disabled
-            {...form.getInputProps('id')}
-          />
-
           <TextInput
             variant="filled"
             label="Organization name"
@@ -50,10 +67,10 @@ export const EditOrganizationSection = () => {
           />
 
           <Button type="submit" className="w-full" variant="light">
-            Update
+            Create
           </Button>
         </Stack>
       </form>
-    </Card>
+    </Modal>
   );
 };

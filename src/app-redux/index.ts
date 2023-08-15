@@ -44,6 +44,20 @@ export {
 export { userApi, useGetUsersQuery, useGetUserByIdQuery } from './apis/userApi';
 
 export {
+  organizationsApi,
+  useGetOrganizationsQuery,
+  useGetOrganizationByIdQuery,
+  useCreateOrganizationMutation,
+} from './apis/organizationsApi';
+
+export {
+  projectsApi,
+  useGetProjectsQuery,
+  useGetProjectByIdQuery,
+  useCreateProjectMutation,
+} from './apis/projectsApi';
+
+export {
   postsApi,
   useGetPostsQuery,
   useGetPostByIdQuery,

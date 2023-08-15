@@ -1,16 +1,16 @@
-import { Card, Stack, TextInput, Textarea, Button, Title } from '@mantine/core';
+import { Stack, Card, TextInput, Textarea, Button, Title } from '@mantine/core';
 import { useForm, isNotEmpty } from '@mantine/form';
 
-export const EditProfileSection = () => {
+export const EditProjectSection = () => {
   const form = useForm({
     initialValues: {
-      nickname: '',
-      email: '',
-      introduction: '',
+      id: '',
+      name: '',
+      description: '',
     },
     validate: {
-      nickname: isNotEmpty('Nickname is required'),
-      email: isNotEmpty('Email is required'),
+      id: isNotEmpty('Project ID is required'),
+      name: isNotEmpty('Project name is required'),
     },
   });
 
@@ -22,31 +22,31 @@ export const EditProfileSection = () => {
     <Card withBorder>
       <form onSubmit={onSubmit}>
         <Stack>
-          <Title order={3}>Edit Profile</Title>
+          <Title order={3}>Edit Project</Title>
 
           <TextInput
             variant="filled"
-            label="Nickname"
-            placeholder="Nickname"
-            withAsterisk
-            {...form.getInputProps('nickname')}
+            label="Project ID"
+            placeholder="Project ID"
+            disabled
+            {...form.getInputProps('id')}
           />
 
           <TextInput
             variant="filled"
-            label="Email"
-            placeholder="Email"
+            label="Project name"
+            placeholder="Project name"
             withAsterisk
-            {...form.getInputProps('email')}
+            {...form.getInputProps('name')}
           />
 
           <Textarea
             variant="filled"
-            label="Introduction"
-            placeholder="Introduction"
+            label="Project description"
+            placeholder="Project description"
             autosize
             minRows={3}
-            {...form.getInputProps('introduction')}
+            {...form.getInputProps('description')}
           />
 
           <Button type="submit" className="w-full" variant="light">
