@@ -28,6 +28,7 @@ export const EditProjectSection = () => {
             variant="filled"
             label="Project ID"
             placeholder="Project ID"
+            withAsterisk
             disabled
             {...form.getInputProps('id')}
           />

@@ -28,6 +28,7 @@ export const EditOrganizationSection = () => {
             variant="filled"
             label="Organization ID"
             placeholder="Organization ID"
+            withAsterisk
             disabled
             {...form.getInputProps('id')}
           />

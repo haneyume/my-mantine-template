@@ -55,7 +55,7 @@ export const OrganizationNavbar = () => {
             return (
               <NavLink
                 key={index}
-                icon={<Icon />}
+                icon={<Icon size={18} />}
                 label={link.label}
                 onClick={() => navigate(link.path)}
                 active={link.path === window.location.pathname}

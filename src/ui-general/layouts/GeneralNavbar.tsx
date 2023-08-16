@@ -128,7 +128,12 @@ export const GeneralNavbar = () => {
       </Navbar.Section>
 
       <Navbar.Section className="p-3">
-        <Button fullWidth variant="light" leftIcon={<IconBook />}>
+        <Button
+          fullWidth
+          variant="light"
+          leftIcon={<IconBook />}
+          onClick={() => window.open(import.meta.env.VITE_DOC_URL)}
+        >
           Document
         </Button>
       </Navbar.Section>

@@ -17,15 +17,15 @@ export const ProjectNavbar = () => {
       notifications: 0,
     },
     {
-      icon: IconSettings,
-      label: 'Settings',
-      path: `/project/${projectId}/settings`,
-      notifications: 0,
-    },
-    {
       icon: IconApi,
       label: 'ApiItems',
       path: `/project/${projectId}/api-items`,
+      notifications: 0,
+    },
+    {
+      icon: IconSettings,
+      label: 'Settings',
+      path: `/project/${projectId}/settings`,
       notifications: 0,
     },
   ];
