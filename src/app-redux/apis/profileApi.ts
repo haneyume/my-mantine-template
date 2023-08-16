@@ -15,13 +15,13 @@ export const profileApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
   tagTypes: [type],
   endpoints: (builder) => ({
-    getProfile: builder.query<Profile[], void>({
-      query: () => `${type}`,
+    getProfile: builder.query<Profile, void>({
+      query: () => `${type}s/me`,
       providesTags: (_) => [{ type }],
     }),
     updateProfile: builder.mutation<{ id: number }, Partial<Profile>>({
       query: (body) => ({
-        url: `${type}/${body.id}`,
+        url: `${type}s/me`,
         method: 'PUT',
         body,
       }),

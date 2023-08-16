@@ -5,8 +5,12 @@ import { IconBrandReact } from '@tabler/icons-react';
 
 import { ThemeButton, UserButton } from '../buttons';
 
+import { useGetProfileQuery } from '@/app-redux';
+
 export const AppHeader = () => {
   const navigate = useNavigate();
+
+  const { data } = useGetProfileQuery();
 
   return (
     <Header height={{ base: 70 }}>
@@ -30,8 +34,8 @@ export const AppHeader = () => {
         <ThemeButton />
 
         <UserButton
-          name={'User'}
-          email={'user@test.com'}
+          name={data?.nickname || ''}
+          email={data?.email || ''}
           onClick={() => navigate('/profile')}
         />
       </div>

@@ -1,7 +1,14 @@
+import { useEffect } from 'react';
+
 import { Card, Stack, TextInput, Textarea, Button, Title } from '@mantine/core';
 import { useForm, isNotEmpty } from '@mantine/form';
 
+import { useGetProfileQuery, useUpdateProfileMutation } from '@/app-redux';
+
 export const EditProfileSection = () => {
+  const { data } = useGetProfileQuery();
+  const [updateProfile] = useUpdateProfileMutation();
+
   const form = useForm({
     initialValues: {
       nickname: '',
@@ -14,8 +21,18 @@ export const EditProfileSection = () => {
     },
   });
 
+  useEffect(() => {
+    if (data) {
+      form.setValues({
+        nickname: data.nickname,
+        email: data.email,
+        introduction: data.introduction,
+      });
+    }
+  }, [data]);
+
   const onSubmit = form.onSubmit((data) => {
-    console.log(data);
+    updateProfile(data);
   });
 
   return (

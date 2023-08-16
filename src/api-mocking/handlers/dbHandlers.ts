@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 import { v4 as uuidv4 } from 'uuid';
 
 const db = factory({
-  profile: {
+  profiles: {
     id: primaryKey(faker.string.uuid),
     nickname: String,
     email: String,
@@ -33,9 +33,9 @@ const db = factory({
 function seedDB() {
   // --- Profile ---
 
-  db.profile.create({
-    id: uuidv4(),
-    nickname: 'My Nickname',
+  db.profiles.create({
+    id: 'me',
+    nickname: 'Test User',
     email: 'test@test.com',
     introduction: 'This is my introduction',
   });
@@ -96,6 +96,7 @@ seedDB();
 const baseUrl = import.meta.env.VITE_API_URL + '/api';
 
 export const dbHandlers = [
+  ...db.profiles.toHandlers('rest', baseUrl),
   ...db.organizations.toHandlers('rest', baseUrl),
   ...db.projects.toHandlers('rest', baseUrl),
   ...db.posts.toHandlers('rest', baseUrl),
