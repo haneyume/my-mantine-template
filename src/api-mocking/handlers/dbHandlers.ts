@@ -29,16 +29,16 @@ const organizationId = uuidv4();
 
 db.organizations.create({
   id: organizationId,
-  name: 'Organization 1',
-  description: 'Description 1',
+  name: 'My Organization',
+  description: 'This is my organization',
   projects: [],
 });
 
 db.projects.create({
   id: uuidv4(),
   organizationId: organizationId,
-  name: 'Project 1',
-  description: 'Description 1',
+  name: 'Test Project',
+  description: 'This is a test project',
 });
 
 db.posts.create({

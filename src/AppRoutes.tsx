@@ -24,7 +24,11 @@ import {
 } from '@/ui-organization/pages';
 
 import { ProjectLayout } from '@/ui-project/layouts';
-import { ApiItemsPage } from '@/ui-project/pages';
+import {
+  OverviewPage,
+  ApiItemsPage,
+  SettingsPage as ProjectSettingsPage,
+} from '@/ui-project/pages';
 
 const GeneralLayoutBase = () => {
   return (
@@ -79,7 +83,7 @@ export const AppRoutes = () => {
       ],
     },
     {
-      path: '/organization/:id',
+      path: '/organization/:organizationId',
       element: <OrganizationLayoutBase />,
       children: [
         {
@@ -105,12 +109,20 @@ export const AppRoutes = () => {
       ],
     },
     {
-      path: '/project/:id',
+      path: '/project/:projectId',
       element: <ProjectLayoutBase />,
       children: [
         {
+          path: 'overview',
+          element: <OverviewPage />,
+        },
+        {
           path: 'api-items',
           element: <ApiItemsPage />,
+        },
+        {
+          path: 'settings',
+          element: <ProjectSettingsPage />,
         },
       ],
     },

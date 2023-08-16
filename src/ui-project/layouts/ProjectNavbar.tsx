@@ -1,48 +1,31 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { Navbar, NavLink, Badge, Stack, Tooltip } from '@mantine/core';
-import {
-  IconHome,
-  IconCode,
-  IconUser,
-  IconSettings,
-  IconApi,
-} from '@tabler/icons-react';
+import { IconHome, IconSettings, IconApi } from '@tabler/icons-react';
 
 export const ProjectNavbar = () => {
   const navigate = useNavigate();
+  const { projectId } = useParams();
   const { t } = useTranslation();
 
   const links = [
     {
       icon: IconHome,
-      label: 'Home',
-      path: '/',
-      notifications: 0,
-    },
-    {
-      icon: IconCode,
-      label: 'CodeGen',
-      path: '/codegen',
-      notifications: 0,
-    },
-    {
-      icon: IconUser,
-      label: 'Profile',
-      path: '/profile',
+      label: 'Overview',
+      path: `/project/${projectId}/overview`,
       notifications: 0,
     },
     {
       icon: IconSettings,
       label: 'Settings',
-      path: '/settings',
+      path: `/project/${projectId}/settings`,
       notifications: 0,
     },
     {
       icon: IconApi,
       label: 'ApiItems',
-      path: '/api-items',
+      path: `/project/${projectId}/api-items`,
       notifications: 0,
     },
   ];

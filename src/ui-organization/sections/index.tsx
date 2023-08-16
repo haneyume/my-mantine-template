@@ -1,2 +1,2 @@
-export { EditOrganizationSection } from './EditOrganizationSection';
-export { DangerZoneSection } from './DangerZoneSection';
+export { EditOrganizationSection } from './Settings/EditOrganizationSection';
+export { DangerZoneSection } from './Settings/DangerZoneSection';
