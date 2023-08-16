@@ -1,14 +1,19 @@
-import { factory, primaryKey, manyOf } from '@mswjs/data';
+import { factory, primaryKey } from '@mswjs/data';
 import { faker } from '@faker-js/faker';
 
 import { v4 as uuidv4 } from 'uuid';
 
 const db = factory({
+  profile: {
+    id: primaryKey(faker.string.uuid),
+    nickname: String,
+    email: String,
+    introduction: String,
+  },
   organizations: {
     id: primaryKey(faker.string.uuid),
     name: String,
     description: String,
-    projects: manyOf('projects'),
   },
   projects: {
     id: primaryKey(faker.string.uuid),
@@ -25,47 +30,73 @@ const db = factory({
   },
 });
 
-const organizationId = uuidv4();
+function seedDB() {
+  // --- Profile ---
 
-db.organizations.create({
-  id: organizationId,
-  name: 'My Organization',
-  description: 'This is my organization',
-  projects: [],
-});
+  db.profile.create({
+    id: uuidv4(),
+    nickname: 'My Nickname',
+    email: 'test@test.com',
+    introduction: 'This is my introduction',
+  });
 
-db.projects.create({
-  id: uuidv4(),
-  organizationId: organizationId,
-  name: 'Test Project',
-  description: 'This is a test project',
-});
+  // --- Organizations ---
 
-db.posts.create({
-  id: uuidv4(),
-  title: 'Post 1',
-  body: 'Body 1',
-  likeCount: 1,
-  commentCount: 1,
-});
+  const organizationId = uuidv4();
+  const organizationId2 = uuidv4();
 
-export const organizationsHandlers = db.organizations.toHandlers(
-  'rest',
-  import.meta.env.VITE_API_URL + '/api',
-);
+  db.organizations.create({
+    id: organizationId,
+    name: 'My Organization',
+    description: 'This is my organization',
+  });
 
-export const projectsHandlers = db.projects.toHandlers(
-  'rest',
-  import.meta.env.VITE_API_URL + '/api',
-);
+  db.organizations.create({
+    id: organizationId2,
+    name: 'My Organization - 2',
+    description: 'This is my organization',
+  });
 
-export const postsHandlers = db.posts.toHandlers(
-  'rest',
-  import.meta.env.VITE_API_URL + '/api',
-);
+  // --- Projects ---
+
+  db.projects.create({
+    id: uuidv4(),
+    organizationId: organizationId,
+    name: 'Test Project',
+    description: 'This is a test project',
+  });
+
+  db.projects.create({
+    id: uuidv4(),
+    organizationId: organizationId,
+    name: 'Test Project - 2',
+    description: 'This is a test project',
+  });
+
+  db.projects.create({
+    id: uuidv4(),
+    organizationId: organizationId2,
+    name: 'Test Project - 3',
+    description: 'This is a test project',
+  });
+
+  // --- Posts ---
+
+  db.posts.create({
+    id: uuidv4(),
+    title: 'Post 1',
+    body: 'Body 1',
+    likeCount: 1,
+    commentCount: 1,
+  });
+}
+
+seedDB();
+
+const baseUrl = import.meta.env.VITE_API_URL + '/api';
 
 export const dbHandlers = [
-  ...organizationsHandlers,
-  ...projectsHandlers,
-  ...postsHandlers,
+  ...db.organizations.toHandlers('rest', baseUrl),
+  ...db.projects.toHandlers('rest', baseUrl),
+  ...db.posts.toHandlers('rest', baseUrl),
 ];

@@ -7,56 +7,56 @@ interface Project {
   description: string;
 }
 
+const type: 'projects' = 'projects';
+const baseUrl = import.meta.env.VITE_API_URL + '/api/';
+
 export const projectsApi = createApi({
-  reducerPath: 'projectsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL + '/api/',
-  }),
-  tagTypes: ['projects'],
+  reducerPath: `${type}Api`,
+  baseQuery: fetchBaseQuery({ baseUrl }),
+  tagTypes: [type],
   endpoints: (builder) => ({
-    getProjects: builder.query<Project[], void>({
-      query: () => `projects`,
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: 'projects' as const, id })),
-              {
-                type: 'projects',
-                id: 'PARTIAL-LIST',
-              },
-            ]
-          : [
-              {
-                type: 'projects',
-                id: 'PARTIAL-LIST',
-              },
-            ],
+    getProjects: builder.query<Project[], { organizationId: string }>({
+      query: ({ organizationId }) => `${type}?organizationId=${organizationId}`,
+      providesTags: (result) => [
+        ...(result || []).map(({ id }) => ({ type, id })),
+        { type, id: `PARTIAL-LIST` },
+      ],
     }),
     getProjectById: builder.query<Project, number>({
-      query: (name) => `projects/${name}`,
+      query: (id) => `${type}/${id}`,
       providesTags: (result) =>
         result
           ? [
-              { type: 'projects', result: result.id },
-              {
-                type: 'projects',
-                id: 'PARTIAL-LIST',
-              },
+              { type, result: result.id },
+              { type, id: 'PARTIAL-LIST' },
             ]
-          : [
-              {
-                type: 'projects',
-                id: 'PARTIAL-LIST',
-              },
-            ],
+          : [{ type, id: 'PARTIAL-LIST' }],
     }),
     createProject: builder.mutation<{ id: number }, Partial<Project>>({
       query: (body) => ({
-        url: `projects`,
+        url: `${type}`,
         method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: 'projects', id: 'PARTIAL-LIST' }],
+      invalidatesTags: [{ type, id: 'PARTIAL-LIST' }],
+    }),
+    updateProject: builder.mutation<
+      { id: number },
+      Pick<Project, 'id'> & Partial<Project>
+    >({
+      query: (body) => ({
+        url: `${type}/${body.id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: [{ type, id: 'PARTIAL-LIST' }],
+    }),
+    deleteProject: builder.mutation<{ id: number }, Pick<Project, 'id'>>({
+      query: (body) => ({
+        url: `${type}/${body.id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: [{ type, id: 'PARTIAL-LIST' }],
     }),
   }),
 });
@@ -65,4 +65,6 @@ export const {
   useGetProjectsQuery,
   useGetProjectByIdQuery,
   useCreateProjectMutation,
+  useUpdateProjectMutation,
+  useDeleteProjectMutation,
 } = projectsApi;

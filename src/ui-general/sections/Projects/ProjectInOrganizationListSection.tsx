@@ -6,12 +6,14 @@ import { ProjectCard } from './ProjectCard';
 
 import { useGetProjectsQuery } from '@/app-redux';
 
-export const ProjectInOrganizationListSection = ({}: {
+export const ProjectInOrganizationListSection = ({
+  organizationId,
+}: {
   organizationId: string;
 }) => {
   const navigate = useNavigate();
 
-  const { data } = useGetProjectsQuery();
+  const { data } = useGetProjectsQuery({ organizationId });
 
   return (
     <Grid>

@@ -10,6 +10,8 @@ import { useDisclosure } from '@mantine/hooks';
 import { useForm, isNotEmpty } from '@mantine/form';
 import { IconPlus } from '@tabler/icons-react';
 
+import { useCreateOrganizationMutation } from '@/app-redux';
+
 export const NewOrganizationButton = () => {
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -31,6 +33,8 @@ const ModalInstance = ({
   opened: boolean;
   close: () => void;
 }) => {
+  const [createOrganization] = useCreateOrganizationMutation();
+
   const form = useForm({
     initialValues: {
       name: '',
@@ -42,7 +46,14 @@ const ModalInstance = ({
   });
 
   const onSubmit = form.onSubmit((data) => {
-    console.log(data);
+    createOrganization({
+      name: data.name,
+      description: data.description,
+    });
+
+    form.reset();
+
+    close();
   });
 
   return (

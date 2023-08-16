@@ -16,7 +16,7 @@ export const HomePage = () => {
   return (
     <Stack>
       {data?.map((post) => (
-        <Card key={post.id}>
+        <Card key={post.id} withBorder>
           <Stack>
             <Title order={3}>{post.title}</Title>
             <Text>{post.body}</Text>

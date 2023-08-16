@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { Navbar, NavLink, Badge, Stack, Tooltip } from '@mantine/core';
-import { IconHome, IconSettings, IconApi } from '@tabler/icons-react';
+import { IconChartBar, IconSettings, IconApi } from '@tabler/icons-react';
 
 export const ProjectNavbar = () => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ export const ProjectNavbar = () => {
 
   const links = [
     {
-      icon: IconHome,
+      icon: IconChartBar,
       label: 'Overview',
       path: `/project/${projectId}/overview`,
       notifications: 0,

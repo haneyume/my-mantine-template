@@ -4,69 +4,64 @@ interface Organization {
   id: string;
   name: string;
   description: string;
-  projects: Array<{
-    id: string;
-    name: string;
-    description: string;
-  }>;
 }
 
+const type: 'organizations' = 'organizations';
+const baseUrl = import.meta.env.VITE_API_URL + '/api/';
+
 export const organizationsApi = createApi({
-  reducerPath: 'organizationsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL + '/api/',
-  }),
-  tagTypes: ['organizations'],
+  reducerPath: `${type}Api`,
+  baseQuery: fetchBaseQuery({ baseUrl }),
+  tagTypes: [type],
   endpoints: (builder) => ({
     getOrganizations: builder.query<Organization[], void>({
-      query: () => `organizations`,
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({
-                type: 'organizations' as const,
-                id,
-              })),
-              {
-                type: 'organizations',
-                id: 'PARTIAL-LIST',
-              },
-            ]
-          : [
-              {
-                type: 'organizations',
-                id: 'PARTIAL-LIST',
-              },
-            ],
+      query: () => `${type}`,
+      providesTags: (result) => [
+        ...(result || []).map(({ id }) => ({ type, id })),
+        { type, id: 'PARTIAL-LIST' },
+      ],
     }),
     getOrganizationById: builder.query<Organization, number>({
-      query: (name) => `organizations/${name}`,
+      query: (id) => `${type}/${id}`,
       providesTags: (result) =>
         result
           ? [
-              { type: 'organizations', result: result.id },
-              {
-                type: 'organizations',
-                id: 'PARTIAL-LIST',
-              },
+              { type, result: result.id },
+              { type, id: 'PARTIAL-LIST' },
             ]
-          : [
-              {
-                type: 'organizations',
-                id: 'PARTIAL-LIST',
-              },
-            ],
+          : [{ type, id: 'PARTIAL-LIST' }],
     }),
     createOrganization: builder.mutation<{ id: number }, Partial<Organization>>(
       {
         query: (body) => ({
-          url: `organizations`,
+          url: `${type}`,
           method: 'POST',
           body,
         }),
-        invalidatesTags: [{ type: 'organizations', id: 'PARTIAL-LIST' }],
+        invalidatesTags: [{ type, id: 'PARTIAL-LIST' }],
       },
     ),
+    updateOrganization: builder.mutation<
+      { id: number },
+      Pick<Organization, 'id'> & Partial<Organization>
+    >({
+      query: (body) => ({
+        url: `${type}/${body.id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: [{ type, id: 'PARTIAL-LIST' }],
+    }),
+    deleteOrganization: builder.mutation<
+      { id: number },
+      Pick<Organization, 'id'>
+    >({
+      query: (body) => ({
+        url: `${type}/${body.id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: [{ type, id: 'PARTIAL-LIST' }],
+    }),
   }),
 });
 
@@ -74,4 +69,6 @@ export const {
   useGetOrganizationsQuery,
   useGetOrganizationByIdQuery,
   useCreateOrganizationMutation,
+  useUpdateOrganizationMutation,
+  useDeleteOrganizationMutation,
 } = organizationsApi;

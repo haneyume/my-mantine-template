@@ -2,6 +2,8 @@ import { Modal, Stack, Button, TextInput, Textarea } from '@mantine/core';
 import { useForm, isNotEmpty } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 
+import { useCreateProjectMutation } from '@/app-redux';
+
 export const NewProjectButton = ({
   organizationId,
 }: {
@@ -33,6 +35,8 @@ const ModalInstance = ({
   opened: boolean;
   close: () => void;
 }) => {
+  const [createProject] = useCreateProjectMutation();
+
   const form = useForm({
     initialValues: {
       name: '',
@@ -44,7 +48,15 @@ const ModalInstance = ({
   });
 
   const onSubmit = form.onSubmit((data) => {
-    console.log(data, organizationId);
+    createProject({
+      name: data.name,
+      description: data.description,
+      organizationId,
+    });
+
+    form.reset();
+
+    close();
   });
 
   return (

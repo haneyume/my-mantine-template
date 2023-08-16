@@ -8,59 +8,64 @@ interface Post {
   commentCount: number;
 }
 
+const type: 'posts' = 'posts';
+const baseUrl = import.meta.env.VITE_API_URL + '/api/';
+
 export const postsApi = createApi({
-  reducerPath: 'postsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL + '/api/',
-  }),
-  tagTypes: ['posts'],
+  reducerPath: `${type}Api`,
+  baseQuery: fetchBaseQuery({ baseUrl }),
+  tagTypes: [type],
   endpoints: (builder) => ({
     getPosts: builder.query<Post[], void>({
-      query: () => `posts`,
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: 'posts' as const, id })),
-              {
-                type: 'posts',
-                id: 'PARTIAL-LIST',
-              },
-            ]
-          : [
-              {
-                type: 'posts',
-                id: 'PARTIAL-LIST',
-              },
-            ],
+      query: () => `${type}`,
+      providesTags: (result) => [
+        ...(result || []).map(({ id }) => ({ type, id })),
+        { type, id: 'PARTIAL-LIST' },
+      ],
     }),
     getPostById: builder.query<Post, number>({
-      query: (name) => `posts/${name}`,
+      query: (id) => `${type}/${id}`,
       providesTags: (result) =>
         result
           ? [
-              { type: 'posts', result: result.id },
-              {
-                type: 'posts',
-                id: 'PARTIAL-LIST',
-              },
+              { type, result: result.id },
+              { type, id: 'PARTIAL-LIST' },
             ]
-          : [
-              {
-                type: 'posts',
-                id: 'PARTIAL-LIST',
-              },
-            ],
+          : [{ type, id: 'PARTIAL-LIST' }],
     }),
     createPost: builder.mutation<{ id: number }, Partial<Post>>({
       query: (body) => ({
-        url: `posts`,
+        url: `${type}`,
         method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: 'posts', id: 'PARTIAL-LIST' }],
+      invalidatesTags: [{ type, id: 'PARTIAL-LIST' }],
+    }),
+    updatePost: builder.mutation<
+      { id: number },
+      Pick<Post, 'id'> & Partial<Post>
+    >({
+      query: (body) => ({
+        url: `${type}/${body.id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: [{ type, id: 'PARTIAL-LIST' }],
+    }),
+    deletePost: builder.mutation<{ id: number }, Pick<Post, 'id'>>({
+      query: (body) => ({
+        url: `${type}/${body.id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: [{ type, id: 'PARTIAL-LIST' }],
     }),
   }),
 });
 
-export const { useGetPostsQuery, useGetPostByIdQuery, useCreatePostMutation } =
-  postsApi;
+export const {
+  useGetPostsQuery,
+  useGetPostByIdQuery,
+  useCreatePostMutation,
+  useUpdatePostMutation,
+  useDeletePostMutation,
+} = postsApi;

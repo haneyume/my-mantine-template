@@ -41,13 +41,20 @@ export {
 // Export all the api calls
 //
 // --------------------------------------------------
-export { userApi, useGetUsersQuery, useGetUserByIdQuery } from './apis/userApi';
+
+export {
+  profileApi,
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from './apis/profileApi';
 
 export {
   organizationsApi,
   useGetOrganizationsQuery,
   useGetOrganizationByIdQuery,
   useCreateOrganizationMutation,
+  useUpdateOrganizationMutation,
+  useDeleteOrganizationMutation,
 } from './apis/organizationsApi';
 
 export {
@@ -55,11 +62,17 @@ export {
   useGetProjectsQuery,
   useGetProjectByIdQuery,
   useCreateProjectMutation,
+  useUpdateProjectMutation,
+  useDeleteProjectMutation,
 } from './apis/projectsApi';
+
+export { userApi, useGetUsersQuery, useGetUserByIdQuery } from './apis/userApi';
 
 export {
   postsApi,
   useGetPostsQuery,
   useGetPostByIdQuery,
   useCreatePostMutation,
+  useUpdatePostMutation,
+  useDeletePostMutation,
 } from './apis/postsApi';
