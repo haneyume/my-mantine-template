@@ -1,7 +1,23 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
 import { Stack, Card, TextInput, Textarea, Button, Title } from '@mantine/core';
 import { useForm, isNotEmpty } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
+
+import {
+  useGetOrganizationByIdQuery,
+  useUpdateOrganizationMutation,
+} from '@/app-redux';
 
 export const EditOrganizationSection = () => {
+  const { organizationId } = useParams();
+
+  const { data } = useGetOrganizationByIdQuery(organizationId!, {
+    skip: !organizationId,
+  });
+  const [updateOrganization] = useUpdateOrganizationMutation();
+
   const form = useForm({
     initialValues: {
       id: '',
@@ -14,8 +30,23 @@ export const EditOrganizationSection = () => {
     },
   });
 
+  useEffect(() => {
+    if (data) {
+      form.setValues({
+        id: data.id,
+        name: data.name,
+        description: data.description,
+      });
+    }
+  }, [data]);
+
   const onSubmit = form.onSubmit((data) => {
-    console.log(data);
+    updateOrganization(data);
+
+    notifications.show({
+      title: 'Success',
+      message: 'Organization updated',
+    });
   });
 
   return (

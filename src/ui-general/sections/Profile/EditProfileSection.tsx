@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import { Card, Stack, TextInput, Textarea, Button, Title } from '@mantine/core';
 import { useForm, isNotEmpty } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
 
 import { useGetProfileQuery, useUpdateProfileMutation } from '@/app-redux';
 
@@ -33,6 +34,11 @@ export const EditProfileSection = () => {
 
   const onSubmit = form.onSubmit((data) => {
     updateProfile(data);
+
+    notifications.show({
+      title: 'Success',
+      message: 'Profile updated',
+    });
   });
 
   return (

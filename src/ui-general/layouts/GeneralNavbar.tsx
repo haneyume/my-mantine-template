@@ -16,7 +16,6 @@ import {
 import {
   IconHome,
   IconBox,
-  IconCode,
   IconUser,
   IconSettings,
   IconBook,
@@ -46,12 +45,6 @@ export const GeneralNavbar = () => {
       notifications: 0,
     },
     {
-      icon: IconCode,
-      label: 'CodeGen',
-      path: '/codegen',
-      notifications: 0,
-    },
-    {
       icon: IconUser,
       label: 'Profile',
       path: '/profile',
@@ -67,7 +60,7 @@ export const GeneralNavbar = () => {
 
   return (
     <Navbar width={{ base: 200 }}>
-      <Navbar.Section>
+      <Navbar.Section className="flex-1">
         <Stack className="my-5" spacing={5}>
           {links.map((link, index) => {
             const Icon = link.icon;
@@ -95,7 +88,7 @@ export const GeneralNavbar = () => {
       </Navbar.Section>
 
       <Navbar.Section
-        className="p-3 border-0 border-t border-b border-solid border-gray-700"
+        className="flex-1 p-3 border-0 border-t border-b border-solid border-gray-700"
         grow
         component={ScrollArea}
       >

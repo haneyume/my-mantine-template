@@ -4,7 +4,7 @@ import { TextareaWithLLM } from '@/ui-shared/buttons/TextareaWithLLM';
 
 export const CodeGenPage = () => {
   return (
-    <Stack>
+    <Stack p="md">
       <TextareaWithLLM
         label="Test"
         minRows={10}

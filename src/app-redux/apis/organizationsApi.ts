@@ -21,7 +21,7 @@ export const organizationsApi = createApi({
         { type, id: 'PARTIAL-LIST' },
       ],
     }),
-    getOrganizationById: builder.query<Organization, number>({
+    getOrganizationById: builder.query<Organization, string>({
       query: (id) => `${type}/${id}`,
       providesTags: (result) =>
         result
@@ -31,7 +31,7 @@ export const organizationsApi = createApi({
             ]
           : [{ type, id: 'PARTIAL-LIST' }],
     }),
-    createOrganization: builder.mutation<{ id: number }, Partial<Organization>>(
+    createOrganization: builder.mutation<{ id: string }, Partial<Organization>>(
       {
         query: (body) => ({
           url: `${type}`,
@@ -42,7 +42,7 @@ export const organizationsApi = createApi({
       },
     ),
     updateOrganization: builder.mutation<
-      { id: number },
+      { id: string },
       Pick<Organization, 'id'> & Partial<Organization>
     >({
       query: (body) => ({
@@ -52,12 +52,9 @@ export const organizationsApi = createApi({
       }),
       invalidatesTags: [{ type, id: 'PARTIAL-LIST' }],
     }),
-    deleteOrganization: builder.mutation<
-      { id: number },
-      Pick<Organization, 'id'>
-    >({
-      query: (body) => ({
-        url: `${type}/${body.id}`,
+    deleteOrganization: builder.mutation<{ id: string }, string>({
+      query: (id) => ({
+        url: `${type}/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: [{ type, id: 'PARTIAL-LIST' }],

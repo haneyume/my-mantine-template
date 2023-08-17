@@ -1,7 +1,20 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
 import { Stack, Card, TextInput, Textarea, Button, Title } from '@mantine/core';
 import { useForm, isNotEmpty } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
+
+import { useGetProjectByIdQuery, useUpdateProjectMutation } from '@/app-redux';
 
 export const EditProjectSection = () => {
+  const { projectId } = useParams();
+
+  const { data } = useGetProjectByIdQuery(projectId!, {
+    skip: !projectId,
+  });
+  const [updateProject] = useUpdateProjectMutation();
+
   const form = useForm({
     initialValues: {
       id: '',
@@ -14,8 +27,23 @@ export const EditProjectSection = () => {
     },
   });
 
+  useEffect(() => {
+    if (data) {
+      form.setValues({
+        id: data.id,
+        name: data.name,
+        description: data.description,
+      });
+    }
+  }, [data]);
+
   const onSubmit = form.onSubmit((data) => {
-    console.log(data);
+    updateProject(data);
+
+    notifications.show({
+      title: 'Success',
+      message: 'Project updated',
+    });
   });
 
   return (

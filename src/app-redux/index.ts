@@ -10,6 +10,13 @@ export type { RootState, AppDispatch } from './app/store';
 //
 // --------------------------------------------------
 export {
+  setCurrentOrganizationId,
+  setCurrentProjectId,
+  currentOrganizationId,
+  currentProjectId,
+} from './features/general/generalSlice';
+
+export {
   incrementCounter,
   decrementCounter,
   incrementCounterByAmount,

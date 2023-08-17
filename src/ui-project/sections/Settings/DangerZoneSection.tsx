@@ -1,11 +1,16 @@
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { Stack, Card, Button, Title, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 
+import { useDeleteProjectMutation } from '@/app-redux';
+
 export const DangerZoneSection = () => {
+  const { projectId } = useParams();
   const navigate = useNavigate();
+
+  const [deleteProject] = useDeleteProjectMutation();
 
   const openModal = () => {
     modals.openConfirmModal({
@@ -21,6 +26,7 @@ export const DangerZoneSection = () => {
       confirmProps: { color: 'red' },
       onCancel: () => {},
       onConfirm: () => {
+        deleteProject(projectId!);
         navigate('/');
 
         notifications.show({

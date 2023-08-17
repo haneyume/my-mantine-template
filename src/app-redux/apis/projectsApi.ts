@@ -22,7 +22,7 @@ export const projectsApi = createApi({
         { type, id: `PARTIAL-LIST` },
       ],
     }),
-    getProjectById: builder.query<Project, number>({
+    getProjectById: builder.query<Project, string>({
       query: (id) => `${type}/${id}`,
       providesTags: (result) =>
         result
@@ -32,7 +32,7 @@ export const projectsApi = createApi({
             ]
           : [{ type, id: 'PARTIAL-LIST' }],
     }),
-    createProject: builder.mutation<{ id: number }, Partial<Project>>({
+    createProject: builder.mutation<{ id: string }, Partial<Project>>({
       query: (body) => ({
         url: `${type}`,
         method: 'POST',
@@ -41,7 +41,7 @@ export const projectsApi = createApi({
       invalidatesTags: [{ type, id: 'PARTIAL-LIST' }],
     }),
     updateProject: builder.mutation<
-      { id: number },
+      { id: string },
       Pick<Project, 'id'> & Partial<Project>
     >({
       query: (body) => ({
@@ -51,9 +51,9 @@ export const projectsApi = createApi({
       }),
       invalidatesTags: [{ type, id: 'PARTIAL-LIST' }],
     }),
-    deleteProject: builder.mutation<{ id: number }, Pick<Project, 'id'>>({
-      query: (body) => ({
-        url: `${type}/${body.id}`,
+    deleteProject: builder.mutation<{ id: string }, string>({
+      query: (id) => ({
+        url: `${type}/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: [{ type, id: 'PARTIAL-LIST' }],

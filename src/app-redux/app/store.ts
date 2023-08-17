@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import generalReducer from '../features/general/generalSlice';
 import counterReducer from '../features/counter/counterSlice';
 import apiItemReducer from '../features/apiItems/apiItemsSlice';
 import usersSlice from '../features/users/usersSlice';
@@ -12,6 +13,7 @@ import { postsApi } from '../apis/postsApi';
 
 export const store = configureStore({
   reducer: {
+    general: generalReducer,
     counter: counterReducer,
     apiItems: apiItemReducer,
     users: usersSlice,

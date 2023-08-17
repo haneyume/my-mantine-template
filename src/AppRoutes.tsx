@@ -1,4 +1,5 @@
-import { useRoutes, Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useRoutes, useParams, Outlet } from 'react-router-dom';
 
 import { AppProvider, RecordProvider } from '@/ui-shared/contexts';
 
@@ -9,7 +10,6 @@ import { GeneralLayout } from '@/ui-general/layouts';
 import {
   HomePage,
   ProjectsPage,
-  CodeGenPage,
   ProfilePage,
   SettingsPage,
 } from '@/ui-general/pages';
@@ -27,8 +27,15 @@ import { ProjectLayout } from '@/ui-project/layouts';
 import {
   OverviewPage,
   ApiItemsPage,
+  CodeGenPage,
   SettingsPage as ProjectSettingsPage,
 } from '@/ui-project/pages';
+
+import {
+  useAppDispatch,
+  setCurrentOrganizationId,
+  setCurrentProjectId,
+} from '@/app-redux';
 
 const GeneralLayoutBase = () => {
   return (
@@ -39,6 +46,17 @@ const GeneralLayoutBase = () => {
 };
 
 const OrganizationLayoutBase = () => {
+  const dispatch = useAppDispatch();
+  const { organizationId } = useParams();
+
+  useEffect(() => {
+    dispatch(setCurrentOrganizationId(organizationId));
+
+    return () => {
+      dispatch(setCurrentOrganizationId(undefined));
+    };
+  }, [organizationId]);
+
   return (
     <OrganizationLayout>
       <Outlet />
@@ -47,6 +65,17 @@ const OrganizationLayoutBase = () => {
 };
 
 const ProjectLayoutBase = () => {
+  const dispatch = useAppDispatch();
+  const { projectId } = useParams();
+
+  useEffect(() => {
+    dispatch(setCurrentProjectId(projectId));
+
+    return () => {
+      dispatch(setCurrentProjectId(undefined));
+    };
+  }, [projectId]);
+
   return (
     <ProjectLayout>
       <Outlet />
@@ -67,10 +96,6 @@ export const AppRoutes = () => {
         {
           path: 'projects',
           element: <ProjectsPage />,
-        },
-        {
-          path: 'codegen',
-          element: <CodeGenPage />,
         },
         {
           path: 'profile',
@@ -119,6 +144,10 @@ export const AppRoutes = () => {
         {
           path: 'api-items',
           element: <ApiItemsPage />,
+        },
+        {
+          path: 'codegen',
+          element: <CodeGenPage />,
         },
         {
           path: 'settings',

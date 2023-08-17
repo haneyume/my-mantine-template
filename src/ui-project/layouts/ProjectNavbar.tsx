@@ -2,7 +2,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { Navbar, NavLink, Badge, Stack, Tooltip } from '@mantine/core';
-import { IconChartBar, IconSettings, IconApi } from '@tabler/icons-react';
+import {
+  IconChartBar,
+  IconSettings,
+  IconApi,
+  IconCode,
+} from '@tabler/icons-react';
 
 export const ProjectNavbar = () => {
   const navigate = useNavigate();
@@ -20,6 +25,12 @@ export const ProjectNavbar = () => {
       icon: IconApi,
       label: 'ApiItems',
       path: `/project/${projectId}/api-items`,
+      notifications: 0,
+    },
+    {
+      icon: IconCode,
+      label: 'CodeGen',
+      path: `/project/${projectId}/codegen`,
       notifications: 0,
     },
     {

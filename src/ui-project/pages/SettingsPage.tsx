@@ -4,7 +4,7 @@ import { EditProjectSection, DangerZoneSection } from '../sections';
 
 export const SettingsPage = () => {
   return (
-    <Stack>
+    <Stack p="md">
       <EditProjectSection />
       <DangerZoneSection />
     </Stack>
