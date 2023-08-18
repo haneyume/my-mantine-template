@@ -9,6 +9,7 @@ import { NotFoundPage } from '@/ui-shared/pages';
 import { GeneralLayout } from '@/ui-general/layouts';
 import {
   HomePage,
+  ChatPage,
   ProjectsPage,
   ProfilePage,
   SettingsPage,
@@ -92,6 +93,10 @@ export const AppRoutes = () => {
         {
           path: '/',
           element: <HomePage />,
+        },
+        {
+          path: 'chat',
+          element: <ChatPage />,
         },
         {
           path: 'projects',

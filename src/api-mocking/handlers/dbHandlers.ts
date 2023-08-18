@@ -21,13 +21,6 @@ const db = factory({
     name: String,
     description: String,
   },
-  posts: {
-    id: primaryKey(faker.string.uuid),
-    title: String,
-    body: String,
-    likeCount: Number,
-    commentCount: Number,
-  },
 });
 
 function seedDB() {
@@ -79,16 +72,6 @@ function seedDB() {
     name: 'Test Project - 3',
     description: 'This is a test project',
   });
-
-  // --- Posts ---
-
-  db.posts.create({
-    id: uuidv4(),
-    title: 'Post 1',
-    body: 'Body 1',
-    likeCount: 1,
-    commentCount: 1,
-  });
 }
 
 seedDB();
@@ -99,5 +82,4 @@ export const dbHandlers = [
   ...db.profiles.toHandlers('rest', baseUrl),
   ...db.organizations.toHandlers('rest', baseUrl),
   ...db.projects.toHandlers('rest', baseUrl),
-  ...db.posts.toHandlers('rest', baseUrl),
 ];

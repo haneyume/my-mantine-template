@@ -15,6 +15,7 @@ import {
 } from '@mantine/core';
 import {
   IconHome,
+  IconMessage,
   IconBox,
   IconUser,
   IconSettings,
@@ -36,6 +37,12 @@ export const GeneralNavbar = () => {
       icon: IconHome,
       label: 'Home',
       path: '/',
+      notifications: 0,
+    },
+    {
+      icon: IconMessage,
+      label: 'Chat',
+      path: '/chat',
       notifications: 0,
     },
     {
