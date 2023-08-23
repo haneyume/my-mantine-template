@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import generalReducer from '../features/general/generalSlice';
 import counterReducer from '../features/counter/counterSlice';
 import apiItemReducer from '../features/apiItems/apiItemsSlice';
+import apiItemReducer2 from '../features/apiItems/apiItemsSlice2';
 import usersSlice from '../features/users/usersSlice';
 
 import { profileApi } from '../apis/profileApi';
@@ -16,6 +17,7 @@ export const store = configureStore({
     general: generalReducer,
     counter: counterReducer,
     apiItems: apiItemReducer,
+    apiItems2: apiItemReducer2,
     users: usersSlice,
     [profileApi.reducerPath]: profileApi.reducer,
     [organizationsApi.reducerPath]: organizationsApi.reducer,

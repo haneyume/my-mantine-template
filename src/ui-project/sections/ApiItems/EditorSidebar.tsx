@@ -23,7 +23,7 @@ import {
   selectApiItem,
 } from '@/app-redux';
 
-import { NewFolderButton, NewItemButton } from '../modals';
+import { NewFolderButton, NewItemButton } from '../../modals';
 
 export const EditorSidebar = () => {
   const items = useAppSelector((state) => state.apiItems.items);

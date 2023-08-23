@@ -33,6 +33,8 @@ export {
   selectedApiItem,
 } from './features/apiItems/apiItemsSlice';
 
+export {} from './features/apiItems/apiItemsSlice2';
+
 export {
   addOneUser,
   updateOneUser,
