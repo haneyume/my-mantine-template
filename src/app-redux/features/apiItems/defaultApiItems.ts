@@ -1,43 +1,23 @@
+import type { EntityState } from '@reduxjs/toolkit';
+
 import { v4 as uuidv4 } from 'uuid';
 
-interface ApiItem {
-  id: string;
-  parent: string;
-  isFolder: boolean;
+import type { ApiItem } from '../../types';
 
-  method?: string;
-  path?: string;
-  description?: string;
-
-  headers?: Array<{ key: string; value: string }>;
-  queryParams?: Array<{ key: string; value: string }>;
-  pathVariables?: Array<{ key: string; value: string }>;
-  body?: string;
-
-  response?: any;
-  jsonPathList?: Array<{
-    name: string;
-    value: string;
-    example: any;
-  }>;
-}
-
-export const defaultApiItems: () => {
-  ids: string[];
-  entities: { [id: string]: ApiItem };
-} = () => {
+export const defaultApiItems: () => EntityState<ApiItem> = () => {
   const folderId = uuidv4();
 
   const data = [
     {
       id: folderId,
       parent: 'root',
+      name: 'Users',
       isFolder: true,
-      description: 'Users',
     },
     {
       id: uuidv4(),
       parent: folderId,
+      name: 'Get users',
       isFolder: false,
 
       method: 'GET',
@@ -47,6 +27,7 @@ export const defaultApiItems: () => {
     {
       id: uuidv4(),
       parent: folderId,
+      name: 'Get user 1',
       isFolder: false,
 
       method: 'GET',
@@ -56,6 +37,7 @@ export const defaultApiItems: () => {
     {
       id: uuidv4(),
       parent: folderId,
+      name: 'Create a user',
       isFolder: false,
 
       method: 'POST',

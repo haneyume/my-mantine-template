@@ -1,54 +1,22 @@
-import {
-  createSlice,
-  createEntityAdapter,
-  PayloadAction,
-} from '@reduxjs/toolkit';
-import type { EntityId, Dictionary } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
+import type { PayloadAction, EntityState } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
-import type { DNDTreeItem } from '../../types';
+import type { CanSelectCurrentItem, ApiItem } from '../../types';
+import {
+  setAllFromDNDTree,
+  transformToDNDTree,
+} from '../../shared/DNDTreeFunctions';
 
 import { defaultApiItems } from './defaultApiItems';
 
 // --------------------------------------------------
-
-interface ApiItem {
-  id: string;
-  parent: string;
-  isFolder: boolean;
-
-  method?: string;
-  path?: string;
-  description?: string;
-
-  headers?: Array<{ key: string; value: string }>;
-  queryParams?: Array<{ key: string; value: string }>;
-  pathVariables?: Array<{ key: string; value: string }>;
-  body?: string;
-
-  response?: any;
-  jsonPathList?: Array<{
-    name: string;
-    value: string;
-    example: any;
-  }>;
-}
-
-type DNDTreeApiItem = DNDTreeItem<ApiItem>;
-
-export type { ApiItem, DNDTreeApiItem };
-
+//
+//  Slice
+//
 // --------------------------------------------------
 
-interface InitialState {
-  ids: string[];
-  entities: {
-    [id: string]: ApiItem;
-  };
-  currentId: string;
-}
-
-const initialState: InitialState = {
+const initialState: EntityState<ApiItem> & CanSelectCurrentItem = {
   ...defaultApiItems(),
   currentId: '',
 };
@@ -63,33 +31,17 @@ export const apiItemsSlice = createSlice({
     updateOne: apiItemsAdapter.updateOne,
     removeOne: apiItemsAdapter.removeOne,
     setAll: apiItemsAdapter.setAll,
-    setAllFromDNDTree: (state, action: PayloadAction<DNDTreeApiItem[]>) => {
-      const allItems = action.payload;
-
-      let ids: EntityId[] & string[] = [];
-      let entities: Dictionary<ApiItem> & {
-        [id: string]: ApiItem;
-      } = {};
-
-      for (let i = 0; i < allItems.length; i++) {
-        let item = allItems[i];
-
-        ids.push(item.id);
-        entities[item.id] = {
-          ...item.data!,
-          parent: item.parent,
-        };
-      }
-
-      state.ids = ids;
-      state.entities = entities;
-    },
+    setAllFromDNDTree: setAllFromDNDTree<ApiItem>,
     setCurrentId: (state, action: PayloadAction<string>) => {
       state.currentId = action.payload;
     },
   },
 });
 
+// --------------------------------------------------
+//
+//  Actions
+//
 // --------------------------------------------------
 
 export const {
@@ -101,6 +53,10 @@ export const {
   setCurrentId: setCurrentApiItemId,
 } = apiItemsSlice.actions;
 
+// --------------------------------------------------
+//
+//  Selectors
+//
 // --------------------------------------------------
 
 const apiItemsSelectors = apiItemsAdapter.getSelectors<RootState>(
@@ -122,20 +78,13 @@ export const selectCurrentApiItem = (state: RootState) => {
 
 export const selectAllApiItemsAsDNDTree = (state: RootState) => {
   const apiItems = selectAllApiItems(state);
-
-  const apiItemsAsDNDTree = apiItems.map((item) => {
-    return {
-      id: item.id,
-      parent: item.parent,
-      text: item.description,
-      droppable: item.isFolder,
-      data: item,
-    } as DNDTreeApiItem;
-  });
-
-  return apiItemsAsDNDTree;
+  return transformToDNDTree<ApiItem>(apiItems);
 };
 
+// --------------------------------------------------
+//
+//  Reducer
+//
 // --------------------------------------------------
 
 export default apiItemsSlice.reducer;

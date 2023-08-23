@@ -16,10 +16,10 @@ export const NewItemButton = () => {
             addOneApiItem({
               id: uuidv4(),
               parent: 'root',
+              name: 'New Api',
               isFolder: false,
               method: 'GET',
               path: 'https://example.com/api/v1/new-api',
-              description: 'New Api',
             }),
           );
         }}

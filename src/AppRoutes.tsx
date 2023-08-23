@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useRoutes, useParams, Outlet } from 'react-router-dom';
+import { useRoutes, Outlet } from 'react-router-dom';
 
 import { AppProvider, RecordProvider } from '@/ui-shared/contexts';
 
@@ -32,12 +31,6 @@ import {
   SettingsPage as ProjectSettingsPage,
 } from '@/ui-project/pages';
 
-import {
-  useAppDispatch,
-  setCurrentOrganizationId,
-  setCurrentProjectId,
-} from '@/app-redux';
-
 const GeneralLayoutBase = () => {
   return (
     <GeneralLayout>
@@ -47,17 +40,6 @@ const GeneralLayoutBase = () => {
 };
 
 const OrganizationLayoutBase = () => {
-  const dispatch = useAppDispatch();
-  const { organizationId } = useParams();
-
-  useEffect(() => {
-    dispatch(setCurrentOrganizationId(organizationId));
-
-    return () => {
-      dispatch(setCurrentOrganizationId(undefined));
-    };
-  }, [organizationId]);
-
   return (
     <OrganizationLayout>
       <Outlet />
@@ -66,17 +48,6 @@ const OrganizationLayoutBase = () => {
 };
 
 const ProjectLayoutBase = () => {
-  const dispatch = useAppDispatch();
-  const { projectId } = useParams();
-
-  useEffect(() => {
-    dispatch(setCurrentProjectId(projectId));
-
-    return () => {
-      dispatch(setCurrentProjectId(undefined));
-    };
-  }, [projectId]);
-
   return (
     <ProjectLayout>
       <Outlet />

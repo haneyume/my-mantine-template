@@ -16,8 +16,8 @@ export const NewFolderButton = () => {
             addOneApiItem({
               id: uuidv4(),
               parent: 'root',
+              name: 'New Folder',
               isFolder: true,
-              description: 'New Folder',
             }),
           );
         }}
