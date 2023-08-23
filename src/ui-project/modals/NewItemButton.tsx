@@ -3,6 +3,8 @@ import { IconFilePlus } from '@tabler/icons-react';
 
 import { useAppDispatch, addOneApiItem } from '@/app-redux';
 
+import { v4 as uuidv4 } from 'uuid';
+
 export const NewItemButton = () => {
   const dispatch = useAppDispatch();
 
@@ -10,7 +12,16 @@ export const NewItemButton = () => {
     <Tooltip label="Add an api">
       <ActionIcon
         onClick={() => {
-          dispatch(addOneApiItem({ name: '', type: 'item' }));
+          dispatch(
+            addOneApiItem({
+              id: uuidv4(),
+              parent: 'root',
+              isFolder: false,
+              method: 'GET',
+              path: 'https://example.com/api/v1/new-api',
+              description: 'New Api',
+            }),
+          );
         }}
       >
         <IconFilePlus size={18} />

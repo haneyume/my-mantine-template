@@ -1,67 +1,91 @@
-import { createSlice, createSelector, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createEntityAdapter,
+  PayloadAction,
+} from '@reduxjs/toolkit';
+import type { EntityId, Dictionary } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
-import type { DNDTreeApiItem, ApiItem } from '../../types';
-import {
-  defaultApiItems,
-  createNewApiItemFolder,
-  createNewApiItem,
-} from '../../types';
+import type { DNDTreeItem } from '../../types';
+
+import { defaultApiItems } from './defaultApiItems';
+
+// --------------------------------------------------
+
+interface ApiItem {
+  id: string;
+  parent: string;
+  isFolder: boolean;
+
+  method?: string;
+  path?: string;
+  description?: string;
+
+  headers?: Array<{ key: string; value: string }>;
+  queryParams?: Array<{ key: string; value: string }>;
+  pathVariables?: Array<{ key: string; value: string }>;
+  body?: string;
+
+  response?: any;
+  jsonPathList?: Array<{
+    name: string;
+    value: string;
+    example: any;
+  }>;
+}
+
+type DNDTreeApiItem = DNDTreeItem<ApiItem>;
+
+export type { ApiItem, DNDTreeApiItem };
+
+// --------------------------------------------------
 
 interface InitialState {
-  items: DNDTreeApiItem[];
-  selectedId: string;
-  currentItem: DNDTreeApiItem | undefined;
+  ids: string[];
+  entities: {
+    [id: string]: ApiItem;
+  };
+  currentId: string;
 }
 
 const initialState: InitialState = {
-  items: defaultApiItems(),
-  selectedId: '',
-  currentItem: undefined,
+  ...defaultApiItems(),
+  currentId: '',
 };
+
+const apiItemsAdapter = createEntityAdapter<ApiItem>();
 
 export const apiItemsSlice = createSlice({
   name: 'apiItems',
-  initialState,
+  initialState: apiItemsAdapter.getInitialState(initialState),
   reducers: {
-    addOne: (
-      state,
-      action: PayloadAction<{ name: string; type: 'item' | 'folder' }>,
-    ) => {
-      const { type } = action.payload;
+    addOne: apiItemsAdapter.addOne,
+    updateOne: apiItemsAdapter.updateOne,
+    removeOne: apiItemsAdapter.removeOne,
+    setAll: apiItemsAdapter.setAll,
+    setAllFromDNDTree: (state, action: PayloadAction<DNDTreeApiItem[]>) => {
+      const allItems = action.payload;
 
-      if (type === 'folder') {
-        state.items.push(createNewApiItemFolder());
-      } else if (type === 'item') {
-        state.items.push(createNewApiItem());
-      }
-    },
-    updateOne: (state, action: PayloadAction<Partial<ApiItem>>) => {
-      const { items, selectedId } = state;
-      const partialData = action.payload;
+      let ids: EntityId[] & string[] = [];
+      let entities: Dictionary<ApiItem> & {
+        [id: string]: ApiItem;
+      } = {};
 
-      const index = items.findIndex((item) => item.id === selectedId);
-      if (index === -1) {
-        return;
-      }
+      for (let i = 0; i < allItems.length; i++) {
+        let item = allItems[i];
 
-      if (state.items[index].data) {
-        state.items[index].data = {
-          ...state.items[index].data!,
-          ...partialData,
+        ids.push(item.id);
+        entities[item.id] = {
+          ...item.data!,
+          parent: item.parent,
         };
       }
 
-      state.currentItem = state.items[index];
+      state.ids = ids;
+      state.entities = entities;
     },
-    setAll: (state, action: PayloadAction<DNDTreeApiItem[]>) => {
-      state.items = action.payload;
-    },
-    select: (state, action: PayloadAction<string>) => {
-      const id = action.payload;
-
-      state.selectedId = id;
-      state.currentItem = state.items.find((item) => item.id === id);
+    setCurrentId: (state, action: PayloadAction<string>) => {
+      state.currentId = action.payload;
     },
   },
 });
@@ -71,19 +95,46 @@ export const apiItemsSlice = createSlice({
 export const {
   addOne: addOneApiItem,
   updateOne: updateOneApiItem,
+  removeOne: removeOneApiItem,
   setAll: setAllApiItems,
-  select: selectApiItem,
+  setAllFromDNDTree: setAllApiItemsFromDNDTree,
+  setCurrentId: setCurrentApiItemId,
 } = apiItemsSlice.actions;
 
 // --------------------------------------------------
 
-export const allApiItems = (state: RootState) => state.apiItems.items;
-
-export const selectedApiItem = createSelector(
-  (state: RootState) => state.apiItems.items,
-  (state: RootState) => state.apiItems.selectedId,
-  (items, selectedId) => items.find((item) => item.id === selectedId),
+const apiItemsSelectors = apiItemsAdapter.getSelectors<RootState>(
+  (state) => state.apiItems,
 );
+
+export const {
+  selectAll: selectAllApiItems,
+  selectById: selectApiItemById,
+  selectIds: selectApiItemIds,
+} = apiItemsSelectors;
+
+export const selectCurrentApiItemId = (state: RootState) =>
+  state.apiItems.currentId;
+
+export const selectCurrentApiItem = (state: RootState) => {
+  return selectApiItemById(state, state.apiItems.currentId);
+};
+
+export const selectAllApiItemsAsDNDTree = (state: RootState) => {
+  const apiItems = selectAllApiItems(state);
+
+  const apiItemsAsDNDTree = apiItems.map((item) => {
+    return {
+      id: item.id,
+      parent: item.parent,
+      text: item.description,
+      droppable: item.isFolder,
+      data: item,
+    } as DNDTreeApiItem;
+  });
+
+  return apiItemsAsDNDTree;
+};
 
 // --------------------------------------------------
 

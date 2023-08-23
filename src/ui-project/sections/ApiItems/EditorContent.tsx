@@ -16,14 +16,20 @@ import {
 import axios from 'axios';
 import ReactJson from 'react-json-view';
 
-import { useAppSelector, useAppDispatch, updateOneApiItem } from '@/app-redux';
+import {
+  useAppDispatch,
+  useAppSelector,
+  updateOneApiItem,
+  selectCurrentApiItemId,
+  selectCurrentApiItem,
+} from '@/app-redux';
 
 // import { Test } from './property/PropertyUIs';
 import { PropertyListItems } from '@/ui-shared/property-uis/PropertyListItems';
 import { PropertyJsonPath } from '@/ui-shared/property-uis/PropertyJsonPath';
 
 export const EditorContent = () => {
-  const currentItem = useAppSelector((state) => state.apiItems.currentItem);
+  const currentItem = useAppSelector(selectCurrentApiItem);
 
   if (!currentItem) {
     return null;
@@ -33,7 +39,7 @@ export const EditorContent = () => {
     <ScrollArea className="h-full">
       <Card withBorder>
         <Stack>
-          <Title order={3}>{currentItem.text}</Title>
+          <Title order={3}>{currentItem.description}</Title>
 
           {/* <Test /> */}
 
@@ -69,8 +75,9 @@ export const EditorContent = () => {
 };
 
 const BasicTab = () => {
-  const currentItem = useAppSelector((state) => state.apiItems.currentItem);
   const dispatch = useAppDispatch();
+  const currentApiItemId = useAppSelector(selectCurrentApiItemId);
+  const currentItem = useAppSelector(selectCurrentApiItem);
 
   if (!currentItem) {
     return null;
@@ -83,9 +90,14 @@ const BasicTab = () => {
           label="Method"
           variant="filled"
           data={['GET', 'POST', 'PUT', 'DELETE']}
-          value={currentItem.data?.method}
+          value={currentItem.method}
           onChange={(value) => {
-            dispatch(updateOneApiItem({ method: value! }));
+            dispatch(
+              updateOneApiItem({
+                id: currentApiItemId,
+                changes: { method: value! },
+              }),
+            );
           }}
         />
 
@@ -93,9 +105,14 @@ const BasicTab = () => {
           className="flex-1"
           variant="filled"
           label="Path"
-          value={currentItem.data?.path}
+          value={currentItem.path}
           onChange={(e) => {
-            dispatch(updateOneApiItem({ path: e.target.value }));
+            dispatch(
+              updateOneApiItem({
+                id: currentApiItemId,
+                changes: { path: e.target.value },
+              }),
+            );
           }}
         />
       </Group>
@@ -104,9 +121,14 @@ const BasicTab = () => {
         className="flex-1"
         variant="filled"
         label="Description"
-        value={currentItem.data?.description}
+        value={currentItem.description}
         onChange={(e) => {
-          dispatch(updateOneApiItem({ description: e.target.value }));
+          dispatch(
+            updateOneApiItem({
+              id: currentApiItemId,
+              changes: { description: e.target.value },
+            }),
+          );
         }}
       />
 
@@ -121,9 +143,14 @@ const BasicTab = () => {
         label="Body"
         minRows={5}
         autosize
-        value={currentItem.data?.body}
+        value={currentItem.body}
         onChange={(e) => {
-          dispatch(updateOneApiItem({ body: e.target.value }));
+          dispatch(
+            updateOneApiItem({
+              id: currentApiItemId,
+              changes: { body: e.target.value },
+            }),
+          );
         }}
       />
     </Stack>
@@ -131,10 +158,10 @@ const BasicTab = () => {
 };
 
 const RequestTab = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const currentItem = useAppSelector((state) => state.apiItems.currentItem);
   const dispatch = useAppDispatch();
+  const currentApiItemId = useAppSelector(selectCurrentApiItemId);
+  const currentItem = useAppSelector(selectCurrentApiItem);
+  const [loading, setLoading] = useState<boolean>(false);
 
   if (!currentItem) {
     return null;
@@ -144,10 +171,10 @@ const RequestTab = () => {
     setLoading(true);
 
     const response = await axios({
-      method: currentItem.data?.method,
-      url: currentItem.data?.path,
-      data: currentItem.data?.body,
-      headers: currentItem.data?.headers?.reduce(
+      method: currentItem.method,
+      url: currentItem.path,
+      data: currentItem.body,
+      headers: currentItem.headers?.reduce(
         (acc, item) => ({ ...acc, [item.key]: item.value }),
         {},
       ),
@@ -155,7 +182,12 @@ const RequestTab = () => {
 
     setLoading(false);
 
-    dispatch(updateOneApiItem({ response: response.data }));
+    dispatch(
+      updateOneApiItem({
+        id: currentApiItemId,
+        changes: { response: response.data },
+      }),
+    );
   };
 
   return (
@@ -170,7 +202,7 @@ const RequestTab = () => {
 
       <Card withBorder>
         <ReactJson
-          src={(currentItem.data?.response as any) || {}}
+          src={(currentItem.response as any) || {}}
           theme={'monokai'}
           name={null}
           enableClipboard={false}

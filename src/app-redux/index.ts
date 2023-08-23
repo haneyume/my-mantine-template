@@ -27,13 +27,17 @@ export {
 export {
   addOneApiItem,
   updateOneApiItem,
+  removeOneApiItem,
   setAllApiItems,
-  selectApiItem,
-  allApiItems,
-  selectedApiItem,
+  setAllApiItemsFromDNDTree,
+  setCurrentApiItemId,
+  selectAllApiItems,
+  selectApiItemById,
+  selectApiItemIds,
+  selectCurrentApiItemId,
+  selectCurrentApiItem,
+  selectAllApiItemsAsDNDTree,
 } from './features/apiItems/apiItemsSlice';
-
-export {} from './features/apiItems/apiItemsSlice2';
 
 export {
   addOneUser,

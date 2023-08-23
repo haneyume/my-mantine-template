@@ -21,14 +21,17 @@ import {
   useAppSelector,
   useAppDispatch,
   updateOneApiItem,
+  selectCurrentApiItemId,
+  selectCurrentApiItem,
 } from '../../app-redux';
 
 export const PropertyJsonPath = () => {
   const field = 'jsonPathList';
   const label = 'JSON Path';
 
-  const currentItem = useAppSelector((state) => state.apiItems.currentItem);
   const dispatch = useAppDispatch();
+  const currentApiItemId = useAppSelector(selectCurrentApiItemId);
+  const currentItem = useAppSelector(selectCurrentApiItem);
 
   if (!currentItem) {
     return null;
@@ -41,8 +44,8 @@ export const PropertyJsonPath = () => {
   });
 
   useEffect(() => {
-    if (currentItem.data?.[field]) {
-      const defaultValue = currentItem.data[field];
+    if (currentItem[field]) {
+      const defaultValue = currentItem[field];
       form.setValues({ items: defaultValue });
     }
   }, []);
@@ -53,7 +56,8 @@ export const PropertyJsonPath = () => {
 
     dispatch(
       updateOneApiItem({
-        [field]: value,
+        id: currentApiItemId,
+        changes: { [field]: value },
       }),
     );
   }, [form.values]);
@@ -98,7 +102,7 @@ export const PropertyJsonPath = () => {
             variant="filled"
             placeholder="preview"
             value={jsonpathQuery(
-              currentItem.data?.response,
+              currentItem.response,
               form.values.items[index].value,
             )}
           />

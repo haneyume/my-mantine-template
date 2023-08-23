@@ -21,6 +21,8 @@ import {
   useAppSelector,
   useAppDispatch,
   updateOneApiItem,
+  selectCurrentApiItemId,
+  selectCurrentApiItem,
 } from '../../app-redux';
 
 export const PropertyListItems = ({
@@ -30,8 +32,9 @@ export const PropertyListItems = ({
   label: string;
   field: keyof ApiItem;
 }) => {
-  const currentItem = useAppSelector((state) => state.apiItems.currentItem);
   const dispatch = useAppDispatch();
+  const currentApiItemId = useAppSelector(selectCurrentApiItemId);
+  const currentItem = useAppSelector(selectCurrentApiItem);
 
   if (!currentItem) {
     return null;
@@ -39,13 +42,15 @@ export const PropertyListItems = ({
 
   const form = useForm({
     initialValues: {
-      items: [{ key: '', value: '' }],
+      items: [
+        // { key: '', value: '' }
+      ],
     },
   });
 
   useEffect(() => {
-    if (currentItem.data?.[field]) {
-      const defaultValue = currentItem.data[field];
+    if (currentItem[field]) {
+      const defaultValue = currentItem[field];
       form.setValues({ items: defaultValue });
     }
   }, []);
@@ -56,7 +61,8 @@ export const PropertyListItems = ({
 
     dispatch(
       updateOneApiItem({
-        [field]: value,
+        id: currentApiItemId,
+        changes: { [field]: value },
       }),
     );
   }, [form.values]);

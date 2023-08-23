@@ -17,19 +17,20 @@ import { Tree, TreeMethods } from '@minoru/react-dnd-treeview';
 import clsx from 'clsx';
 
 import {
-  useAppSelector,
   useAppDispatch,
-  setAllApiItems,
-  selectApiItem,
+  useAppSelector,
+  setAllApiItemsFromDNDTree,
+  setCurrentApiItemId,
+  selectAllApiItemsAsDNDTree,
+  selectCurrentApiItemId,
 } from '@/app-redux';
 
 import { NewFolderButton, NewItemButton } from '../../modals';
 
 export const EditorSidebar = () => {
-  const items = useAppSelector((state) => state.apiItems.items);
-  const selectedId = useAppSelector((state) => state.apiItems.selectedId);
-  // const currentItem = useAppSelector((state) => state.apiItem.currentItem);
   const dispatch = useAppDispatch();
+  const items = useAppSelector(selectAllApiItemsAsDNDTree);
+  const currentId = useAppSelector(selectCurrentApiItemId);
 
   const treeRef = useRef<TreeMethods>(null);
 
@@ -62,7 +63,7 @@ export const EditorSidebar = () => {
           tree={items}
           rootId={'root'}
           onDrop={(newTreeData: any) => {
-            dispatch(setAllApiItems(newTreeData));
+            dispatch(setAllApiItemsFromDNDTree(newTreeData));
           }}
           sort={false}
           insertDroppableFirst={false}
@@ -85,7 +86,7 @@ export const EditorSidebar = () => {
                 data-cy={`EditorSidebar-item-${index}`}
                 className={clsx(
                   'flex items-center space-x-2 cursor-pointer hover:bg-gray-800',
-                  selectedId === node.id && 'bg-gray-700',
+                  currentId === node.id && 'bg-gray-700',
                 )}
                 style={{ paddingLeft: 10 + depth * 20 }}
                 onClick={() => {
@@ -94,7 +95,7 @@ export const EditorSidebar = () => {
                   }
 
                   if (!node.droppable) {
-                    dispatch(selectApiItem(node.id as string));
+                    dispatch(setCurrentApiItemId(node.id as string));
                   }
                 }}
               >
