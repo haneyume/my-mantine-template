@@ -4,22 +4,22 @@ const mySchema = z.string();
 
 import { TextInput, Text, Button } from '@mantine/core';
 
-import {
-  // useAppSelector,
-  useAppDispatch,
-  addOneApiItem,
-} from '../../app-redux';
+// import {
+//   // useAppSelector,
+//   useAppDispatch,
+//   addOneApiItem,
+// } from '../../app-redux';
 
 export const PropertyFieldString = ({ z }: { z: ZodSchema }) => {
   // const currentItem = useAppSelector((state) => state.apiItem.currentItem);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   return (
     <>
       <Text>{JSON.stringify(z)}</Text>
 
       <Button
-        onClick={() => dispatch(addOneApiItem({ name: '', type: 'item' }))}
+      // onClick={() => dispatch(addOneApiItem({ name: '', type: 'item' }))}
       >
         newItem
       </Button>

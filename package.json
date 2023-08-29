@@ -49,6 +49,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@anatine/zod-mock": "^3.13.2",
     "@faker-js/faker": "^8.0.2",
     "@mswjs/data": "^0.13.0",
     "@types/file-saver": "^2.0.5",

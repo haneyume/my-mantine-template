@@ -1,12 +1,19 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { z } from 'zod';
 
-interface Post {
-  id: number;
-  title: string;
-  body: string;
+export interface Post {
+  id: string;
+  content: string;
   likeCount: number;
   commentCount: number;
 }
+
+export const postSchema = z.object({
+  id: z.string(),
+  content: z.string(),
+  likeCount: z.number(),
+  commentCount: z.number(),
+});
 
 const type: 'posts' = 'posts';
 const baseUrl = import.meta.env.VITE_API_URL + '/api/';
