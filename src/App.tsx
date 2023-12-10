@@ -1,42 +1,39 @@
-import { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
-import {
-  MantineProvider,
-  ColorSchemeProvider,
-  ColorScheme,
-} from '@mantine/core';
+import { MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 
-import { ReduxProvider, store } from '@/app-redux';
-import { AppRoutes } from '@/AppRoutes';
+import { theme } from '@/theme';
+
+import '@mantine/core/styles.css';
+import '@mantine/code-highlight/styles.css';
+import '@mantine/dates/styles.css';
+import '@mantine/dropzone/styles.css';
+import '@mantine/notifications/styles.css';
+import '@mantine/spotlight/styles.css';
+import '@mantine/tiptap/styles.css';
+
+import '@/index.css';
 
 export const App = () => {
-  const [colorScheme, setColorScheme] = useState<ColorScheme>('dark');
-
   return (
-    <ReduxProvider store={store}>
-      <ColorSchemeProvider
-        colorScheme={colorScheme}
-        toggleColorScheme={(value) => {
-          setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
-        }}
-      >
-        <MantineProvider
-          theme={{ colorScheme }}
-          withGlobalStyles
-          withNormalizeCSS
-        >
-          <ModalsProvider>
-            <Notifications position="top-right" />
+    <MantineProvider defaultColorScheme="dark" theme={theme}>
+      <ModalsProvider>
+        <Notifications position="top-right" />
 
-            <BrowserRouter>
-              <AppRoutes />
-            </BrowserRouter>
-          </ModalsProvider>
-        </MantineProvider>
-      </ColorSchemeProvider>
-    </ReduxProvider>
+        <BrowserRouter>
+          <AuthedAppContent />
+        </BrowserRouter>
+      </ModalsProvider>
+    </MantineProvider>
+  );
+};
+
+const AuthedAppContent = () => {
+  return (
+    <div className="container mx-auto">
+      <h1>App Content</h1>
+    </div>
   );
 };
