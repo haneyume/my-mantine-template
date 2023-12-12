@@ -1,4 +1,4 @@
-import { BrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
@@ -16,24 +16,39 @@ import '@mantine/tiptap/styles.css';
 
 import '@/index.css';
 
+import { AppReduxProvider, store } from '@/app-redux';
+
+import { AppLayout } from './AppLayout';
+import { Home } from './pages/Home';
+import { About } from './pages/About';
+
 export const App = () => {
   return (
-    <MantineProvider defaultColorScheme="dark" theme={theme}>
-      <ModalsProvider>
-        <Notifications position="top-right" />
+    <AppReduxProvider store={store}>
+      <MantineProvider defaultColorScheme="dark" theme={theme}>
+        <ModalsProvider>
+          <Notifications position="top-right" />
 
-        <BrowserRouter>
-          <AuthedAppContent />
-        </BrowserRouter>
-      </ModalsProvider>
-    </MantineProvider>
+          <RouterProvider router={router} />
+        </ModalsProvider>
+      </MantineProvider>
+    </AppReduxProvider>
   );
 };
 
-const AuthedAppContent = () => {
-  return (
-    <div className="container mx-auto">
-      <h1>App Content</h1>
-    </div>
-  );
-};
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <AppLayout />,
+    children: [
+      {
+        path: '',
+        element: <Home />,
+      },
+      {
+        path: 'about',
+        element: <About />,
+      },
+    ],
+  },
+]);
