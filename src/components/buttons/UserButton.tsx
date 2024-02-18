@@ -1,16 +1,20 @@
+import { FC } from 'react';
+
 import { UnstyledButton, Group, Avatar, Text } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
 
-export const UserButton = ({
-  name = 'test-user',
-  email = 'test@test.com',
-  icon,
-  onClick,
-}: {
+export interface UserButtonProps {
   name?: string;
   email?: string;
   icon?: React.ReactNode;
   onClick?: () => void;
+}
+
+export const UserButton: FC<UserButtonProps> = ({
+  name = 'test-user',
+  email = 'test@test.com',
+  icon,
+  onClick,
 }) => {
   if (!name || name.length === 0) {
     name = 'test-user';

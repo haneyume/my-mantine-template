@@ -1,5 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import '@/utils/i18n';
+
 import { MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
@@ -18,7 +20,6 @@ import '@/index.css';
 
 import { AppReduxProvider, store } from '@/app-redux';
 
-import { AppLayout } from './AppLayout';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
 
@@ -39,16 +40,10 @@ export const App = () => {
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <AppLayout />,
-    children: [
-      {
-        path: '',
-        element: <Home />,
-      },
-      {
-        path: 'about',
-        element: <About />,
-      },
-    ],
+    element: <Home />,
+  },
+  {
+    path: '/about',
+    element: <About />,
   },
 ]);
