@@ -1,6 +1,10 @@
-export { SpotlightButton } from './buttons/SpotlightButton';
-export { ThemeButton } from './buttons/ThemeButton';
-export { UserButton } from './buttons/UserButton';
+// layouts
+export { HomeLayout } from './layouts/HomeLayout';
+export { ProjectLayout } from './layouts/ProjectLayout';
 
-export { ColorSchemeSelect } from './selects/ColorSchemeSelect';
-export { LanguageSelect } from './selects/LanguageSelect';
+// sections
+export { EditSettings } from './sections/EditSettings';
+export { KeySettingSection } from './sections/KeySettingSection';
+
+// components
+export { ProjectCard } from './ProjectCard';

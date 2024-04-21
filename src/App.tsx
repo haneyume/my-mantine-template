@@ -1,4 +1,5 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { FC } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
 import '@/utils/i18n';
 
@@ -19,31 +20,26 @@ import '@mantine/tiptap/styles.css';
 import '@/index.css';
 
 import { AppReduxProvider, store } from '@/app-redux';
+import { AuthedAppContent } from '@/AuthedAppContent';
 
-import { Home } from './pages/Home';
-import { About } from './pages/About';
-
-export const App = () => {
+export const App: FC<{}> = () => {
   return (
     <AppReduxProvider store={store}>
-      <MantineProvider defaultColorScheme="dark" theme={theme}>
-        <ModalsProvider>
-          <Notifications position="top-right" />
-
-          <RouterProvider router={router} />
-        </ModalsProvider>
-      </MantineProvider>
+      <AppContent />
     </AppReduxProvider>
   );
 };
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Home />,
-  },
-  {
-    path: '/about',
-    element: <About />,
-  },
-]);
+const AppContent: FC = () => {
+  return (
+    <MantineProvider defaultColorScheme="dark" theme={theme}>
+      <ModalsProvider>
+        <Notifications position="top-right" />
+
+        <BrowserRouter>
+          <AuthedAppContent />
+        </BrowserRouter>
+      </ModalsProvider>
+    </MantineProvider>
+  );
+};
