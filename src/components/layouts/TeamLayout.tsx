@@ -2,12 +2,14 @@ import { FC, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AppShell, NavLink, ScrollArea } from '@mantine/core';
+import { useElementSize } from '@mantine/hooks';
 
-import { IconHome, IconUser, IconSettings } from '@tabler/icons-react';
+import { IconLayoutDashboard, IconSettings } from '@tabler/icons-react';
 
 import { AppTitle } from './AppTitle';
 
 export interface AppLayoutProps {
+  teamId: string;
   children: ReactNode;
   isSidebarOpened: boolean;
   setIsSidebarOpened: (value: boolean) => void;
@@ -16,7 +18,8 @@ export interface AppLayoutProps {
   onNavigate: (path: string) => void;
 }
 
-export const HomeLayout: FC<AppLayoutProps> = ({
+export const TeamLayout: FC<AppLayoutProps> = ({
+  teamId,
   children,
   isSidebarOpened,
   setIsSidebarOpened,
@@ -26,10 +29,11 @@ export const HomeLayout: FC<AppLayoutProps> = ({
 }) => {
   const { t: tr } = useTranslation();
 
+  const { ref, width } = useElementSize();
+
   return (
     <AppShell
       header={{ height: 60 }}
-      // footer={{ height: 40 }}
       navbar={{
         width: 200,
         breakpoint: 'sm',
@@ -49,30 +53,24 @@ export const HomeLayout: FC<AppLayoutProps> = ({
         <div className="w-full h-full flex">
           <div className="py-5 flex-1 flex flex-col items-center">
             <NavLink
-              label={tr('Home')}
-              leftSection={<IconHome size={18} />}
-              onClick={() => onNavigate('/')}
-              active={window.location.pathname === '/'}
-            />
-            <NavLink
-              label={tr('Profile')}
-              leftSection={<IconUser size={18} />}
-              onClick={() => onNavigate('/profile')}
-              active={window.location.pathname === '/profile'}
+              label={tr('Overview')}
+              leftSection={<IconLayoutDashboard size={18} />}
+              onClick={() => onNavigate(`/team/${teamId}`)}
+              active={window.location.pathname === `/team/${teamId}`}
             />
             <NavLink
               label={tr('Settings')}
               leftSection={<IconSettings size={18} />}
-              onClick={() => onNavigate('/settings')}
-              active={window.location.pathname === '/settings'}
+              onClick={() => onNavigate(`/team/${teamId}/settings`)}
+              active={window.location.pathname === `/team/${teamId}/settings`}
             />
           </div>
         </div>
       </AppShell.Navbar>
 
-      <AppShell.Main>
-        <ScrollArea p="md" style={{ height: 'calc(100vh - 60px)' }}>
-          {children}
+      <AppShell.Main ref={ref}>
+        <ScrollArea style={{ height: 'calc(100vh - 60px)' }}>
+          <div style={{ width, padding: 20 }}>{children}</div>
         </ScrollArea>
       </AppShell.Main>
     </AppShell>

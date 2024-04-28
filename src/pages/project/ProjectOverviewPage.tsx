@@ -1,25 +1,16 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Stack, Title, Text, Card } from '@mantine/core';
 
+import { useGetProjectByIdQuery } from '@/app-redux';
+
 export const ProjectOverviewPage: FC<{}> = () => {
   const { projectId = '' } = useParams();
 
-  const [projectData, setProjectData] = useState<
-    | {
-        data: string;
-      }
-    | undefined
-  >(undefined);
+  const { data: project } = useGetProjectByIdQuery({ id: projectId });
 
-  useEffect(() => {
-    setProjectData({
-      data: `This is ${projectId}`,
-    });
-  }, []);
-
-  if (!projectData) {
+  if (!project) {
     return <div>Loading...</div>;
   }
 
@@ -28,7 +19,7 @@ export const ProjectOverviewPage: FC<{}> = () => {
       <Title order={3}>Project</Title>
 
       <Card>
-        <Text>{projectData.data}</Text>
+        <Text>{JSON.stringify(project.data)}</Text>
       </Card>
     </Stack>
   );

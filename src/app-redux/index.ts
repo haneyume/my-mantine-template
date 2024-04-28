@@ -7,14 +7,17 @@ export { useAppSelector, useAppDispatch } from './hooks';
 
 // --------------------------------------------------
 //
-// State General
-//
-// --------------------------------------------------
-
-export * from './state-general/generalSlice';
-
-// --------------------------------------------------
-//
 // Service APIs
 //
 // --------------------------------------------------
+
+export * from './services/projectsApi';
+
+// --------------------------------------------------
+//
+// Slices
+//
+// --------------------------------------------------
+
+export * from './slices/generalSlice';
+export * from './slices/projectSlice';

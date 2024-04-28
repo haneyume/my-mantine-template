@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { AppShell, ActionIcon, Tooltip } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
 
-import { IconLayoutDashboard } from '@tabler/icons-react';
+import { IconLayoutDashboard, IconSettings } from '@tabler/icons-react';
 
 import { AppTitle } from './AppTitle';
 
@@ -66,6 +66,11 @@ export const ProjectLayout: FC<AppLayoutProps> = ({
               icon={<IconLayoutDashboard size={18} />}
               label={tr('Overview')}
               onClick={() => onNavigate(`/project/${projectId}`)}
+            />
+            <SidebarButton
+              icon={<IconSettings size={18} />}
+              label={tr('Settings')}
+              onClick={() => onNavigate(`/project/${projectId}/settings`)}
             />
           </div>
         </div>

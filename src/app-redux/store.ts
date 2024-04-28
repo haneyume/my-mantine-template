@@ -1,15 +1,24 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import generalReducer from './state-general/generalSlice';
+import { projectsApi } from './services/projectsApi';
+
+import generalReducer from './slices/generalSlice';
+import projectReducer from './slices/projectSlice';
 
 export const store = configureStore({
   reducer: {
     general: generalReducer,
+    project: projectReducer,
+
+    [projectsApi.reducerPath]: projectsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat([]),
+    }).concat([
+      // Add the projectsApi middleware
+      projectsApi.middleware,
+    ]),
   devTools: import.meta.env.DEV,
 });
 

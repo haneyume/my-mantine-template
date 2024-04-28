@@ -1,14 +1,19 @@
 import { FC } from 'react';
 import { useRoutes, Outlet, useNavigate, useParams } from 'react-router-dom';
 
-import { HomeLayout, ProjectLayout } from '@/components';
+import { HomeLayout, TeamLayout, ProjectLayout } from '@/components';
 
 import {
   //
   HomePage,
+  HomeProfilePage,
   HomeSettingsPage,
   //
+  TeamOverviewPage,
+  TeamSettingsPage,
+  //
   ProjectOverviewPage,
+  ProjectSettingsPage,
 } from '@/pages';
 
 export const AuthedAppContent: FC = () => {
@@ -22,8 +27,26 @@ export const AuthedAppContent: FC = () => {
           element: <HomePage />,
         },
         {
+          path: 'profile',
+          element: <HomeProfilePage />,
+        },
+        {
           path: 'settings',
           element: <HomeSettingsPage />,
+        },
+      ],
+    },
+    {
+      path: '/team/:teamId',
+      element: <TeamLayoutWrapper />,
+      children: [
+        {
+          path: '',
+          element: <TeamOverviewPage />,
+        },
+        {
+          path: 'settings',
+          element: <TeamSettingsPage />,
         },
       ],
     },
@@ -34,6 +57,10 @@ export const AuthedAppContent: FC = () => {
         {
           path: '',
           element: <ProjectOverviewPage />,
+        },
+        {
+          path: 'settings',
+          element: <ProjectSettingsPage />,
         },
       ],
     },
@@ -55,6 +82,24 @@ const HomeLayoutWrapper: FC = () => {
     >
       <Outlet />
     </HomeLayout>
+  );
+};
+
+const TeamLayoutWrapper: FC = () => {
+  const navigate = useNavigate();
+  const { teamId = '' } = useParams();
+
+  return (
+    <TeamLayout
+      teamId={teamId}
+      isSidebarOpened={false}
+      setIsSidebarOpened={() => {}}
+      userNickname=""
+      userEmail=""
+      onNavigate={(path) => navigate(path)}
+    >
+      <Outlet />
+    </TeamLayout>
   );
 };
 

@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { Stack } from '@mantine/core';
 
-import { EditSettings, KeySettingSection } from '@/components';
+import { EditSettings, KeySettingSection, SignOutSection } from '@/components';
 
 export const HomeSettingsPage: FC = () => {
   return (
@@ -10,6 +10,8 @@ export const HomeSettingsPage: FC = () => {
       <EditSettings />
 
       <KeySettingSection />
+
+      <SignOutSection onSignOut={() => {}} />
     </Stack>
   );
 };
