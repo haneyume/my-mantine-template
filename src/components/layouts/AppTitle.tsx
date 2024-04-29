@@ -23,30 +23,28 @@ export const AppTitle: FC<AppTitleProps> = ({
 }) => {
   return (
     <AppShell.Header>
-      <div className="px-5 h-full flex items-center space-x-5">
-        <Burger
-          opened={isSidebarOpened}
-          onClick={() => setIsSidebarOpened(!isSidebarOpened)}
-          hiddenFrom="sm"
-          size="sm"
-        />
+      <Burger
+        opened={isSidebarOpened}
+        onClick={() => setIsSidebarOpened(!isSidebarOpened)}
+        hiddenFrom="sm"
+        size="sm"
+      />
 
-        <UnstyledButton onClick={() => onNavigate('/')}>
-          <IconBrandReact />
-        </UnstyledButton>
+      <UnstyledButton onClick={() => onNavigate('/')}>
+        <IconBrandReact />
+      </UnstyledButton>
 
-        <UnstyledButton onClick={() => onNavigate('/')}>
-          <Title order={3}>{import.meta.env.VITE_APP_NAME}</Title>
-        </UnstyledButton>
+      <UnstyledButton onClick={() => onNavigate('/')}>
+        <Title order={3}>{import.meta.env.VITE_APP_NAME}</Title>
+      </UnstyledButton>
 
-        <div className="flex-1" />
+      <div className="flex-1" />
 
-        <UserButton
-          name={userNickname}
-          email={userEmail}
-          onClick={() => onNavigate('/profile')}
-        />
-      </div>
+      <UserButton
+        name={userNickname}
+        email={userEmail}
+        onClick={() => onNavigate('/profile')}
+      />
     </AppShell.Header>
   );
 };

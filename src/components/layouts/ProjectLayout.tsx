@@ -7,6 +7,7 @@ import { useElementSize } from '@mantine/hooks';
 import { IconLayoutDashboard, IconSettings } from '@tabler/icons-react';
 
 import { AppTitle } from './AppTitle';
+import { AppFooter } from './AppFooter';
 
 export interface AppLayoutProps {
   projectId: string;
@@ -36,6 +37,7 @@ export const ProjectLayout: FC<AppLayoutProps> = ({
   return (
     <AppShell
       header={{ height: 60 }}
+      footer={{ height: 40 }}
       navbar={{
         width: 50,
         breakpoint: 'sm',
@@ -49,7 +51,6 @@ export const ProjectLayout: FC<AppLayoutProps> = ({
           mobile: !isSecondarySidebarOpened,
         },
       }}
-      // padding="md"
     >
       <AppTitle
         isSidebarOpened={isSidebarOpened}
@@ -60,20 +61,22 @@ export const ProjectLayout: FC<AppLayoutProps> = ({
       />
 
       <AppShell.Navbar>
-        <div className="w-full h-full flex">
-          <div className="py-5 flex-1 flex flex-col items-center">
-            <SidebarButton
-              icon={<IconLayoutDashboard size={18} />}
-              label={tr('Overview')}
-              onClick={() => onNavigate(`/project/${projectId}`)}
-            />
-            <SidebarButton
-              icon={<IconSettings size={18} />}
-              label={tr('Settings')}
-              onClick={() => onNavigate(`/project/${projectId}/settings`)}
-            />
-          </div>
-        </div>
+        <AppShell.Section>
+          <SidebarButton
+            icon={<IconLayoutDashboard size={18} />}
+            label={tr('Overview')}
+            onClick={() => onNavigate(`/project/${projectId}`)}
+            active={window.location.pathname === `/project/${projectId}`}
+          />
+          <SidebarButton
+            icon={<IconSettings size={18} />}
+            label={tr('Settings')}
+            onClick={() => onNavigate(`/project/${projectId}/settings`)}
+            active={
+              window.location.pathname === `/project/${projectId}/settings`
+            }
+          />
+        </AppShell.Section>
       </AppShell.Navbar>
 
       <AppShell.Main ref={ref}>
@@ -83,6 +86,8 @@ export const ProjectLayout: FC<AppLayoutProps> = ({
       <AppShell.Aside id="chatbot-layout">
         {/* <ChatBotLayout width="100%" height="100%" /> */}
       </AppShell.Aside>
+
+      <AppFooter />
     </AppShell>
   );
 };
@@ -91,6 +96,7 @@ const SidebarButton: FC<{
   icon: ReactNode;
   label: string;
   onClick: () => void;
+  active?: boolean;
 }> = ({ icon, label, onClick }) => {
   return (
     <Tooltip label={label}>

@@ -32,7 +32,22 @@ export const App: FC<{}> = () => {
 
 const AppContent: FC = () => {
   return (
-    <MantineProvider defaultColorScheme="dark" theme={theme}>
+    <MantineProvider
+      defaultColorScheme="dark"
+      theme={theme}
+      cssVariablesResolver={(theme) => ({
+        variables: {
+          '--mantine-hero-height': theme.other.heroHeight,
+        },
+        light: {
+          '--mantine-color-body': '#fff',
+        },
+        dark: {
+          '--mantine-color-body': 'var(--mantine-color-dark-9)',
+          '--mantine-color-default-border': 'var(--mantine-color-dark-9)',
+        },
+      })}
+    >
       <ModalsProvider>
         <Notifications position="top-right" />
 

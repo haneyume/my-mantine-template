@@ -43,7 +43,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({
 
         <Text size="sm">{description}</Text>
 
-        <Button color="blue" fullWidth onClick={onClick}>
+        <Button fullWidth onClick={onClick}>
           {tr('Start')}
         </Button>
       </Stack>

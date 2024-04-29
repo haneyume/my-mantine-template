@@ -6,7 +6,7 @@ import { EditProfile } from '@/components';
 
 export const HomeProfilePage: FC = () => {
   return (
-    <Stack>
+    <Stack className="w-1/2">
       <EditProfile
         defaultData={{ email: '', nickname: '', introduction: '' }}
         onSubmitForm={(data) => {

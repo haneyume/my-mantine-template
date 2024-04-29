@@ -63,7 +63,7 @@ export const HomePage: FC<{}> = () => {
             });
           }}
         >
-          <IconPlus />
+          <IconPlus size={18} />
         </ActionIcon>
 
         <div className="flex-1" />
