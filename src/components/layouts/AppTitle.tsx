@@ -4,6 +4,7 @@ import { AppShell, Burger, Title, UnstyledButton } from '@mantine/core';
 
 import { IconBrandReact } from '@tabler/icons-react';
 
+import { ThemeButton } from '../buttons/ThemeButton';
 import { UserButton } from '../buttons/UserButton';
 
 export interface AppTitleProps {
@@ -39,6 +40,8 @@ export const AppTitle: FC<AppTitleProps> = ({
       </UnstyledButton>
 
       <div className="flex-1" />
+
+      <ThemeButton />
 
       <UserButton
         name={userNickname}

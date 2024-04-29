@@ -1,59 +1,59 @@
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import {
-  getProjects,
-  getProject,
-  createProject,
-  updateProject,
-  deleteProject,
+  getUsers,
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser,
 } from '@/utils/datasource';
-import type { Project } from '@/types';
+import type { User } from '@/types';
 
-export const projectsApi = createApi({
-  reducerPath: 'projectsApi',
+export const usersApi = createApi({
+  reducerPath: 'usersApi',
   baseQuery: fakeBaseQuery(),
-  tagTypes: ['projects'],
+  tagTypes: ['users'],
   endpoints: (builder) => ({
-    getProjects: builder.query<Project[], void>({
+    getUsers: builder.query<User[], void>({
       queryFn: async () => {
         try {
-          const res = await getProjects();
+          const res = await getUsers();
 
           return { data: res };
         } catch (error: any) {
           return { error };
         }
       },
-      providesTags: ['projects'],
+      providesTags: ['users'],
     }),
-    getProjectById: builder.query<Project, { id: string }>({
+    getUserById: builder.query<User, { id: string }>({
       queryFn: async (arg) => {
         try {
-          const res = await getProject(arg.id);
+          const res = await getUser(arg.id);
 
           return { data: res };
         } catch (error: any) {
           return { error };
         }
       },
-      providesTags: ['projects'],
+      providesTags: ['users'],
     }),
-    createProject: builder.mutation<Project, Project>({
+    createUser: builder.mutation<User, User>({
       queryFn: async (arg) => {
         try {
-          const res = await createProject(arg);
+          const res = await createUser(arg);
 
           return { data: res };
         } catch (error: any) {
           return { error };
         }
       },
-      invalidatesTags: ['projects'],
+      invalidatesTags: ['users'],
     }),
-    updateProject: builder.mutation<void, Project>({
+    updateUser: builder.mutation<void, User>({
       queryFn: async (arg) => {
         try {
-          await updateProject(arg);
+          await updateUser(arg);
 
           return { data: undefined };
         } catch (error: any) {
@@ -62,13 +62,9 @@ export const projectsApi = createApi({
       },
       async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
-          projectsApi.util.updateQueryData(
-            'getProjectById',
-            { id },
-            (draft) => {
-              Object.assign(draft, patch);
-            },
-          ),
+          usersApi.util.updateQueryData('getUserById', { id }, (draft) => {
+            Object.assign(draft, patch);
+          }),
         );
         try {
           await queryFulfilled;
@@ -76,27 +72,27 @@ export const projectsApi = createApi({
           patchResult.undo();
         }
       },
-      invalidatesTags: ['projects'],
+      invalidatesTags: ['users'],
     }),
-    deleteProject: builder.mutation<void, { id: string }>({
+    deleteUser: builder.mutation<void, { id: string }>({
       queryFn: async (arg) => {
         try {
-          await deleteProject(arg.id);
+          await deleteUser(arg.id);
 
           return { data: undefined };
         } catch (error: any) {
           return { error };
         }
       },
-      invalidatesTags: ['projects'],
+      invalidatesTags: ['users'],
     }),
   }),
 });
 
 export const {
-  useGetProjectsQuery,
-  useGetProjectByIdQuery,
-  useCreateProjectMutation,
-  useUpdateProjectMutation,
-  useDeleteProjectMutation,
-} = projectsApi;
+  useGetUsersQuery,
+  useGetUserByIdQuery,
+  useCreateUserMutation,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+} = usersApi;

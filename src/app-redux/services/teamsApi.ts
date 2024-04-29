@@ -1,59 +1,59 @@
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import {
-  getProjects,
-  getProject,
-  createProject,
-  updateProject,
-  deleteProject,
+  getTeams,
+  getTeam,
+  createTeam,
+  updateTeam,
+  deleteTeam,
 } from '@/utils/datasource';
-import type { Project } from '@/types';
+import type { Team } from '@/types';
 
-export const projectsApi = createApi({
-  reducerPath: 'projectsApi',
+export const teamsApi = createApi({
+  reducerPath: 'teamsApi',
   baseQuery: fakeBaseQuery(),
-  tagTypes: ['projects'],
+  tagTypes: ['teams'],
   endpoints: (builder) => ({
-    getProjects: builder.query<Project[], void>({
+    getTeams: builder.query<Team[], void>({
       queryFn: async () => {
         try {
-          const res = await getProjects();
+          const res = await getTeams();
 
           return { data: res };
         } catch (error: any) {
           return { error };
         }
       },
-      providesTags: ['projects'],
+      providesTags: ['teams'],
     }),
-    getProjectById: builder.query<Project, { id: string }>({
+    getTeamById: builder.query<Team, { id: string }>({
       queryFn: async (arg) => {
         try {
-          const res = await getProject(arg.id);
+          const res = await getTeam(arg.id);
 
           return { data: res };
         } catch (error: any) {
           return { error };
         }
       },
-      providesTags: ['projects'],
+      providesTags: ['teams'],
     }),
-    createProject: builder.mutation<Project, Project>({
+    createTeam: builder.mutation<Team, Team>({
       queryFn: async (arg) => {
         try {
-          const res = await createProject(arg);
+          const res = await createTeam(arg);
 
           return { data: res };
         } catch (error: any) {
           return { error };
         }
       },
-      invalidatesTags: ['projects'],
+      invalidatesTags: ['teams'],
     }),
-    updateProject: builder.mutation<void, Project>({
+    updateTeam: builder.mutation<void, Team>({
       queryFn: async (arg) => {
         try {
-          await updateProject(arg);
+          await updateTeam(arg);
 
           return { data: undefined };
         } catch (error: any) {
@@ -62,13 +62,9 @@ export const projectsApi = createApi({
       },
       async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
-          projectsApi.util.updateQueryData(
-            'getProjectById',
-            { id },
-            (draft) => {
-              Object.assign(draft, patch);
-            },
-          ),
+          teamsApi.util.updateQueryData('getTeamById', { id }, (draft) => {
+            Object.assign(draft, patch);
+          }),
         );
         try {
           await queryFulfilled;
@@ -76,27 +72,27 @@ export const projectsApi = createApi({
           patchResult.undo();
         }
       },
-      invalidatesTags: ['projects'],
+      invalidatesTags: ['teams'],
     }),
-    deleteProject: builder.mutation<void, { id: string }>({
+    deleteTeam: builder.mutation<void, { id: string }>({
       queryFn: async (arg) => {
         try {
-          await deleteProject(arg.id);
+          await deleteTeam(arg.id);
 
           return { data: undefined };
         } catch (error: any) {
           return { error };
         }
       },
-      invalidatesTags: ['projects'],
+      invalidatesTags: ['teams'],
     }),
   }),
 });
 
 export const {
-  useGetProjectsQuery,
-  useGetProjectByIdQuery,
-  useCreateProjectMutation,
-  useUpdateProjectMutation,
-  useDeleteProjectMutation,
-} = projectsApi;
+  useGetTeamsQuery,
+  useGetTeamByIdQuery,
+  useCreateTeamMutation,
+  useUpdateTeamMutation,
+  useDeleteTeamMutation,
+} = teamsApi;

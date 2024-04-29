@@ -14,9 +14,9 @@ import { modals } from '@mantine/modals';
 import { IconPlus, IconSearch } from '@tabler/icons-react';
 
 import { CreateProject } from '@/components';
-import { useGetProjectsQuery, useCreateProjectMutation } from '@/app-redux';
-
 import { ProjectCard } from '@/components';
+
+import { useGetProjectsQuery, useCreateProjectMutation } from '@/app-redux';
 
 export const HomePage: FC<{}> = () => {
   const navigate = useNavigate();

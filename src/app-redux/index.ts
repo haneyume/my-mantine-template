@@ -11,6 +11,8 @@ export { useAppSelector, useAppDispatch } from './hooks';
 //
 // --------------------------------------------------
 
+export * from './services/usersApi';
+export * from './services/teamsApi';
 export * from './services/projectsApi';
 
 // --------------------------------------------------

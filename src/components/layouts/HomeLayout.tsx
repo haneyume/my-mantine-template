@@ -1,13 +1,22 @@
 import { FC, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { AppShell, NavLink, ScrollArea } from '@mantine/core';
+import {
+  AppShell,
+  NavLink,
+  ScrollArea,
+  Stack,
+  Text,
+  Button,
+  Card,
+} from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
 
 import { IconHome, IconUser, IconSettings } from '@tabler/icons-react';
 
 import { AppTitle } from './AppTitle';
 import { AppFooter } from './AppFooter';
+import { TeamList } from './TeamList';
 
 export interface AppLayoutProps {
   children: ReactNode;
@@ -70,9 +79,22 @@ export const HomeLayout: FC<AppLayoutProps> = ({
           />
         </AppShell.Section>
 
-        <AppShell.Section grow>123s</AppShell.Section>
+        <AppShell.Section
+          p="md"
+          grow
+          className="border-0 border-t border-b border-solid border-neutral-700"
+        >
+          <TeamList onNavigate={onNavigate} />
+        </AppShell.Section>
 
-        <AppShell.Section>123s</AppShell.Section>
+        <AppShell.Section p="sm">
+          <Card p="xs">
+            <Stack>
+              <Text>Get full features</Text>
+              <Button>See plans</Button>
+            </Stack>
+          </Card>
+        </AppShell.Section>
       </AppShell.Navbar>
 
       <AppShell.Main ref={ref}>
