@@ -25,7 +25,7 @@ export const ProjectSettingsPage: FC = () => {
   }
 
   return (
-    <Stack p="md">
+    <Stack className="w-1/2" p="md">
       <EditProject
         defaultData={project}
         onSubmitForm={({ id, name, description }) => {

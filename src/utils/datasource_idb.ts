@@ -65,11 +65,4 @@ async function deleteProject(id: string) {
   await db.delete('projects', id);
 }
 
-export {
-  init,
-  getProjects,
-  getProject,
-  createProject,
-  updateProject,
-  deleteProject,
-};
+export { getProjects, getProject, createProject, updateProject, deleteProject };
