@@ -1,7 +1,9 @@
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { Stack } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 
 import { EditProject, ProjectDangerZoneSection } from '@/components';
 
@@ -12,6 +14,8 @@ import {
 } from '@/app-redux';
 
 export const ProjectSettingsPage: FC = () => {
+  const { t: tr } = useTranslation();
+
   const navigate = useNavigate();
   const { projectId = '' } = useParams();
 
@@ -34,14 +38,42 @@ export const ProjectSettingsPage: FC = () => {
             id,
             name,
             description,
-          });
+          })
+            .unwrap()
+            .then(() => {
+              notifications.show({
+                title: tr('Success'),
+                message: tr('Project updated successfully'),
+              });
+            })
+            .catch((error) => {
+              notifications.show({
+                title: tr('Error'),
+                message: error.message,
+                color: 'red',
+              });
+            });
         }}
       />
 
       <ProjectDangerZoneSection
         projectId={projectId}
         onSubmitForm={({ projectId }) => {
-          deleteProject({ id: projectId });
+          deleteProject({ id: projectId })
+            .unwrap()
+            .then(() => {
+              notifications.show({
+                title: tr('Success'),
+                message: tr('Project deleted successfully'),
+              });
+            })
+            .catch((error) => {
+              notifications.show({
+                title: tr('Error'),
+                message: error.message,
+                color: 'red',
+              });
+            });
 
           navigate('/');
         }}

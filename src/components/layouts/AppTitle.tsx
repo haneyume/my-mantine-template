@@ -5,21 +5,17 @@ import { AppShell, Burger, Title, UnstyledButton } from '@mantine/core';
 import { IconBrandReact } from '@tabler/icons-react';
 
 import { ThemeButton } from '../buttons/ThemeButton';
-import { UserButton } from '../buttons/UserButton';
+import { UserButton } from '../buttons/UserButton2';
 
 export interface AppTitleProps {
   isSidebarOpened: boolean;
   setIsSidebarOpened: (value: boolean) => void;
-  userNickname: string;
-  userEmail: string;
   onNavigate: (path: string) => void;
 }
 
 export const AppTitle: FC<AppTitleProps> = ({
   isSidebarOpened,
   setIsSidebarOpened,
-  userNickname,
-  userEmail,
   onNavigate,
 }) => {
   return (
@@ -43,11 +39,7 @@ export const AppTitle: FC<AppTitleProps> = ({
 
       <ThemeButton />
 
-      <UserButton
-        name={userNickname}
-        email={userEmail}
-        onClick={() => onNavigate('/profile')}
-      />
+      <UserButton onClick={() => onNavigate('/profile')} />
     </AppShell.Header>
   );
 };

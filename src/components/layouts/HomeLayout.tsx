@@ -15,8 +15,6 @@ export interface AppLayoutProps {
   children: ReactNode;
   isSidebarOpened: boolean;
   setIsSidebarOpened: (value: boolean) => void;
-  userNickname: string;
-  userEmail: string;
   onNavigate: (path: string) => void;
 }
 
@@ -24,8 +22,6 @@ export const HomeLayout: FC<AppLayoutProps> = ({
   children,
   isSidebarOpened,
   setIsSidebarOpened,
-  userNickname,
-  userEmail,
   onNavigate,
 }) => {
   // const { t: tr } = useTranslation();
@@ -45,8 +41,6 @@ export const HomeLayout: FC<AppLayoutProps> = ({
       <AppTitle
         isSidebarOpened={isSidebarOpened}
         setIsSidebarOpened={setIsSidebarOpened}
-        userNickname={userNickname}
-        userEmail={userEmail}
         onNavigate={onNavigate}
       />
 

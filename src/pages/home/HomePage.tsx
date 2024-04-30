@@ -1,4 +1,5 @@
 import { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -10,6 +11,7 @@ import {
   ActionIcon,
 } from '@mantine/core';
 import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
 
 import { IconPlus, IconSearch } from '@tabler/icons-react';
 
@@ -19,6 +21,8 @@ import { ProjectCard } from '@/components';
 import { useGetProjectsQuery, useCreateProjectMutation } from '@/app-redux';
 
 export const HomePage: FC<{}> = () => {
+  const { t: tr } = useTranslation();
+
   const navigate = useNavigate();
 
   const [search, setSearch] = useState<string>('');
@@ -39,7 +43,21 @@ export const HomePage: FC<{}> = () => {
       updated_at: new Date().toISOString(),
 
       data: {},
-    });
+    })
+      .unwrap()
+      .then(() => {
+        notifications.show({
+          title: tr('Success'),
+          message: tr('Project created successfully'),
+        });
+      })
+      .catch((error) => {
+        notifications.show({
+          title: tr('Error'),
+          message: error.message,
+          color: 'red',
+        });
+      });
   };
 
   return (

@@ -16,6 +16,14 @@ import {
   ProjectSettingsPage,
 } from '@/pages';
 
+import {
+  useAppDispatch,
+  useAppSelector,
+  selectIsSidebarOpened,
+  selectIsSecondarySidebarOpened,
+  setIsSidebarOpened,
+} from '@/app-redux';
+
 export const AuthedAppRoutes: FC = () => {
   const routes = useRoutes([
     {
@@ -72,12 +80,15 @@ export const AuthedAppRoutes: FC = () => {
 const HomeLayoutWrapper: FC = () => {
   const navigate = useNavigate();
 
+  const dispatch = useAppDispatch();
+  const isSidebarOpened = useAppSelector(selectIsSidebarOpened);
+
   return (
     <HomeLayout
-      isSidebarOpened={false}
-      setIsSidebarOpened={() => {}}
-      userNickname=""
-      userEmail=""
+      isSidebarOpened={isSidebarOpened || false}
+      setIsSidebarOpened={(value) => {
+        dispatch(setIsSidebarOpened(value));
+      }}
       onNavigate={(path) => navigate(path)}
     >
       <Outlet />
@@ -89,13 +100,16 @@ const TeamLayoutWrapper: FC = () => {
   const navigate = useNavigate();
   const { teamId = '' } = useParams();
 
+  const dispatch = useAppDispatch();
+  const isSidebarOpened = useAppSelector(selectIsSidebarOpened);
+
   return (
     <TeamLayout
       teamId={teamId}
-      isSidebarOpened={false}
-      setIsSidebarOpened={() => {}}
-      userNickname=""
-      userEmail=""
+      isSidebarOpened={isSidebarOpened || false}
+      setIsSidebarOpened={(value) => {
+        dispatch(setIsSidebarOpened(value));
+      }}
       onNavigate={(path) => navigate(path)}
     >
       <Outlet />
@@ -107,14 +121,20 @@ const ProjectLayoutWrapper: FC = () => {
   const navigate = useNavigate();
   const { projectId = '' } = useParams();
 
+  const dispatch = useAppDispatch();
+  const isSidebarOpened = useAppSelector(selectIsSidebarOpened);
+  const isSecondarySidebarOpened = useAppSelector(
+    selectIsSecondarySidebarOpened,
+  );
+
   return (
     <ProjectLayout
       projectId={projectId}
-      isSidebarOpened={false}
-      setIsSidebarOpened={() => {}}
-      isSecondarySidebarOpened={false}
-      userNickname=""
-      userEmail=""
+      isSidebarOpened={isSidebarOpened || false}
+      setIsSidebarOpened={(value) => {
+        dispatch(setIsSidebarOpened(value));
+      }}
+      isSecondarySidebarOpened={isSecondarySidebarOpened || false}
       onNavigate={(path) => navigate(path)}
     >
       <Outlet />

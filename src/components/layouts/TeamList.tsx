@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { NavLink, ActionIcon, Group, Stack, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
 
 import { IconPlus } from '@tabler/icons-react';
 
@@ -28,7 +29,21 @@ export const TeamList: FC<TeamListProps> = ({ onNavigate }) => {
       description: description || '',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-    });
+    })
+      .unwrap()
+      .then(() => {
+        notifications.show({
+          title: tr('Success'),
+          message: tr('Team created successfully'),
+        });
+      })
+      .catch((error) => {
+        notifications.show({
+          title: tr('Error'),
+          message: error.message,
+          color: 'red',
+        });
+      });
   };
 
   return (

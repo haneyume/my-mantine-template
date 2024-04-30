@@ -15,8 +15,6 @@ export interface AppLayoutProps {
   isSidebarOpened: boolean;
   setIsSidebarOpened: (value: boolean) => void;
   isSecondarySidebarOpened: boolean;
-  userNickname: string;
-  userEmail: string;
   onNavigate: (path: string) => void;
 }
 
@@ -26,8 +24,6 @@ export const ProjectLayout: FC<AppLayoutProps> = ({
   isSidebarOpened,
   setIsSidebarOpened,
   isSecondarySidebarOpened,
-  userNickname,
-  userEmail,
   onNavigate,
 }) => {
   // const { t: tr } = useTranslation();
@@ -55,8 +51,6 @@ export const ProjectLayout: FC<AppLayoutProps> = ({
       <AppTitle
         isSidebarOpened={isSidebarOpened}
         setIsSidebarOpened={setIsSidebarOpened}
-        userNickname={userNickname}
-        userEmail={userEmail}
         onNavigate={onNavigate}
       />
 
