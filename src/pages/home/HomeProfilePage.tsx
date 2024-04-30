@@ -33,17 +33,14 @@ export const HomeProfilePage: FC = () => {
         defaultData={{
           email: user.email,
           nickname: user.nickname,
-          introduction: '',
+          introduction: user.introduction,
         }}
-        onSubmitForm={({
-          email,
-          nickname,
-          // introduction
-        }) => {
+        onSubmitForm={({ email, nickname, introduction }) => {
           updateUser({
             ...user,
             email,
             nickname,
+            introduction,
           })
             .unwrap()
             .then(() => {

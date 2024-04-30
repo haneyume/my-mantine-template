@@ -1,8 +1,9 @@
 type User = {
   id: string;
+  avatar: string;
   email: string;
   nickname: string;
-  avatar: string;
+  introduction: string;
 };
 
 type Team = {
@@ -23,7 +24,7 @@ type Project = {
   created_at: string;
   updated_at: string;
 
-  data: Record<string, any>;
+  data: string;
 };
 
 export type { User, Team, Project };
