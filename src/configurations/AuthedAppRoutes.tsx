@@ -16,7 +16,7 @@ import {
   ProjectSettingsPage,
 } from '@/pages';
 
-export const AuthedAppContent: FC = () => {
+export const AuthedAppRoutes: FC = () => {
   const routes = useRoutes([
     {
       path: '/',

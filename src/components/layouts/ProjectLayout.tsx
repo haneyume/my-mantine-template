@@ -1,13 +1,13 @@
 import { FC, ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 
-import { AppShell, ActionIcon, Tooltip } from '@mantine/core';
+import { AppShell } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
-
-import { IconLayoutDashboard, IconSettings } from '@tabler/icons-react';
 
 import { AppTitle } from './AppTitle';
 import { AppFooter } from './AppFooter';
+
+import { ProjectLayoutMenus } from '@/configurations/menus/ProjectLayoutMenus';
 
 export interface AppLayoutProps {
   projectId: string;
@@ -30,7 +30,7 @@ export const ProjectLayout: FC<AppLayoutProps> = ({
   userEmail,
   onNavigate,
 }) => {
-  const { t: tr } = useTranslation();
+  // const { t: tr } = useTranslation();
 
   const { ref, width, height } = useElementSize();
 
@@ -62,20 +62,7 @@ export const ProjectLayout: FC<AppLayoutProps> = ({
 
       <AppShell.Navbar>
         <AppShell.Section>
-          <SidebarButton
-            icon={<IconLayoutDashboard size={18} />}
-            label={tr('Overview')}
-            onClick={() => onNavigate(`/project/${projectId}`)}
-            active={window.location.pathname === `/project/${projectId}`}
-          />
-          <SidebarButton
-            icon={<IconSettings size={18} />}
-            label={tr('Settings')}
-            onClick={() => onNavigate(`/project/${projectId}/settings`)}
-            active={
-              window.location.pathname === `/project/${projectId}/settings`
-            }
-          />
+          <ProjectLayoutMenus projectId={projectId} onNavigate={onNavigate} />
         </AppShell.Section>
       </AppShell.Navbar>
 
@@ -89,25 +76,5 @@ export const ProjectLayout: FC<AppLayoutProps> = ({
 
       <AppFooter />
     </AppShell>
-  );
-};
-
-const SidebarButton: FC<{
-  icon: ReactNode;
-  label: string;
-  onClick: () => void;
-  active?: boolean;
-}> = ({ icon, label, onClick }) => {
-  return (
-    <Tooltip label={label}>
-      <ActionIcon
-        className="w-full h-[40px]"
-        variant="subtle"
-        color="gray"
-        onClick={onClick}
-      >
-        {icon}
-      </ActionIcon>
-    </Tooltip>
   );
 };

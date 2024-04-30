@@ -1,13 +1,13 @@
 import { FC, ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 
-import { AppShell, NavLink, ScrollArea } from '@mantine/core';
+import { AppShell, ScrollArea } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
-
-import { IconLayoutDashboard, IconSettings } from '@tabler/icons-react';
 
 import { AppTitle } from './AppTitle';
 import { AppFooter } from './AppFooter';
+
+import { TeamLayoutMenus } from '@/configurations/menus/TeamLayoutMenus';
 
 export interface AppLayoutProps {
   teamId: string;
@@ -28,7 +28,7 @@ export const TeamLayout: FC<AppLayoutProps> = ({
   userEmail,
   onNavigate,
 }) => {
-  const { t: tr } = useTranslation();
+  // const { t: tr } = useTranslation();
 
   const { ref, height } = useElementSize();
 
@@ -52,18 +52,7 @@ export const TeamLayout: FC<AppLayoutProps> = ({
 
       <AppShell.Navbar>
         <AppShell.Section>
-          <NavLink
-            label={tr('Overview')}
-            leftSection={<IconLayoutDashboard size={18} />}
-            onClick={() => onNavigate(`/team/${teamId}`)}
-            active={window.location.pathname === `/team/${teamId}`}
-          />
-          <NavLink
-            label={tr('Settings')}
-            leftSection={<IconSettings size={18} />}
-            onClick={() => onNavigate(`/team/${teamId}/settings`)}
-            active={window.location.pathname === `/team/${teamId}/settings`}
-          />
+          <TeamLayoutMenus teamId={teamId} onNavigate={onNavigate} />
         </AppShell.Section>
       </AppShell.Navbar>
 

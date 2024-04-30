@@ -7,7 +7,7 @@ import { MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 
-import { theme } from '@/theme';
+import { theme } from '@/configurations/theme';
 
 import '@mantine/core/styles.css';
 import '@mantine/code-highlight/styles.css';
@@ -20,7 +20,7 @@ import '@mantine/tiptap/styles.css';
 import '@/index.css';
 
 import { AppReduxProvider, store } from '@/app-redux';
-import { AuthedAppContent } from '@/AuthedAppContent';
+import { AuthedAppRoutes } from '@/configurations/AuthedAppRoutes';
 
 export const App: FC<{}> = () => {
   return (
@@ -52,7 +52,7 @@ const AppContent: FC = () => {
         <Notifications position="top-right" />
 
         <BrowserRouter>
-          <AuthedAppContent />
+          <AuthedAppRoutes />
         </BrowserRouter>
       </ModalsProvider>
     </MantineProvider>

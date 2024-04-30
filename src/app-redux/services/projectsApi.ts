@@ -6,7 +6,7 @@ import {
   createProject,
   updateProject,
   deleteProject,
-} from '@/utils/datasource';
+} from '@/datasource';
 import type { Project } from '@/types';
 
 export const projectsApi = createApi({

@@ -6,7 +6,7 @@ import {
   createUser,
   updateUser,
   deleteUser,
-} from '@/utils/datasource';
+} from '@/datasource';
 import type { User } from '@/types';
 
 export const usersApi = createApi({

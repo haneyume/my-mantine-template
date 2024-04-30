@@ -6,7 +6,7 @@ import {
   createTeam,
   updateTeam,
   deleteTeam,
-} from '@/utils/datasource';
+} from '@/datasource';
 import type { Team } from '@/types';
 
 export const teamsApi = createApi({

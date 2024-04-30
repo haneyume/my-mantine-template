@@ -6,7 +6,7 @@ import { MantineProvider, Paper } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 
-import { theme } from '@/theme';
+import { theme } from '@/configurations/theme';
 
 import '@mantine/core/styles.css';
 import '@mantine/code-highlight/styles.css';

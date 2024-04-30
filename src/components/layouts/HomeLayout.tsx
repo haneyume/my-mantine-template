@@ -1,22 +1,14 @@
 import { FC, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-  AppShell,
-  NavLink,
-  ScrollArea,
-  Stack,
-  Text,
-  Button,
-  Card,
-} from '@mantine/core';
+import { AppShell, ScrollArea, Stack, Text, Button, Card } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
-
-import { IconHome, IconUser, IconSettings } from '@tabler/icons-react';
 
 import { AppTitle } from './AppTitle';
 import { AppFooter } from './AppFooter';
 import { TeamList } from './TeamList';
+
+import { HomeLayoutMenus } from '@/configurations/menus/HomeLayoutMenus';
 
 export interface AppLayoutProps {
   children: ReactNode;
@@ -59,30 +51,13 @@ export const HomeLayout: FC<AppLayoutProps> = ({
 
       <AppShell.Navbar>
         <AppShell.Section grow>
-          <NavLink
-            label={tr('Home')}
-            leftSection={<IconHome size={18} />}
-            onClick={() => onNavigate('/')}
-            active={window.location.pathname === '/'}
-          />
-          <NavLink
-            label={tr('Profile')}
-            leftSection={<IconUser size={18} />}
-            onClick={() => onNavigate('/profile')}
-            active={window.location.pathname === '/profile'}
-          />
-          <NavLink
-            label={tr('Settings')}
-            leftSection={<IconSettings size={18} />}
-            onClick={() => onNavigate('/settings')}
-            active={window.location.pathname === '/settings'}
-          />
+          <HomeLayoutMenus onNavigate={onNavigate} />
         </AppShell.Section>
 
         <AppShell.Section
+          className="border-0 border-t border-b border-solid border-neutral-700"
           p="md"
           grow
-          className="border-0 border-t border-b border-solid border-neutral-700"
         >
           <TeamList onNavigate={onNavigate} />
         </AppShell.Section>
@@ -91,7 +66,7 @@ export const HomeLayout: FC<AppLayoutProps> = ({
           <Card p="xs">
             <Stack>
               <Text>Get full features</Text>
-              <Button>See plans</Button>
+              <Button>{tr('See plans')}</Button>
             </Stack>
           </Card>
         </AppShell.Section>
