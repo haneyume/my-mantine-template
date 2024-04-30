@@ -16,6 +16,7 @@ export interface GeneralState {
   currentUserAccessToken?: string;
   currentUserName?: string;
   currentUserEmail?: string;
+  statusMessage: string;
 }
 
 const initialState: GeneralState = {
@@ -27,6 +28,7 @@ const initialState: GeneralState = {
   currentUserAccessToken: undefined,
   currentUserName: undefined,
   currentUserEmail: undefined,
+  statusMessage: 'Ready',
 };
 
 // --------------------------------------------------
@@ -66,6 +68,9 @@ export const generalSlice = createSlice({
     setCurrentUserEmail: (state, action: PayloadAction<string | undefined>) => {
       state.currentUserEmail = action.payload;
     },
+    setStatusMessage: (state, action: PayloadAction<string>) => {
+      state.statusMessage = action.payload;
+    },
   },
 });
 
@@ -84,6 +89,7 @@ export const {
   setCurrentUserAccessToken,
   setCurrentUserName,
   setCurrentUserEmail,
+  setStatusMessage,
 } = generalSlice.actions;
 
 // --------------------------------------------------
@@ -114,6 +120,9 @@ export const selectCurrentUserName = (state: RootState) =>
 
 export const selectCurrentUserEmail = (state: RootState) =>
   state.general.currentUserEmail;
+
+export const selectStatusMessage = (state: RootState) =>
+  state.general.statusMessage;
 
 // --------------------------------------------------
 //

@@ -3,11 +3,9 @@ import { BrowserRouter } from 'react-router-dom';
 
 import '@/utils/i18n';
 
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, LoadingOverlay } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
-
-import { theme } from '@/configurations/theme';
 
 import '@mantine/core/styles.css';
 import '@mantine/code-highlight/styles.css';
@@ -16,11 +14,23 @@ import '@mantine/dropzone/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/spotlight/styles.css';
 import '@mantine/tiptap/styles.css';
-
 import '@/index.css';
 
-import { AppReduxProvider, store } from '@/app-redux';
+import {
+  AppReduxProvider,
+  store,
+  //
+  useAppSelector,
+  //
+  selectInitialized,
+  selectCurrentUserId,
+  selectIsLoading,
+} from '@/app-redux';
+
+import { theme } from '@/configurations/theme';
 import { AuthedAppRoutes } from '@/configurations/AuthedAppRoutes';
+
+import { InitPage, LoginPage } from '@/pages';
 
 export const App: FC<{}> = () => {
   return (
@@ -31,6 +41,18 @@ export const App: FC<{}> = () => {
 };
 
 const AppContent: FC = () => {
+  const initialized = useAppSelector(selectInitialized);
+  const isLoading = useAppSelector(selectIsLoading);
+  const currentUserId = useAppSelector(selectCurrentUserId);
+
+  if (!initialized) {
+    return <InitPage />;
+  }
+
+  if (!currentUserId) {
+    return <LoginPage />;
+  }
+
   return (
     <MantineProvider
       defaultColorScheme="dark"
@@ -52,6 +74,7 @@ const AppContent: FC = () => {
         <Notifications position="top-right" />
 
         <BrowserRouter>
+          <LoadingOverlay visible={isLoading} />
           <AuthedAppRoutes />
         </BrowserRouter>
       </ModalsProvider>

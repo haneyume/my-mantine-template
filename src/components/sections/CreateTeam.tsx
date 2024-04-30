@@ -1,11 +1,12 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Stack, Button, TextInput } from '@mantine/core';
+import { Stack, Button, TextInput, Textarea } from '@mantine/core';
 import { useForm, isNotEmpty } from '@mantine/form';
 
 export type CreateTeamFormData = {
   name: string;
+  description: string;
 };
 
 export interface CreateTeamProps {
@@ -18,6 +19,7 @@ export const CreateTeam: FC<CreateTeamProps> = ({ onSubmitForm }) => {
   const form = useForm<CreateTeamFormData>({
     initialValues: {
       name: '',
+      description: '',
     },
     validate: {
       name: isNotEmpty(tr('Team name is required')),
@@ -38,6 +40,12 @@ export const CreateTeam: FC<CreateTeamProps> = ({ onSubmitForm }) => {
           placeholder={tr('Please input team name')}
           required
           {...form.getInputProps('name')}
+        />
+
+        <Textarea
+          label={tr('Project description')}
+          placeholder={tr('Project description')}
+          {...form.getInputProps('description')}
         />
 
         <Button type="submit" className="w-full">

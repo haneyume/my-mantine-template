@@ -34,7 +34,7 @@ export const theme = createTheme({
       defaultProps: {
         classNames: {
           footer:
-            'border-t border-neutral-700 bg-black flex justify-start items-center px-10',
+            'border-t border-neutral-700 bg-black flex justify-start items-center px-10 gap-2',
         },
       },
     }),

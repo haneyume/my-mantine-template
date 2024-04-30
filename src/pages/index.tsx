@@ -1,3 +1,7 @@
+export { InitPage } from './InitPage';
+export { LoginPage } from './LoginPage';
+export { NotFoundPage } from './NotFoundPage';
+
 export { HomePage } from './home/HomePage';
 export { HomeProfilePage } from './home/HomeProfilePage';
 export { HomeSettingsPage } from './home/HomeSettingsPage';

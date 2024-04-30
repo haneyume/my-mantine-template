@@ -39,7 +39,8 @@ i18n
   .init({
     // lng: 'en',
     fallbackLng: 'en',
-    debug: import.meta.env.DEV,
+    // debug: import.meta.env.DEV,
+    debug: false,
     resources,
     interpolation: {
       escapeValue: false,

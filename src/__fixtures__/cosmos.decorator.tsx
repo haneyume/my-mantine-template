@@ -6,8 +6,6 @@ import { MantineProvider, Paper } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 
-import { theme } from '@/configurations/theme';
-
 import '@mantine/core/styles.css';
 import '@mantine/code-highlight/styles.css';
 import '@mantine/dates/styles.css';
@@ -15,8 +13,9 @@ import '@mantine/dropzone/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/spotlight/styles.css';
 import '@mantine/tiptap/styles.css';
-
 import '@/index.css';
+
+import { theme } from '@/configurations/theme';
 
 export default ({ children }: { children: ReactNode }) => {
   return (

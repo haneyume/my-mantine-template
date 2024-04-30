@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ActionIcon, Group, Stack, Text } from '@mantine/core';
+import { NavLink, ActionIcon, Group, Stack, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 
 import { IconPlus } from '@tabler/icons-react';
@@ -45,7 +45,7 @@ export const TeamList: FC<TeamListProps> = ({ onNavigate }) => {
                 children: (
                   <CreateTeam
                     onSubmitForm={(values) => {
-                      onCreateTeam(values.name);
+                      onCreateTeam(values.name, values.description);
 
                       modals.closeAll();
                     }}
@@ -60,9 +60,12 @@ export const TeamList: FC<TeamListProps> = ({ onNavigate }) => {
       <Stack>
         {teams?.map((team) => {
           return (
-            <Text key={team.id} onClick={() => onNavigate(`/team/${team.id}`)}>
-              {team.name}
-            </Text>
+            <NavLink
+              className="rounded-lg"
+              key={team.id}
+              label={team.name}
+              onClick={() => onNavigate(`/team/${team.id}`)}
+            />
           );
         })}
       </Stack>

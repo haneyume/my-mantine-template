@@ -1,14 +1,15 @@
 import { FC, ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 
-import { AppShell, ScrollArea, Stack, Text, Button, Card } from '@mantine/core';
+import { AppShell, ScrollArea } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
 
 import { AppTitle } from './AppTitle';
 import { AppFooter } from './AppFooter';
-import { TeamList } from './TeamList';
 
 import { HomeLayoutMenus } from '@/configurations/menus/HomeLayoutMenus';
+import { TeamList } from './TeamList';
+import { FullFeatureButton } from './FullFeatureButton';
 
 export interface AppLayoutProps {
   children: ReactNode;
@@ -27,7 +28,7 @@ export const HomeLayout: FC<AppLayoutProps> = ({
   userEmail,
   onNavigate,
 }) => {
-  const { t: tr } = useTranslation();
+  // const { t: tr } = useTranslation();
 
   const { ref, height } = useElementSize();
 
@@ -56,19 +57,14 @@ export const HomeLayout: FC<AppLayoutProps> = ({
 
         <AppShell.Section
           className="border-0 border-t border-b border-solid border-neutral-700"
-          p="md"
+          p="sm"
           grow
         >
           <TeamList onNavigate={onNavigate} />
         </AppShell.Section>
 
         <AppShell.Section p="sm">
-          <Card p="xs">
-            <Stack>
-              <Text>Get full features</Text>
-              <Button>{tr('See plans')}</Button>
-            </Stack>
-          </Card>
+          <FullFeatureButton />
         </AppShell.Section>
       </AppShell.Navbar>
 
