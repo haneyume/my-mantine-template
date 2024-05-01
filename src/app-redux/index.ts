@@ -13,6 +13,7 @@ export { useAppSelector, useAppDispatch } from './hooks';
 
 export * from './services/usersApi';
 export * from './services/teamsApi';
+export * from './services/teamMembersApi';
 export * from './services/projectsApi';
 
 // --------------------------------------------------

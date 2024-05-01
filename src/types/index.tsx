@@ -14,6 +14,18 @@ type Team = {
   updated_at: string;
 };
 
+type TeamMember = {
+  id: string;
+  team_id: string;
+  user_id: string;
+  role: string;
+  created_at: string;
+  updated_at: string;
+
+  // user
+  user: User;
+};
+
 type Project = {
   id: string;
   team_id: string;
@@ -27,4 +39,4 @@ type Project = {
   data: string;
 };
 
-export type { User, Team, Project };
+export type { User, Team, TeamMember, Project };

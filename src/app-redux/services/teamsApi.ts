@@ -50,12 +50,12 @@ export const teamsApi = createApi({
       },
       invalidatesTags: ['teams'],
     }),
-    updateTeam: builder.mutation<void, Team>({
+    updateTeam: builder.mutation<Team, Team>({
       queryFn: async (arg) => {
         try {
-          await updateTeam(arg);
+          const res = await updateTeam(arg);
 
-          return { data: undefined };
+          return { data: res };
         } catch (error: any) {
           return { error };
         }

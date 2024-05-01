@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { usersApi } from './services/usersApi';
 import { teamsApi } from './services/teamsApi';
+import { teamMembersApi } from './services/teamMembersApi';
 import { projectsApi } from './services/projectsApi';
 
 import generalReducer from './slices/generalSlice';
@@ -14,6 +15,7 @@ export const store = configureStore({
 
     [usersApi.reducerPath]: usersApi.reducer,
     [teamsApi.reducerPath]: teamsApi.reducer,
+    [teamMembersApi.reducerPath]: teamMembersApi.reducer,
     [projectsApi.reducerPath]: projectsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -22,6 +24,7 @@ export const store = configureStore({
     }).concat([
       usersApi.middleware,
       teamsApi.middleware,
+      teamMembersApi.middleware,
       projectsApi.middleware,
     ]),
   devTools: import.meta.env.DEV,

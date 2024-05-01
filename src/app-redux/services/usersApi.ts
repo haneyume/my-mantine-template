@@ -50,12 +50,12 @@ export const usersApi = createApi({
       },
       invalidatesTags: ['users'],
     }),
-    updateUser: builder.mutation<void, User>({
+    updateUser: builder.mutation<User, User>({
       queryFn: async (arg) => {
         try {
-          await updateUser(arg);
+          const res = await updateUser(arg);
 
-          return { data: undefined };
+          return { data: res };
         } catch (error: any) {
           return { error };
         }

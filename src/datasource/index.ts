@@ -15,6 +15,12 @@ export {
   updateTeam,
   deleteTeam,
   //
+  getTeamMembers,
+  getTeamMember,
+  createTeamMember,
+  updateTeamMember,
+  deleteTeamMember,
+  //
   getProjects,
   getProject,
   createProject,
