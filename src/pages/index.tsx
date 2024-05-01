@@ -7,6 +7,7 @@ export { HomeProfilePage } from './home/HomeProfilePage';
 export { HomeSettingsPage } from './home/HomeSettingsPage';
 
 export { TeamOverviewPage } from './team/TeamOverviewPage';
+export { TeamMembersPage } from './team/TeamMembersPage';
 export { TeamSettingsPage } from './team/TeamSettingsPage';
 
 export { ProjectOverviewPage } from './project/ProjectOverviewPage';

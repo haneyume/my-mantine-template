@@ -14,6 +14,7 @@ import '@mantine/dropzone/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/spotlight/styles.css';
 import '@mantine/tiptap/styles.css';
+import 'mantine-datatable/styles.css';
 import '@/index.css';
 
 import {

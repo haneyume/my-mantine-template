@@ -10,10 +10,13 @@ import {
   HomeSettingsPage,
   //
   TeamOverviewPage,
+  TeamMembersPage,
   TeamSettingsPage,
   //
   ProjectOverviewPage,
   ProjectSettingsPage,
+  //
+  NotFoundPage,
 } from '@/pages';
 
 import {
@@ -42,6 +45,10 @@ export const AuthedAppRoutes: FC = () => {
           path: 'settings',
           element: <HomeSettingsPage />,
         },
+        {
+          path: '*',
+          element: <NotFoundPage />,
+        },
       ],
     },
     {
@@ -53,8 +60,16 @@ export const AuthedAppRoutes: FC = () => {
           element: <TeamOverviewPage />,
         },
         {
+          path: 'members',
+          element: <TeamMembersPage />,
+        },
+        {
           path: 'settings',
           element: <TeamSettingsPage />,
+        },
+        {
+          path: '*',
+          element: <NotFoundPage />,
         },
       ],
     },
@@ -70,7 +85,15 @@ export const AuthedAppRoutes: FC = () => {
           path: 'settings',
           element: <ProjectSettingsPage />,
         },
+        {
+          path: '*',
+          element: <NotFoundPage />,
+        },
       ],
+    },
+    {
+      path: '*',
+      element: <NotFoundPage />,
     },
   ]);
 

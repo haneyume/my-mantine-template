@@ -3,7 +3,11 @@ import { useTranslation } from 'react-i18next';
 
 import { NavLink } from '@mantine/core';
 
-import { IconLayoutDashboard, IconSettings } from '@tabler/icons-react';
+import {
+  IconLayoutDashboard,
+  IconUsers,
+  IconSettings,
+} from '@tabler/icons-react';
 
 export const TeamLayoutMenus: FC<{
   teamId: string;
@@ -18,6 +22,12 @@ export const TeamLayoutMenus: FC<{
         leftSection={<IconLayoutDashboard size={18} />}
         onClick={() => onNavigate(`/team/${teamId}`)}
         active={window.location.pathname === `/team/${teamId}`}
+      />
+      <NavLink
+        label={tr('Members')}
+        leftSection={<IconUsers size={18} />}
+        onClick={() => onNavigate(`/team/${teamId}/members`)}
+        active={window.location.pathname === `/team/${teamId}/members`}
       />
       <NavLink
         label={tr('Settings')}

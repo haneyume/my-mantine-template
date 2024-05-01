@@ -18,9 +18,37 @@ import { IconPlus, IconSearch } from '@tabler/icons-react';
 import { CreateProject } from '@/components';
 import { ProjectCard } from '@/components';
 
-import { useGetProjectsQuery, useCreateProjectMutation } from '@/app-redux';
+import {
+  useGetTeamsQuery,
+  useGetProjectsQuery,
+  useCreateProjectMutation,
+} from '@/app-redux';
 
 export const HomePage: FC<{}> = () => {
+  const { data: teams } = useGetTeamsQuery();
+
+  if (!teams) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <Stack>
+      {teams.map((team) => {
+        return (
+          <TeamSection key={team.id} teamId={team.id} teamName={team.name} />
+        );
+      })}
+    </Stack>
+  );
+};
+
+const TeamSection = ({
+  teamId,
+  teamName,
+}: {
+  teamId: string;
+  teamName: string;
+}) => {
   const { t: tr } = useTranslation();
 
   const navigate = useNavigate();
@@ -34,7 +62,7 @@ export const HomePage: FC<{}> = () => {
   const onCreateProject = (name: string, description?: string) => {
     createProject({
       id: crypto.randomUUID(),
-      team_id: crypto.randomUUID(),
+      team_id: teamId,
       is_draft: true,
       is_public: false,
       name: name,
@@ -42,7 +70,7 @@ export const HomePage: FC<{}> = () => {
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
 
-      data: {},
+      data: '',
     })
       .unwrap()
       .then(() => {
@@ -60,10 +88,14 @@ export const HomePage: FC<{}> = () => {
       });
   };
 
+  if (!projects) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Stack>
       <Group justify="space-between">
-        <Title order={3}>Projects</Title>
+        <Title order={3}>{teamName}</Title>
 
         <ActionIcon
           onClick={() => {
@@ -97,6 +129,9 @@ export const HomePage: FC<{}> = () => {
       <SimpleGrid cols={3}>
         {projects
           ?.filter((project) => {
+            return project.team_id === teamId;
+          })
+          .filter((project) => {
             return project.name.toLowerCase().includes(search.toLowerCase());
           })
           .map((project) => {
