@@ -18,7 +18,7 @@ type TeamMember = {
   id: string;
   team_id: string;
   user_id: string;
-  role: string;
+  role: 'owner' | 'manager' | 'member';
   created_at: string;
   updated_at: string;
 

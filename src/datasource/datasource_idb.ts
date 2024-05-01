@@ -31,6 +31,8 @@ import type {
   DeleteProjectFn,
 } from './datasource_types';
 
+///////////////////////////////////////////////////////////////
+
 interface MyDB extends DBSchema {
   auth: {
     value: string;
@@ -84,6 +86,43 @@ async function initDB() {
       const projectStore = db.createObjectStore('projects');
       projectStore.createIndex('by_team_id', 'team_id');
       projectStore.createIndex('by_created_at', 'created_at');
+
+      // fake data
+      {
+        const defaultUserId = crypto.randomUUID();
+        const defaultTeamId = crypto.randomUUID();
+        const defaultTeamMemberId = crypto.randomUUID();
+
+        const defaultUser: User = {
+          id: defaultUserId,
+          avatar: '',
+          email: 'test@mail.com',
+          nickname: 'Test User',
+          introduction: '',
+        };
+
+        const defaultTeam: Team = {
+          id: defaultTeamId,
+          name: 'Default Team',
+          description: '',
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        };
+
+        const defaultTeamMember: TeamMember = {
+          id: defaultTeamMemberId,
+          team_id: defaultTeamId,
+          user_id: defaultUserId,
+          role: 'owner',
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+          user: defaultUser,
+        };
+
+        userStore.add(defaultUser, defaultUserId);
+        teamStore.add(defaultTeam, defaultTeamId);
+        teamMemberStore.add(defaultTeamMember, defaultTeamMemberId);
+      }
     },
   });
 }
@@ -95,14 +134,23 @@ const login: LoginFn = async (email: string, password: string) => {
     db = await initDB();
   }
 
-  // fake auth
+  // check email and password
   if (email !== 'test@mail.com' || password !== '123456') {
     return undefined;
   }
 
-  await db.put('auth', email, email);
+  // check if user exists
+  const users = await db.getAll('users');
+  users.filter((user) => user.email === email);
+  if (users.length === 0 || users.length > 1) {
+    return undefined;
+  }
 
-  return email;
+  const userId = users[0].id;
+
+  await db.put('auth', userId, userId);
+
+  return userId;
 };
 
 const logout: LogoutFn = async () => {
@@ -119,7 +167,6 @@ const isAuthed: IsAuthedFn = async () => {
   }
 
   const data = await db.getAll('auth');
-
   if (data.length === 0) {
     return undefined;
   }
@@ -142,19 +189,7 @@ const getUser: GetUserFn = async (id: string) => {
     db = await initDB();
   }
 
-  // fake user
-  const user = await db.get('users', id);
-  if (!user) {
-    return {
-      id: id,
-      avatar: '',
-      email: id,
-      nickname: 'Test User',
-      introduction: '',
-    };
-  }
-
-  return user;
+  return await db.get('users', id);
 };
 
 const createUser: CreateUserFn = async (user: User) => {
