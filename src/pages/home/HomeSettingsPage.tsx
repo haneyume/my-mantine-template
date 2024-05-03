@@ -12,7 +12,7 @@ export const HomeSettingsPage: FC = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <Stack className="w-1/2">
+    <Stack className="w-1/2" p="md">
       <EditSettings />
 
       <KeySettingSection />

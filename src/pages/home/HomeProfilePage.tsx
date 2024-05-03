@@ -28,7 +28,7 @@ export const HomeProfilePage: FC = () => {
   }
 
   return (
-    <Stack className="w-1/2">
+    <Stack className="w-1/2" p="md">
       <EditProfile
         defaultData={{
           email: user.email,

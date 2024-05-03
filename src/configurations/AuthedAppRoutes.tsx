@@ -172,6 +172,7 @@ const ProjectLayoutWrapper: FC = () => {
       }}
       isSecondarySidebarOpened={isSecondarySidebarOpened || false}
       onNavigate={(path) => navigate(path)}
+      navbarWidth={50}
       navbarComponent={
         <ProjectNavbar
           projectId={projectId}

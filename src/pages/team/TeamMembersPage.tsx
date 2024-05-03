@@ -99,7 +99,7 @@ export const TeamMembersPage: FC = () => {
   ];
 
   return (
-    <Stack>
+    <Stack p="md">
       <Group justify="space-between">
         <Title order={3}>{tr('Members')}</Title>
 

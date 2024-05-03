@@ -32,7 +32,7 @@ export const HomePage: FC<{}> = () => {
   }
 
   return (
-    <Stack>
+    <Stack p="md">
       {teams.map((team) => {
         return (
           <TeamSection key={team.id} teamId={team.id} teamName={team.name} />
