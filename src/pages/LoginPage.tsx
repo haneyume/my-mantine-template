@@ -1,50 +1,62 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { useAppDispatch, setCurrentUserId } from '@/app-redux';
+import { Stack, TextInput, PasswordInput, Title, Button } from '@mantine/core';
 
-import { login } from '@/datasource';
+import {
+  useAppSelector,
+  selectInitialized,
+  selectCurrentUserId,
+} from '@/app-redux';
+
+import { auth_checkAuthed, auth_login } from '@/datasource';
 
 export const LoginPage: FC = () => {
-  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const initialized = useAppSelector(selectInitialized);
+  const currentUserId = useAppSelector(selectCurrentUserId);
 
   const [email, setEmail] = useState('test@mail.com');
   const [password, setPassword] = useState('123456');
 
   useEffect(() => {
-    if (window.location.pathname !== '/') {
-      window.location.href = '/';
+    if (!initialized) {
+      auth_checkAuthed();
     }
-  }, []);
+
+    if (initialized && currentUserId) {
+      navigate('/');
+    }
+  }, [initialized, currentUserId]);
 
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center gap-5">
-      <div className="text-3xl font-bold">Login</div>
+    <div className="w-full h-screen flex justify-center items-center">
+      <Stack w={300}>
+        <Title>Login</Title>
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+        <TextInput
+          label="Email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <PasswordInput
+          label="Password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      <button
-        onClick={() => {
-          login(email, password).then((authed) => {
-            if (authed) {
-              dispatch(setCurrentUserId(authed));
-            }
-          });
-        }}
-      >
-        Login
-      </button>
+        <Button
+          onClick={() => {
+            auth_login(email, password);
+          }}
+        >
+          Login
+        </Button>
+      </Stack>
     </div>
   );
 };

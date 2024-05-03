@@ -1,8 +1,6 @@
+export { auth_login, auth_logout, auth_checkAuthed } from './auth_handle_idb';
+
 export {
-  login,
-  logout,
-  isAuthed,
-  //
   getUsers,
   getUser,
   createUser,

@@ -22,16 +22,11 @@ import {
   store,
   //
   useAppSelector,
-  //
-  selectInitialized,
-  selectCurrentUserId,
   selectIsLoading,
 } from '@/app-redux';
 
 import { theme } from '@/configurations/theme';
 import { AuthedAppRoutes } from '@/configurations/AuthedAppRoutes';
-
-import { InitPage, LoginPage } from '@/pages';
 
 export const App: FC<{}> = () => {
   return (
@@ -42,32 +37,19 @@ export const App: FC<{}> = () => {
 };
 
 const AppContent: FC = () => {
-  const initialized = useAppSelector(selectInitialized);
   const isLoading = useAppSelector(selectIsLoading);
-  const currentUserId = useAppSelector(selectCurrentUserId);
-
-  if (!initialized) {
-    return <InitPage />;
-  }
-
-  if (!currentUserId) {
-    return <LoginPage />;
-  }
 
   return (
     <MantineProvider
       defaultColorScheme="dark"
       theme={theme}
-      cssVariablesResolver={(theme) => ({
-        variables: {
-          '--mantine-hero-height': theme.other.heroHeight,
-        },
+      cssVariablesResolver={(_theme) => ({
+        variables: {},
         light: {
           '--mantine-color-body': '#fff',
         },
         dark: {
           '--mantine-color-body': 'var(--mantine-color-dark-9)',
-          '--mantine-color-default-border': 'var(--mantine-color-dark-9)',
         },
       })}
     >

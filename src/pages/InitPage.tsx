@@ -1,20 +1,10 @@
 import { FC, useEffect } from 'react';
 
-import { useAppDispatch, setInitialized, setCurrentUserId } from '@/app-redux';
-
-import { isAuthed } from '@/datasource';
+import { auth_checkAuthed } from '@/datasource';
 
 export const InitPage: FC = () => {
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
-    isAuthed().then((authed) => {
-      if (authed) {
-        dispatch(setCurrentUserId(authed));
-      }
-
-      dispatch(setInitialized(true));
-    });
+    auth_checkAuthed();
   }, []);
 
   return (

@@ -7,6 +7,8 @@ import { TeamNavbar } from './navbars/TeamNavbar';
 import { ProjectNavbar } from './navbars/ProjectNavbar';
 
 import {
+  LoginPage,
+  AuthProtectedPage,
   //
   HomePage,
   HomeProfilePage,
@@ -34,7 +36,11 @@ export const AuthedAppRoutes: FC = () => {
   const routes = useRoutes([
     {
       path: '/',
-      element: <HomeLayoutWrapper />,
+      element: (
+        <AuthProtectedPage>
+          <HomeLayoutWrapper />
+        </AuthProtectedPage>
+      ),
       children: [
         {
           path: '',
@@ -56,7 +62,11 @@ export const AuthedAppRoutes: FC = () => {
     },
     {
       path: '/team/:teamId',
-      element: <TeamLayoutWrapper />,
+      element: (
+        <AuthProtectedPage>
+          <TeamLayoutWrapper />
+        </AuthProtectedPage>
+      ),
       children: [
         {
           path: '',
@@ -78,7 +88,11 @@ export const AuthedAppRoutes: FC = () => {
     },
     {
       path: '/project/:projectId',
-      element: <ProjectLayoutWrapper />,
+      element: (
+        <AuthProtectedPage>
+          <ProjectLayoutWrapper />
+        </AuthProtectedPage>
+      ),
       children: [
         {
           path: '',
@@ -93,6 +107,10 @@ export const AuthedAppRoutes: FC = () => {
           element: <NotFoundPage />,
         },
       ],
+    },
+    {
+      path: '/login',
+      element: <LoginPage />,
     },
     {
       path: '*',
