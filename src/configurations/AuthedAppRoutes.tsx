@@ -1,7 +1,10 @@
 import { FC } from 'react';
 import { useRoutes, Outlet, useNavigate, useParams } from 'react-router-dom';
 
-import { HomeLayout, TeamLayout, ProjectLayout } from '@/components';
+import { AppLayoutRegular } from '@/components';
+import { HomeNavbar } from './navbars/HomeNavbar';
+import { TeamNavbar } from './navbars/TeamNavbar';
+import { ProjectNavbar } from './navbars/ProjectNavbar';
 
 import {
   //
@@ -105,17 +108,22 @@ const HomeLayoutWrapper: FC = () => {
 
   const dispatch = useAppDispatch();
   const isSidebarOpened = useAppSelector(selectIsSidebarOpened);
+  const isSecondarySidebarOpened = useAppSelector(
+    selectIsSecondarySidebarOpened,
+  );
 
   return (
-    <HomeLayout
+    <AppLayoutRegular
       isSidebarOpened={isSidebarOpened || false}
       setIsSidebarOpened={(value) => {
         dispatch(setIsSidebarOpened(value));
       }}
+      isSecondarySidebarOpened={isSecondarySidebarOpened || false}
       onNavigate={(path) => navigate(path)}
+      navbarComponent={<HomeNavbar onNavigate={(path) => navigate(path)} />}
     >
       <Outlet />
-    </HomeLayout>
+    </AppLayoutRegular>
   );
 };
 
@@ -125,18 +133,24 @@ const TeamLayoutWrapper: FC = () => {
 
   const dispatch = useAppDispatch();
   const isSidebarOpened = useAppSelector(selectIsSidebarOpened);
+  const isSecondarySidebarOpened = useAppSelector(
+    selectIsSecondarySidebarOpened,
+  );
 
   return (
-    <TeamLayout
-      teamId={teamId}
+    <AppLayoutRegular
       isSidebarOpened={isSidebarOpened || false}
       setIsSidebarOpened={(value) => {
         dispatch(setIsSidebarOpened(value));
       }}
+      isSecondarySidebarOpened={isSecondarySidebarOpened || false}
       onNavigate={(path) => navigate(path)}
+      navbarComponent={
+        <TeamNavbar teamId={teamId} onNavigate={(path) => navigate(path)} />
+      }
     >
       <Outlet />
-    </TeamLayout>
+    </AppLayoutRegular>
   );
 };
 
@@ -151,16 +165,21 @@ const ProjectLayoutWrapper: FC = () => {
   );
 
   return (
-    <ProjectLayout
-      projectId={projectId}
+    <AppLayoutRegular
       isSidebarOpened={isSidebarOpened || false}
       setIsSidebarOpened={(value) => {
         dispatch(setIsSidebarOpened(value));
       }}
       isSecondarySidebarOpened={isSecondarySidebarOpened || false}
       onNavigate={(path) => navigate(path)}
+      navbarComponent={
+        <ProjectNavbar
+          projectId={projectId}
+          onNavigate={(path) => navigate(path)}
+        />
+      }
     >
       <Outlet />
-    </ProjectLayout>
+    </AppLayoutRegular>
   );
 };

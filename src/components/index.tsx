@@ -4,9 +4,9 @@ export { ThemeButton } from './buttons/ThemeButton';
 export { UserButton } from './buttons/UserButton';
 
 // layouts
-export { HomeLayout } from './layouts/HomeLayout';
-export { TeamLayout } from './layouts/TeamLayout';
-export { ProjectLayout } from './layouts/ProjectLayout';
+export { AppLayoutRegular } from './layouts/AppLayoutRegular';
+export { AppTitle } from './layouts/AppTitle';
+export { AppFooter } from './layouts/AppFooter';
 
 // selects
 export { ColorSchemeSelect } from './selects/ColorSchemeSelect';

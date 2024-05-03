@@ -7,35 +7,45 @@ import { useElementSize } from '@mantine/hooks';
 import { AppTitle } from './AppTitle';
 import { AppFooter } from './AppFooter';
 
-import { HomeLayoutMenus } from '@/configurations/menus/HomeLayoutMenus';
-import { TeamList } from './TeamList';
-import { FullFeatureButton } from './FullFeatureButton';
-
 export interface AppLayoutProps {
   children: ReactNode;
   isSidebarOpened: boolean;
   setIsSidebarOpened: (value: boolean) => void;
+  isSecondarySidebarOpened: boolean;
   onNavigate: (path: string) => void;
+  navbarWidth?: number;
+  navbarComponent?: ReactNode;
 }
 
-export const HomeLayout: FC<AppLayoutProps> = ({
+export const AppLayoutRegular: FC<AppLayoutProps> = ({
   children,
   isSidebarOpened,
   setIsSidebarOpened,
+  isSecondarySidebarOpened,
   onNavigate,
+  navbarWidth = 200, // 50 for thin sidebar
+  navbarComponent,
 }) => {
   // const { t: tr } = useTranslation();
 
-  const { ref, height } = useElementSize();
+  const { ref, width, height } = useElementSize();
 
   return (
     <AppShell
       header={{ height: 60 }}
       footer={{ height: 40 }}
       navbar={{
-        width: 200,
+        width: navbarWidth,
         breakpoint: 'sm',
         collapsed: { mobile: !isSidebarOpened },
+      }}
+      aside={{
+        width: 500,
+        breakpoint: 'md',
+        collapsed: {
+          desktop: !isSecondarySidebarOpened,
+          mobile: !isSecondarySidebarOpened,
+        },
       }}
     >
       <AppTitle
@@ -44,29 +54,15 @@ export const HomeLayout: FC<AppLayoutProps> = ({
         onNavigate={onNavigate}
       />
 
-      <AppShell.Navbar>
-        <AppShell.Section grow>
-          <HomeLayoutMenus onNavigate={onNavigate} />
-        </AppShell.Section>
-
-        <AppShell.Section
-          className="border-0 border-t border-b border-solid border-neutral-700"
-          p="sm"
-          grow
-        >
-          <TeamList onNavigate={onNavigate} />
-        </AppShell.Section>
-
-        <AppShell.Section p="sm">
-          <FullFeatureButton />
-        </AppShell.Section>
-      </AppShell.Navbar>
+      {navbarComponent}
 
       <AppShell.Main ref={ref}>
-        <ScrollArea p="md" style={{ height }}>
-          {children}
-        </ScrollArea>
+        <ScrollArea style={{ width, height }}>{children}</ScrollArea>
       </AppShell.Main>
+
+      <AppShell.Aside id="app-layout-aside">
+        <div />
+      </AppShell.Aside>
 
       <AppFooter />
     </AppShell>
