@@ -9,7 +9,10 @@ const auth_login: LoginFn = async (email: string, password: string) => {
     const db = await getDB();
 
     // check email and password
-    if (email !== 'test@mail.com' || password !== '123456') {
+    if (
+      email !== import.meta.env.VITE_FAKE_USER_EMAIL ||
+      password !== import.meta.env.VITE_FAKE_USER_PASSWORD
+    ) {
       throw new Error('Invalid email or password');
     }
 

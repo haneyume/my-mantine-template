@@ -17,8 +17,12 @@ export const LoginPage: FC = () => {
   const initialized = useAppSelector(selectInitialized);
   const currentUserId = useAppSelector(selectCurrentUserId);
 
-  const [email, setEmail] = useState('test@mail.com');
-  const [password, setPassword] = useState('123456');
+  const [email, setEmail] = useState(
+    import.meta.env.VITE_FAKE_USER_EMAIL || '',
+  );
+  const [password, setPassword] = useState(
+    import.meta.env.VITE_FAKE_USER_PASSWORD || '',
+  );
 
   useEffect(() => {
     if (!initialized) {

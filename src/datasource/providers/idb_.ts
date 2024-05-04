@@ -66,9 +66,9 @@ async function initDB() {
 
         const defaultUser: User = {
           id: defaultUserId,
-          avatar: '',
-          email: 'test@mail.com',
-          nickname: 'Test User',
+          avatar: import.meta.env.VITE_FAKE_USER_AVATAR,
+          email: import.meta.env.VITE_FAKE_USER_EMAIL,
+          nickname: import.meta.env.VITE_FAKE_USER_NAME,
           introduction: '',
         };
 

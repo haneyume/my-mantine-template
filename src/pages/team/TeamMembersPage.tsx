@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { Stack, Group, ActionIcon, Title, Button, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
@@ -15,7 +15,7 @@ import { useGetTeamMembersQuery } from '@/app-redux';
 export const TeamMembersPage: FC = () => {
   const { t: tr } = useTranslation();
 
-  // const { teamId = '' } = useParams();
+  const { teamId = '' } = useParams();
 
   const PAGE_SIZE = 50;
   const [page, setPage] = useState<number>(1);
@@ -25,7 +25,7 @@ export const TeamMembersPage: FC = () => {
   });
   const [selectedRecords, setSelectedRecords] = useState<any[]>([]);
 
-  const { data: teamMembers } = useGetTeamMembersQuery();
+  const { data: teamMembers } = useGetTeamMembersQuery({ teamId });
 
   const totalRecords = teamMembers?.length || 0;
   const displayData = (teamMembers || []).slice(
