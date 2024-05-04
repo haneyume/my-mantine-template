@@ -26,6 +26,7 @@ import {
 } from '@/app-redux';
 
 import { theme } from '@/configurations/theme';
+import { cssVariablesResolver } from '@/configurations/cssVariablesResolver';
 import { AuthedAppRoutes } from '@/configurations/AuthedAppRoutes';
 
 export const App: FC<{}> = () => {
@@ -43,15 +44,7 @@ const AppContent: FC = () => {
     <MantineProvider
       defaultColorScheme="dark"
       theme={theme}
-      cssVariablesResolver={(_theme) => ({
-        variables: {},
-        light: {
-          '--mantine-color-body': '#fff',
-        },
-        dark: {
-          '--mantine-color-body': 'var(--mantine-color-dark-9)',
-        },
-      })}
+      cssVariablesResolver={cssVariablesResolver}
     >
       <ModalsProvider>
         <Notifications position="top-right" />

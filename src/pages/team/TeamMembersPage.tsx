@@ -2,10 +2,13 @@ import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 // import { useParams } from 'react-router-dom';
 
-import { Stack, Group, ActionIcon, Title, Button } from '@mantine/core';
+import { Stack, Group, ActionIcon, Title, Button, Text } from '@mantine/core';
+import { modals } from '@mantine/modals';
 import { DataTable, type DataTableSortStatus } from 'mantine-datatable';
 
 import { IconPlus, IconEye, IconEdit, IconTrash } from '@tabler/icons-react';
+
+import { InviteTeamMember, EditTeamMember } from '@/components';
 
 import { useGetTeamMembersQuery } from '@/app-redux';
 
@@ -81,7 +84,20 @@ export const TeamMembersPage: FC = () => {
             size="sm"
             variant="subtle"
             color="blue"
-            // onClick={() => showModal({ company, action: 'edit' })}
+            onClick={() => {
+              modals.open({
+                title: 'Edit member',
+                children: (
+                  <EditTeamMember
+                    onSubmitForm={(values) => {
+                      console.log('values', values);
+
+                      modals.closeAll();
+                    }}
+                  />
+                ),
+              });
+            }}
           >
             <IconEdit size={16} />
           </ActionIcon>
@@ -89,7 +105,22 @@ export const TeamMembersPage: FC = () => {
             size="sm"
             variant="subtle"
             color="red"
-            // onClick={() => showModal({ company, action: 'delete' })}
+            onClick={() => {
+              modals.openConfirmModal({
+                title: 'Please confirm your action',
+                children: (
+                  <Text size="sm">
+                    {tr(
+                      'Are you sure you want to delete this member? This action is irreversible and will delete all the data associated with this project.',
+                    )}
+                  </Text>
+                ),
+                labels: { confirm: tr('Confirm'), cancel: tr('Cancel') },
+                confirmProps: { color: 'red' },
+                onCancel: () => {},
+                onConfirm: () => {},
+              });
+            }}
           >
             <IconTrash size={16} />
           </ActionIcon>
@@ -105,7 +136,23 @@ export const TeamMembersPage: FC = () => {
 
         <div className="flex-1" />
 
-        <Button leftSection={<IconPlus size={18} />} onClick={() => {}}>
+        <Button
+          leftSection={<IconPlus size={18} />}
+          onClick={() => {
+            modals.open({
+              title: 'Invite member',
+              children: (
+                <InviteTeamMember
+                  onSubmitForm={(values) => {
+                    console.log('values', values);
+
+                    modals.closeAll();
+                  }}
+                />
+              ),
+            });
+          }}
+        >
           {tr('Invite member')}
         </Button>
       </Group>

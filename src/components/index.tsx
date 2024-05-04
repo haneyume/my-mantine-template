@@ -27,6 +27,10 @@ export { CreateTeam } from './sections/CreateTeam';
 export { EditTeam } from './sections/EditTeam';
 export { TeamDangerZoneSection } from './sections/TeamDangerZoneSection';
 
+// for team member
+export { InviteTeamMember } from './modals/InviteTeamMember';
+export { EditTeamMember } from './modals/EditTeamMember';
+
 // for user
 export { EditProfile } from './sections/EditProfile';
 export { SignOutSection } from './sections/SignOutSection';
