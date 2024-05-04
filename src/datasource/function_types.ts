@@ -40,15 +40,18 @@ type DeleteTeamFn = (id: string) => Promise<void>;
 
 //
 
-type GetTeamMembersFn = () => Promise<TeamMember[]>;
+type GetTeamMembersFn = (teamId: string) => Promise<TeamMember[]>;
 
-type GetTeamMemberFn = (id: string) => Promise<TeamMember | undefined>;
+type GetTeamMemberFn = (
+  teamId: string,
+  id: string,
+) => Promise<TeamMember | undefined>;
 
 type CreateTeamMemberFn = (teamMember: TeamMember) => Promise<TeamMember>;
 
 type UpdateTeamMemberFn = (teamMember: TeamMember) => Promise<TeamMember>;
 
-type DeleteTeamMemberFn = (id: string) => Promise<void>;
+type DeleteTeamMemberFn = (teamId: string, id: string) => Promise<void>;
 
 //
 

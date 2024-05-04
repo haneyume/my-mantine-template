@@ -101,22 +101,28 @@ const deleteTeam: DeleteTeamFn = async (id: string) => {
 
 ///////////////////////////////////////////////////////////////
 
-const getTeamMembers: GetTeamMembersFn = async () => {
+const getTeamMembers: GetTeamMembersFn = async (teamId: string) => {
   const db = await getDB();
 
-  return await db.getAll('teamMembers');
+  const data = await db.getAll('teamMembers');
+
+  return data.filter((teamMember) => teamMember.team_id === teamId);
 };
 
-const getTeamMember: GetTeamMemberFn = async (id: string) => {
+const getTeamMember: GetTeamMemberFn = async (teamId: string, id: string) => {
   const db = await getDB();
 
-  return await db.get('teamMembers', id);
+  return await db.get('teamMembers', `${teamId}-${id}`);
 };
 
 const createTeamMember: CreateTeamMemberFn = async (teamMember: TeamMember) => {
   const db = await getDB();
 
-  await db.put('teamMembers', teamMember, teamMember.id);
+  await db.put(
+    'teamMembers',
+    teamMember,
+    `${teamMember.team_id}-${teamMember.id}`,
+  );
 
   return teamMember;
 };
@@ -124,15 +130,22 @@ const createTeamMember: CreateTeamMemberFn = async (teamMember: TeamMember) => {
 const updateTeamMember: UpdateTeamMemberFn = async (teamMember: TeamMember) => {
   const db = await getDB();
 
-  await db.put('teamMembers', teamMember, teamMember.id);
+  await db.put(
+    'teamMembers',
+    teamMember,
+    `${teamMember.team_id}-${teamMember.id}`,
+  );
 
   return teamMember;
 };
 
-const deleteTeamMember: DeleteTeamMemberFn = async (id: string) => {
+const deleteTeamMember: DeleteTeamMemberFn = async (
+  teamId: string,
+  id: string,
+) => {
   const db = await getDB();
 
-  await db.delete('teamMembers', id);
+  await db.delete('teamMembers', `${teamId}-${id}`);
 };
 
 ///////////////////////////////////////////////////////////////

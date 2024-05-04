@@ -1,4 +1,4 @@
-import { Client, Account, Teams, Databases } from 'appwrite';
+import { Client, Account, Teams, Databases, ID } from 'appwrite';
 
 const client = new Client();
 
@@ -9,3 +9,9 @@ client
 export const account = new Account(client);
 export const teams = new Teams(client);
 export const databases = new Databases(client);
+
+export { ID };
+
+export const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
+export const PROJECTS_COLLECTION_ID = import.meta.env
+  .VITE_APPWRITE_PROJECTS_COLLECTION_ID;

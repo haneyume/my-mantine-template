@@ -14,10 +14,10 @@ export const teamMembersApi = createApi({
   baseQuery: fakeBaseQuery(),
   tagTypes: ['teamMembers'],
   endpoints: (builder) => ({
-    getTeamMembers: builder.query<TeamMember[], void>({
-      queryFn: async () => {
+    getTeamMembers: builder.query<TeamMember[], { teamId: string }>({
+      queryFn: async (arg) => {
         try {
-          const res = await getTeamMembers();
+          const res = await getTeamMembers(arg.teamId);
 
           return { data: res };
         } catch (error: any) {
@@ -26,10 +26,13 @@ export const teamMembersApi = createApi({
       },
       providesTags: ['teamMembers'],
     }),
-    getTeamMemberById: builder.query<TeamMember, { id: string }>({
+    getTeamMemberById: builder.query<
+      TeamMember,
+      { teamId: string; id: string }
+    >({
       queryFn: async (arg) => {
         try {
-          const res = await getTeamMember(arg.id);
+          const res = await getTeamMember(arg.teamId, arg.id);
 
           return { data: res };
         } catch (error: any) {
@@ -60,11 +63,14 @@ export const teamMembersApi = createApi({
           return { error };
         }
       },
-      async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+      async onQueryStarted(
+        { team_id, id, ...patch },
+        { dispatch, queryFulfilled },
+      ) {
         const patchResult = dispatch(
           teamMembersApi.util.updateQueryData(
             'getTeamMemberById',
-            { id },
+            { teamId: team_id, id },
             (draft) => {
               Object.assign(draft, patch);
             },
@@ -78,10 +84,10 @@ export const teamMembersApi = createApi({
       },
       invalidatesTags: ['teamMembers'],
     }),
-    deleteTeamMember: builder.mutation<void, { id: string }>({
+    deleteTeamMember: builder.mutation<void, { teamId: string; id: string }>({
       queryFn: async (arg) => {
         try {
-          await deleteTeamMember(arg.id);
+          await deleteTeamMember(arg.teamId, arg.id);
 
           return { data: undefined };
         } catch (error: any) {
