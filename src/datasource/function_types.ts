@@ -1,10 +1,18 @@
 import type { User, Team, TeamMember, Project } from '@/types';
 
-type LoginFn = (email: string, password: string) => Promise<string | undefined>;
+type AuthLoginFn = (email: string, password: string) => Promise<boolean>;
+
+type AuthLogoutFn = () => Promise<void>;
+
+type AuthCheckAuthedFn = () => Promise<void>;
+
+//
+
+type LoginFn = (email: string, password: string) => Promise<boolean>;
 
 type LogoutFn = () => Promise<void>;
 
-type IsAuthedFn = () => Promise<string | undefined>;
+type CheckAuthedFn = () => Promise<void>;
 
 //
 
@@ -57,9 +65,13 @@ type DeleteProjectFn = (id: string) => Promise<void>;
 //
 
 export type {
+  AuthLoginFn,
+  AuthLogoutFn,
+  AuthCheckAuthedFn,
+  //
   LoginFn,
   LogoutFn,
-  IsAuthedFn,
+  CheckAuthedFn,
   //
   GetUsersFn,
   GetUserFn,

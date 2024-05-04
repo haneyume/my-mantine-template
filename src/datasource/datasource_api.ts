@@ -1,11 +1,5 @@
-import axios from 'axios';
-
 import type { User, Team, TeamMember, Project } from '@/types';
 import type {
-  LoginFn,
-  LogoutFn,
-  IsAuthedFn,
-  //
   GetUsersFn,
   GetUserFn,
   CreateUserFn,
@@ -29,23 +23,9 @@ import type {
   CreateProjectFn,
   UpdateProjectFn,
   DeleteProjectFn,
-} from './datasource_types';
+} from './function_types';
 
-axios.defaults.baseURL = 'http://localhost:3000';
-
-///////////////////////////////////////////////////////////////
-
-const login: LoginFn = async (email: string, password: string) => {
-  console.log(email, password);
-
-  return undefined;
-};
-
-const logout: LogoutFn = async () => {};
-
-const isAuthed: IsAuthedFn = async () => {
-  return undefined;
-};
+import { axios } from './providers/api_';
 
 ///////////////////////////////////////////////////////////////
 
@@ -152,10 +132,6 @@ const deleteProject: DeleteProjectFn = async (id: string) => {
 ///////////////////////////////////////////////////////////////
 
 export {
-  login,
-  logout,
-  isAuthed,
-  //
   getUsers,
   getUser,
   createUser,

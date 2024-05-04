@@ -1,37 +1,62 @@
 import { store, setInitialized, setCurrentUserId } from '@/app-redux';
 
-import { login, logout, isAuthed } from './datasource_idb';
+import { LoginFn, LogoutFn, CheckAuthedFn } from './function_types';
 
-import {
-  AuthLoginFn,
-  AuthLogoutFn,
-  AuthCheckAuthedFn,
-} from './auth_handle_types';
+import { getDB } from './providers/idb_';
 
-const auth_login: AuthLoginFn = async (email: string, password: string) => {
-  const userId = await login(email, password);
+const auth_login: LoginFn = async (email: string, password: string) => {
+  try {
+    const db = await getDB();
 
-  if (userId) {
+    // check email and password
+    if (email !== 'test@mail.com' || password !== '123456') {
+      throw new Error('Invalid email or password');
+    }
+
+    // check if user exists
+    const users = await db.getAll('users');
+    users.filter((user) => user.email === email);
+    if (users.length === 0 || users.length > 1) {
+      throw new Error('User not found');
+    }
+
+    // get user id
+    const userId = users[0].id;
+
+    // save login session
+    await db.put('auth', userId, userId);
+
     store.dispatch(setCurrentUserId(userId));
+
     return true;
-  } else {
+  } catch (e) {
     store.dispatch(setCurrentUserId(undefined));
+
     return false;
   }
 };
 
-const auth_logout: AuthLogoutFn = async () => {
-  await logout();
+const auth_logout: LogoutFn = async () => {
+  const db = await getDB();
+
+  // clear login session
+  await db.clear('auth');
 
   store.dispatch(setCurrentUserId(undefined));
 };
 
-const auth_checkAuthed: AuthCheckAuthedFn = async () => {
-  const userId = await isAuthed();
+const auth_checkAuthed: CheckAuthedFn = async () => {
+  try {
+    const db = await getDB();
 
-  if (userId) {
-    store.dispatch(setCurrentUserId(userId));
-  } else {
+    // check if login session exists
+    const data = await db.getAll('auth');
+    if (data.length === 0) {
+      throw new Error('Not authed');
+    }
+
+    store.dispatch(setCurrentUserId(data[0]));
+  } catch (e) {
     store.dispatch(setCurrentUserId(undefined));
   }
 

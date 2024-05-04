@@ -1,11 +1,5 @@
-import { openDB, type DBSchema, type IDBPDatabase } from 'idb';
-
 import type { User, Team, TeamMember, Project } from '@/types';
 import type {
-  LoginFn,
-  LogoutFn,
-  IsAuthedFn,
-  //
   GetUsersFn,
   GetUserFn,
   CreateUserFn,
@@ -29,173 +23,26 @@ import type {
   CreateProjectFn,
   UpdateProjectFn,
   DeleteProjectFn,
-} from './datasource_types';
+} from './function_types';
 
-///////////////////////////////////////////////////////////////
-
-interface MyDB extends DBSchema {
-  auth: {
-    value: string;
-    key: string;
-  };
-  users: {
-    value: User;
-    key: string;
-  };
-  teams: {
-    value: Team;
-    key: string;
-    indexes: {
-      by_created_at: string;
-    };
-  };
-  teamMembers: {
-    value: TeamMember;
-    key: string;
-    indexes: {
-      by_created_at: string;
-    };
-  };
-  projects: {
-    value: Project;
-    key: string;
-    indexes: {
-      by_team_id: string;
-      by_created_at: string;
-    };
-  };
-}
-
-let db: IDBPDatabase<MyDB> | undefined = undefined;
-
-async function initDB() {
-  return await openDB<MyDB>('my-db', 1, {
-    upgrade(db) {
-      const authStore = db.createObjectStore('auth');
-      console.log(authStore);
-
-      const userStore = db.createObjectStore('users');
-      console.log(userStore);
-
-      const teamStore = db.createObjectStore('teams');
-      teamStore.createIndex('by_created_at', 'created_at');
-
-      const teamMemberStore = db.createObjectStore('teamMembers');
-      teamMemberStore.createIndex('by_created_at', 'created_at');
-
-      const projectStore = db.createObjectStore('projects');
-      projectStore.createIndex('by_team_id', 'team_id');
-      projectStore.createIndex('by_created_at', 'created_at');
-
-      // fake data
-      {
-        const defaultUserId = crypto.randomUUID();
-        const defaultTeamId = crypto.randomUUID();
-        const defaultTeamMemberId = crypto.randomUUID();
-
-        const defaultUser: User = {
-          id: defaultUserId,
-          avatar: '',
-          email: 'test@mail.com',
-          nickname: 'Test User',
-          introduction: '',
-        };
-
-        const defaultTeam: Team = {
-          id: defaultTeamId,
-          name: 'Default Team',
-          description: '',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        };
-
-        const defaultTeamMember: TeamMember = {
-          id: defaultTeamMemberId,
-          team_id: defaultTeamId,
-          user_id: defaultUserId,
-          role: 'owner',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          user: defaultUser,
-        };
-
-        userStore.add(defaultUser, defaultUserId);
-        teamStore.add(defaultTeam, defaultTeamId);
-        teamMemberStore.add(defaultTeamMember, defaultTeamMemberId);
-      }
-    },
-  });
-}
-
-///////////////////////////////////////////////////////////////
-
-const login: LoginFn = async (email: string, password: string) => {
-  if (!db) {
-    db = await initDB();
-  }
-
-  // check email and password
-  if (email !== 'test@mail.com' || password !== '123456') {
-    return undefined;
-  }
-
-  // check if user exists
-  const users = await db.getAll('users');
-  users.filter((user) => user.email === email);
-  if (users.length === 0 || users.length > 1) {
-    return undefined;
-  }
-
-  const userId = users[0].id;
-
-  await db.put('auth', userId, userId);
-
-  return userId;
-};
-
-const logout: LogoutFn = async () => {
-  if (!db) {
-    db = await initDB();
-  }
-
-  await db.clear('auth');
-};
-
-const isAuthed: IsAuthedFn = async () => {
-  if (!db) {
-    db = await initDB();
-  }
-
-  const data = await db.getAll('auth');
-  if (data.length === 0) {
-    return undefined;
-  }
-
-  return data[0];
-};
+import { getDB } from './providers/idb_';
 
 ///////////////////////////////////////////////////////////////
 
 const getUsers: GetUsersFn = async () => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   return await db.getAll('users');
 };
 
 const getUser: GetUserFn = async (id: string) => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   return await db.get('users', id);
 };
 
 const createUser: CreateUserFn = async (user: User) => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   await db.put('users', user, user.id);
 
@@ -203,9 +50,7 @@ const createUser: CreateUserFn = async (user: User) => {
 };
 
 const updateUser: UpdateUserFn = async (user: User) => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   await db.put('users', user, user.id);
 
@@ -213,9 +58,7 @@ const updateUser: UpdateUserFn = async (user: User) => {
 };
 
 const deleteUser: DeleteUserFn = async (id: string) => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   await db.delete('users', id);
 };
@@ -223,25 +66,19 @@ const deleteUser: DeleteUserFn = async (id: string) => {
 ///////////////////////////////////////////////////////////////
 
 const getTeams: GetTeamsFn = async () => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   return await db.getAll('teams');
 };
 
 const getTeam: GetTeamFn = async (id: string) => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   return await db.get('teams', id);
 };
 
 const createTeam: CreateTeamFn = async (team: Team) => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   await db.put('teams', team, team.id);
 
@@ -249,9 +86,7 @@ const createTeam: CreateTeamFn = async (team: Team) => {
 };
 
 const updateTeam: UpdateTeamFn = async (team: Team) => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   await db.put('teams', team, team.id);
 
@@ -259,9 +94,7 @@ const updateTeam: UpdateTeamFn = async (team: Team) => {
 };
 
 const deleteTeam: DeleteTeamFn = async (id: string) => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   await db.delete('teams', id);
 };
@@ -269,25 +102,19 @@ const deleteTeam: DeleteTeamFn = async (id: string) => {
 ///////////////////////////////////////////////////////////////
 
 const getTeamMembers: GetTeamMembersFn = async () => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   return await db.getAll('teamMembers');
 };
 
 const getTeamMember: GetTeamMemberFn = async (id: string) => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   return await db.get('teamMembers', id);
 };
 
 const createTeamMember: CreateTeamMemberFn = async (teamMember: TeamMember) => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   await db.put('teamMembers', teamMember, teamMember.id);
 
@@ -295,9 +122,7 @@ const createTeamMember: CreateTeamMemberFn = async (teamMember: TeamMember) => {
 };
 
 const updateTeamMember: UpdateTeamMemberFn = async (teamMember: TeamMember) => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   await db.put('teamMembers', teamMember, teamMember.id);
 
@@ -305,9 +130,7 @@ const updateTeamMember: UpdateTeamMemberFn = async (teamMember: TeamMember) => {
 };
 
 const deleteTeamMember: DeleteTeamMemberFn = async (id: string) => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   await db.delete('teamMembers', id);
 };
@@ -315,25 +138,19 @@ const deleteTeamMember: DeleteTeamMemberFn = async (id: string) => {
 ///////////////////////////////////////////////////////////////
 
 const getProjects: GetProjectsFn = async () => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   return await db.getAll('projects');
 };
 
 const getProject: GetProjectFn = async (id: string) => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   return await db.get('projects', id);
 };
 
 const createProject: CreateProjectFn = async (project: Project) => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   await db.put('projects', project, project.id);
 
@@ -341,9 +158,7 @@ const createProject: CreateProjectFn = async (project: Project) => {
 };
 
 const updateProject: UpdateProjectFn = async (project: Project) => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   await db.put('projects', project, project.id);
 
@@ -351,9 +166,7 @@ const updateProject: UpdateProjectFn = async (project: Project) => {
 };
 
 const deleteProject: DeleteProjectFn = async (id: string) => {
-  if (!db) {
-    db = await initDB();
-  }
+  const db = await getDB();
 
   await db.delete('projects', id);
 };
@@ -361,10 +174,6 @@ const deleteProject: DeleteProjectFn = async (id: string) => {
 ///////////////////////////////////////////////////////////////
 
 export {
-  login,
-  logout,
-  isAuthed,
-  //
   getUsers,
   getUser,
   createUser,
