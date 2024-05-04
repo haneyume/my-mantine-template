@@ -13,7 +13,7 @@ export const HomeSettingsPage: FC = () => {
 
       <KeySettingSection />
 
-      <SignOutSection onSignOut={auth_logout} />
+      <SignOutSection onSignOut={() => auth_logout({})} />
     </Stack>
   );
 };

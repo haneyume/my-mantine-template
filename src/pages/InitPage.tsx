@@ -4,7 +4,7 @@ import { auth_checkAuthed } from '@/datasource';
 
 export const InitPage: FC = () => {
   useEffect(() => {
-    auth_checkAuthed();
+    auth_checkAuthed({});
   }, []);
 
   return (

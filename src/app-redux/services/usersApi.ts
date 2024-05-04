@@ -7,6 +7,13 @@ import {
   updateUser,
   deleteUser,
 } from '@/datasource';
+import type {
+  GetUsersFnParams,
+  GetUserFnParams,
+  CreateUserFnParams,
+  UpdateUserFnParams,
+  DeleteUserFnParams,
+} from '@/datasource/function_types';
 import type { User } from '@/types';
 
 export const usersApi = createApi({
@@ -14,22 +21,10 @@ export const usersApi = createApi({
   baseQuery: fakeBaseQuery(),
   tagTypes: ['users'],
   endpoints: (builder) => ({
-    getUsers: builder.query<User[], void>({
-      queryFn: async () => {
-        try {
-          const res = await getUsers();
-
-          return { data: res };
-        } catch (error: any) {
-          return { error };
-        }
-      },
-      providesTags: ['users'],
-    }),
-    getUserById: builder.query<User, { id: string }>({
+    getUsers: builder.query<User[], GetUsersFnParams>({
       queryFn: async (arg) => {
         try {
-          const res = await getUser(arg.id);
+          const res = await getUsers(arg);
 
           return { data: res };
         } catch (error: any) {
@@ -38,7 +33,19 @@ export const usersApi = createApi({
       },
       providesTags: ['users'],
     }),
-    createUser: builder.mutation<User, User>({
+    getUserById: builder.query<User, GetUserFnParams>({
+      queryFn: async (arg) => {
+        try {
+          const res = await getUser(arg);
+
+          return { data: res };
+        } catch (error: any) {
+          return { error };
+        }
+      },
+      providesTags: ['users'],
+    }),
+    createUser: builder.mutation<User, CreateUserFnParams>({
       queryFn: async (arg) => {
         try {
           const res = await createUser(arg);
@@ -50,7 +57,7 @@ export const usersApi = createApi({
       },
       invalidatesTags: ['users'],
     }),
-    updateUser: builder.mutation<User, User>({
+    updateUser: builder.mutation<User, UpdateUserFnParams>({
       queryFn: async (arg) => {
         try {
           const res = await updateUser(arg);
@@ -60,7 +67,10 @@ export const usersApi = createApi({
           return { error };
         }
       },
-      async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+      async onQueryStarted(
+        { user: { id }, ...patch },
+        { dispatch, queryFulfilled },
+      ) {
         const patchResult = dispatch(
           usersApi.util.updateQueryData('getUserById', { id }, (draft) => {
             Object.assign(draft, patch);
@@ -74,10 +84,10 @@ export const usersApi = createApi({
       },
       invalidatesTags: ['users'],
     }),
-    deleteUser: builder.mutation<void, { id: string }>({
+    deleteUser: builder.mutation<void, DeleteUserFnParams>({
       queryFn: async (arg) => {
         try {
-          await deleteUser(arg.id);
+          await deleteUser(arg);
 
           return { data: undefined };
         } catch (error: any) {

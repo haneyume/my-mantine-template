@@ -4,7 +4,7 @@ import { LoginFn, LogoutFn, CheckAuthedFn } from './function_types';
 
 import { account } from './providers/appwrite_';
 
-const auth_login: LoginFn = async (email: string, password: string) => {
+const auth_login: LoginFn = async ({ email, password }) => {
   try {
     const user = await account.createEmailPasswordSession(email, password);
 
@@ -18,13 +18,13 @@ const auth_login: LoginFn = async (email: string, password: string) => {
   }
 };
 
-const auth_logout: LogoutFn = async () => {
+const auth_logout: LogoutFn = async ({}) => {
   await account.deleteSession('current');
 
   store.dispatch(setCurrentUserId(undefined));
 };
 
-const auth_checkAuthed: CheckAuthedFn = async () => {
+const auth_checkAuthed: CheckAuthedFn = async ({}) => {
   try {
     const user = await account.get();
 

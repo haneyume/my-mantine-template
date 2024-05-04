@@ -4,7 +4,7 @@ import { LoginFn, LogoutFn, CheckAuthedFn } from './function_types';
 
 import { getDB } from './providers/idb_';
 
-const auth_login: LoginFn = async (email: string, password: string) => {
+const auth_login: LoginFn = async ({ email, password }) => {
   try {
     const db = await getDB();
 
@@ -39,7 +39,7 @@ const auth_login: LoginFn = async (email: string, password: string) => {
   }
 };
 
-const auth_logout: LogoutFn = async () => {
+const auth_logout: LogoutFn = async ({}) => {
   const db = await getDB();
 
   // clear login session
@@ -48,7 +48,7 @@ const auth_logout: LogoutFn = async () => {
   store.dispatch(setCurrentUserId(undefined));
 };
 
-const auth_checkAuthed: CheckAuthedFn = async () => {
+const auth_checkAuthed: CheckAuthedFn = async ({}) => {
   try {
     const db = await getDB();
 

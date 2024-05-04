@@ -27,8 +27,10 @@ export const ProjectOverviewPage: FC<{}> = () => {
           value={project.data}
           onChange={(e) => {
             updateProject({
-              ...project,
-              data: e.currentTarget.value,
+              project: {
+                ...project,
+                data: e.currentTarget.value,
+              },
             });
           }}
         />

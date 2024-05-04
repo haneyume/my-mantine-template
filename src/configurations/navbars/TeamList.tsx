@@ -18,17 +18,19 @@ export interface TeamListProps {
 export const TeamList: FC<TeamListProps> = ({ onNavigate }) => {
   const { t: tr } = useTranslation();
 
-  const { data: teams } = useGetTeamsQuery();
+  const { data: teams } = useGetTeamsQuery({});
 
   const [createTeam] = useCreateTeamMutation();
 
   const onCreateTeam = (name: string, description?: string) => {
     createTeam({
-      id: crypto.randomUUID(),
-      name: name,
-      description: description || '',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
+      team: {
+        id: crypto.randomUUID(),
+        name: name,
+        description: description || '',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      },
     })
       .unwrap()
       .then(() => {
@@ -72,7 +74,7 @@ export const TeamList: FC<TeamListProps> = ({ onNavigate }) => {
         </ActionIcon>
       </Group>
 
-      <Stack>
+      <Stack gap={0}>
         {teams?.map((team) => {
           return (
             <NavLink

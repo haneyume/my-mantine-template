@@ -1,4 +1,4 @@
-import type { User, Team, TeamMember, Project } from '@/types';
+import type {} from '@/types';
 import type {
   GetUsersFn,
   GetUserFn,
@@ -29,19 +29,19 @@ import { getDB } from './providers/idb_';
 
 ///////////////////////////////////////////////////////////////
 
-const getUsers: GetUsersFn = async () => {
+const getUsers: GetUsersFn = async ({}) => {
   const db = await getDB();
 
   return await db.getAll('users');
 };
 
-const getUser: GetUserFn = async (id: string) => {
+const getUser: GetUserFn = async ({ id }) => {
   const db = await getDB();
 
   return await db.get('users', id);
 };
 
-const createUser: CreateUserFn = async (user: User) => {
+const createUser: CreateUserFn = async ({ user }) => {
   const db = await getDB();
 
   await db.put('users', user, user.id);
@@ -49,7 +49,7 @@ const createUser: CreateUserFn = async (user: User) => {
   return user;
 };
 
-const updateUser: UpdateUserFn = async (user: User) => {
+const updateUser: UpdateUserFn = async ({ user }) => {
   const db = await getDB();
 
   await db.put('users', user, user.id);
@@ -57,7 +57,7 @@ const updateUser: UpdateUserFn = async (user: User) => {
   return user;
 };
 
-const deleteUser: DeleteUserFn = async (id: string) => {
+const deleteUser: DeleteUserFn = async ({ id }) => {
   const db = await getDB();
 
   await db.delete('users', id);
@@ -65,19 +65,19 @@ const deleteUser: DeleteUserFn = async (id: string) => {
 
 ///////////////////////////////////////////////////////////////
 
-const getTeams: GetTeamsFn = async () => {
+const getTeams: GetTeamsFn = async ({}) => {
   const db = await getDB();
 
   return await db.getAll('teams');
 };
 
-const getTeam: GetTeamFn = async (id: string) => {
+const getTeam: GetTeamFn = async ({ id }) => {
   const db = await getDB();
 
   return await db.get('teams', id);
 };
 
-const createTeam: CreateTeamFn = async (team: Team) => {
+const createTeam: CreateTeamFn = async ({ team }) => {
   const db = await getDB();
 
   await db.put('teams', team, team.id);
@@ -85,7 +85,7 @@ const createTeam: CreateTeamFn = async (team: Team) => {
   return team;
 };
 
-const updateTeam: UpdateTeamFn = async (team: Team) => {
+const updateTeam: UpdateTeamFn = async ({ team }) => {
   const db = await getDB();
 
   await db.put('teams', team, team.id);
@@ -93,7 +93,7 @@ const updateTeam: UpdateTeamFn = async (team: Team) => {
   return team;
 };
 
-const deleteTeam: DeleteTeamFn = async (id: string) => {
+const deleteTeam: DeleteTeamFn = async ({ id }) => {
   const db = await getDB();
 
   await db.delete('teams', id);
@@ -101,7 +101,7 @@ const deleteTeam: DeleteTeamFn = async (id: string) => {
 
 ///////////////////////////////////////////////////////////////
 
-const getTeamMembers: GetTeamMembersFn = async (teamId: string) => {
+const getTeamMembers: GetTeamMembersFn = async ({ teamId }) => {
   const db = await getDB();
 
   const data = await db.getAll('teamMembers');
@@ -109,13 +109,13 @@ const getTeamMembers: GetTeamMembersFn = async (teamId: string) => {
   return data.filter((teamMember) => teamMember.team_id === teamId);
 };
 
-const getTeamMember: GetTeamMemberFn = async (teamId: string, id: string) => {
+const getTeamMember: GetTeamMemberFn = async ({ teamId, id }) => {
   const db = await getDB();
 
   return await db.get('teamMembers', `${teamId}-${id}`);
 };
 
-const createTeamMember: CreateTeamMemberFn = async (teamMember: TeamMember) => {
+const createTeamMember: CreateTeamMemberFn = async ({ teamMember }) => {
   const db = await getDB();
 
   await db.put(
@@ -127,7 +127,7 @@ const createTeamMember: CreateTeamMemberFn = async (teamMember: TeamMember) => {
   return teamMember;
 };
 
-const updateTeamMember: UpdateTeamMemberFn = async (teamMember: TeamMember) => {
+const updateTeamMember: UpdateTeamMemberFn = async ({ teamMember }) => {
   const db = await getDB();
 
   await db.put(
@@ -139,10 +139,7 @@ const updateTeamMember: UpdateTeamMemberFn = async (teamMember: TeamMember) => {
   return teamMember;
 };
 
-const deleteTeamMember: DeleteTeamMemberFn = async (
-  teamId: string,
-  id: string,
-) => {
+const deleteTeamMember: DeleteTeamMemberFn = async ({ teamId, id }) => {
   const db = await getDB();
 
   await db.delete('teamMembers', `${teamId}-${id}`);
@@ -150,19 +147,19 @@ const deleteTeamMember: DeleteTeamMemberFn = async (
 
 ///////////////////////////////////////////////////////////////
 
-const getProjects: GetProjectsFn = async () => {
+const getProjects: GetProjectsFn = async ({}) => {
   const db = await getDB();
 
   return await db.getAll('projects');
 };
 
-const getProject: GetProjectFn = async (id: string) => {
+const getProject: GetProjectFn = async ({ id }) => {
   const db = await getDB();
 
   return await db.get('projects', id);
 };
 
-const createProject: CreateProjectFn = async (project: Project) => {
+const createProject: CreateProjectFn = async ({ project }) => {
   const db = await getDB();
 
   await db.put('projects', project, project.id);
@@ -170,7 +167,7 @@ const createProject: CreateProjectFn = async (project: Project) => {
   return project;
 };
 
-const updateProject: UpdateProjectFn = async (project: Project) => {
+const updateProject: UpdateProjectFn = async ({ project }) => {
   const db = await getDB();
 
   await db.put('projects', project, project.id);
@@ -178,7 +175,7 @@ const updateProject: UpdateProjectFn = async (project: Project) => {
   return project;
 };
 
-const deleteProject: DeleteProjectFn = async (id: string) => {
+const deleteProject: DeleteProjectFn = async ({ id }) => {
   const db = await getDB();
 
   await db.delete('projects', id);

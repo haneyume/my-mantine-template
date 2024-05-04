@@ -25,7 +25,7 @@ import {
 } from '@/app-redux';
 
 export const HomePage: FC<{}> = () => {
-  const { data: teams } = useGetTeamsQuery();
+  const { data: teams } = useGetTeamsQuery({});
 
   if (!teams) {
     return <div>Loading...</div>;
@@ -55,22 +55,24 @@ const TeamSection = ({
 
   const [search, setSearch] = useState<string>('');
 
-  const { data: projects } = useGetProjectsQuery();
+  const { data: projects } = useGetProjectsQuery({});
 
   const [createProject] = useCreateProjectMutation();
 
   const onCreateProject = (name: string, description?: string) => {
     createProject({
-      id: crypto.randomUUID(),
-      team_id: teamId,
-      is_draft: true,
-      is_public: false,
-      name: name,
-      description: description || '',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
+      project: {
+        id: crypto.randomUUID(),
+        team_id: teamId,
+        is_draft: true,
+        is_public: false,
+        name: name,
+        description: description || '',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
 
-      data: '',
+        data: '',
+      },
     })
       .unwrap()
       .then(() => {

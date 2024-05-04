@@ -1,77 +1,95 @@
 import type { User, Team, TeamMember, Project } from '@/types';
 
-type AuthLoginFn = (email: string, password: string) => Promise<boolean>;
+type LoginFnParams = { email: string; password: string };
+type LoginFn = (params: LoginFnParams) => Promise<boolean>;
 
-type AuthLogoutFn = () => Promise<void>;
+type LogoutFnParams = {};
+type LogoutFn = (params: LogoutFnParams) => Promise<void>;
 
-type AuthCheckAuthedFn = () => Promise<void>;
-
-//
-
-type LoginFn = (email: string, password: string) => Promise<boolean>;
-
-type LogoutFn = () => Promise<void>;
-
-type CheckAuthedFn = () => Promise<void>;
+type CheckAuthedFnParams = {};
+type CheckAuthedFn = (params: CheckAuthedFnParams) => Promise<void>;
 
 //
 
-type GetUsersFn = () => Promise<User[]>;
+type GetUsersFnParams = {};
+type GetUsersFn = (params: GetUsersFnParams) => Promise<User[]>;
 
-type GetUserFn = (id: string) => Promise<User | undefined>;
+type GetUserFnParams = { id: string };
+type GetUserFn = (params: GetUserFnParams) => Promise<User | undefined>;
 
-type CreateUserFn = (user: User) => Promise<User>;
+type CreateUserFnParams = { user: User };
+type CreateUserFn = (params: CreateUserFnParams) => Promise<User>;
 
-type UpdateUserFn = (user: User) => Promise<User>;
+type UpdateUserFnParams = { user: User };
+type UpdateUserFn = (params: UpdateUserFnParams) => Promise<User>;
 
-type DeleteUserFn = (id: string) => Promise<void>;
-
-//
-
-type GetTeamsFn = () => Promise<Team[]>;
-
-type GetTeamFn = (id: string) => Promise<Team | undefined>;
-
-type CreateTeamFn = (team: Team) => Promise<Team>;
-
-type UpdateTeamFn = (team: Team) => Promise<Team>;
-
-type DeleteTeamFn = (id: string) => Promise<void>;
+type DeleteUserFnParams = { id: string };
+type DeleteUserFn = (params: DeleteUserFnParams) => Promise<void>;
 
 //
 
-type GetTeamMembersFn = (teamId: string) => Promise<TeamMember[]>;
+type GetTeamsFnParams = {};
+type GetTeamsFn = (params: GetTeamsFnParams) => Promise<Team[]>;
 
+type GetTeamFnParams = { id: string };
+type GetTeamFn = (params: GetTeamFnParams) => Promise<Team | undefined>;
+
+type CreateTeamFnParams = { team: Team };
+type CreateTeamFn = (params: CreateTeamFnParams) => Promise<Team>;
+
+type UpdateTeamFnParams = { team: Team };
+type UpdateTeamFn = (params: UpdateTeamFnParams) => Promise<Team>;
+
+type DeleteTeamFnParams = { id: string };
+type DeleteTeamFn = (params: DeleteTeamFnParams) => Promise<void>;
+
+//
+
+type GetTeamMembersFnParams = { teamId: string };
+type GetTeamMembersFn = (
+  params: GetTeamMembersFnParams,
+) => Promise<TeamMember[]>;
+
+type GetTeamMemberFnParams = { teamId: string; id: string };
 type GetTeamMemberFn = (
-  teamId: string,
-  id: string,
+  params: GetTeamMemberFnParams,
 ) => Promise<TeamMember | undefined>;
 
-type CreateTeamMemberFn = (teamMember: TeamMember) => Promise<TeamMember>;
+type CreateTeamMemberFnParams = { teamMember: TeamMember };
+type CreateTeamMemberFn = (
+  params: CreateTeamMemberFnParams,
+) => Promise<TeamMember>;
 
-type UpdateTeamMemberFn = (teamMember: TeamMember) => Promise<TeamMember>;
+type UpdateTeamMemberFnParams = { teamMember: TeamMember };
+type UpdateTeamMemberFn = (
+  params: UpdateTeamMemberFnParams,
+) => Promise<TeamMember>;
 
-type DeleteTeamMemberFn = (teamId: string, id: string) => Promise<void>;
+type DeleteTeamMemberFnParams = { teamId: string; id: string };
+type DeleteTeamMemberFn = (params: DeleteTeamMemberFnParams) => Promise<void>;
 
 //
 
-type GetProjectsFn = () => Promise<Project[]>;
+type GetProjectsFnParams = {};
+type GetProjectsFn = (params: GetProjectsFnParams) => Promise<Project[]>;
 
-type GetProjectFn = (id: string) => Promise<Project | undefined>;
+type GetProjectFnParams = { id: string };
+type GetProjectFn = (
+  params: GetProjectFnParams,
+) => Promise<Project | undefined>;
 
-type CreateProjectFn = (project: Project) => Promise<Project>;
+type CreateProjectFnParams = { project: Project };
+type CreateProjectFn = (params: CreateProjectFnParams) => Promise<Project>;
 
-type UpdateProjectFn = (project: Project) => Promise<Project>;
+type UpdateProjectFnParams = { project: Project };
+type UpdateProjectFn = (params: UpdateProjectFnParams) => Promise<Project>;
 
-type DeleteProjectFn = (id: string) => Promise<void>;
+type DeleteProjectFnParams = { id: string };
+type DeleteProjectFn = (params: DeleteProjectFnParams) => Promise<void>;
 
 //
 
 export type {
-  AuthLoginFn,
-  AuthLogoutFn,
-  AuthCheckAuthedFn,
-  //
   LoginFn,
   LogoutFn,
   CheckAuthedFn,
@@ -99,4 +117,34 @@ export type {
   CreateProjectFn,
   UpdateProjectFn,
   DeleteProjectFn,
+};
+
+export type {
+  LoginFnParams,
+  LogoutFnParams,
+  CheckAuthedFnParams,
+  //
+  GetUsersFnParams,
+  GetUserFnParams,
+  CreateUserFnParams,
+  UpdateUserFnParams,
+  DeleteUserFnParams,
+  //
+  GetTeamsFnParams,
+  GetTeamFnParams,
+  CreateTeamFnParams,
+  UpdateTeamFnParams,
+  DeleteTeamFnParams,
+  //
+  GetTeamMembersFnParams,
+  GetTeamMemberFnParams,
+  CreateTeamMemberFnParams,
+  UpdateTeamMemberFnParams,
+  DeleteTeamMemberFnParams,
+  //
+  GetProjectsFnParams,
+  GetProjectFnParams,
+  CreateProjectFnParams,
+  UpdateProjectFnParams,
+  DeleteProjectFnParams,
 };

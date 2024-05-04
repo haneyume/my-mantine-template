@@ -36,11 +36,11 @@ import {
 
 ///////////////////////////////////////////////////////////////
 
-const getUsers: GetUsersFn = async () => {
+const getUsers: GetUsersFn = async ({}) => {
   throw new Error('Not implemented');
 };
 
-const getUser: GetUserFn = async (_id: string) => {
+const getUser: GetUserFn = async ({}) => {
   // get current user instead of user by id
 
   const data = await account.get();
@@ -54,11 +54,11 @@ const getUser: GetUserFn = async (_id: string) => {
   } as User;
 };
 
-const createUser: CreateUserFn = async (_user: User) => {
+const createUser: CreateUserFn = async ({}) => {
   throw new Error('Not implemented');
 };
 
-const updateUser: UpdateUserFn = async (user: User) => {
+const updateUser: UpdateUserFn = async ({ user }) => {
   let data = await account.updateName(user.nickname);
 
   data = await account.updatePrefs({
@@ -75,13 +75,13 @@ const updateUser: UpdateUserFn = async (user: User) => {
   } as User;
 };
 
-const deleteUser: DeleteUserFn = async (_id: string) => {
+const deleteUser: DeleteUserFn = async () => {
   throw new Error('Not implemented');
 };
 
 ///////////////////////////////////////////////////////////////
 
-const getTeams: GetTeamsFn = async () => {
+const getTeams: GetTeamsFn = async ({}) => {
   const data = await teams.list();
 
   return data.teams.map((team) => ({
@@ -93,7 +93,7 @@ const getTeams: GetTeamsFn = async () => {
   })) as Team[];
 };
 
-const getTeam: GetTeamFn = async (id: string) => {
+const getTeam: GetTeamFn = async ({ id }) => {
   const data = await teams.get(id);
 
   return {
@@ -105,7 +105,7 @@ const getTeam: GetTeamFn = async (id: string) => {
   } as Team;
 };
 
-const createTeam: CreateTeamFn = async (team: Team) => {
+const createTeam: CreateTeamFn = async ({ team }) => {
   let data = await teams.create(ID.unique(), team.name);
 
   data = await teams.updatePrefs(data.$id, {
@@ -121,7 +121,7 @@ const createTeam: CreateTeamFn = async (team: Team) => {
   } as Team;
 };
 
-const updateTeam: UpdateTeamFn = async (team: Team) => {
+const updateTeam: UpdateTeamFn = async ({ team }) => {
   let data = await teams.updateName(team.id, team.name);
 
   data = await teams.updatePrefs(data.$id, {
@@ -137,13 +137,13 @@ const updateTeam: UpdateTeamFn = async (team: Team) => {
   } as Team;
 };
 
-const deleteTeam: DeleteTeamFn = async (id: string) => {
+const deleteTeam: DeleteTeamFn = async ({ id }) => {
   await teams.delete(id);
 };
 
 ///////////////////////////////////////////////////////////////
 
-const getTeamMembers: GetTeamMembersFn = async (teamId: string) => {
+const getTeamMembers: GetTeamMembersFn = async ({ teamId }) => {
   const data = await teams.listMemberships(teamId);
 
   return data.memberships.map((membership) => ({
@@ -164,7 +164,7 @@ const getTeamMembers: GetTeamMembersFn = async (teamId: string) => {
   })) as TeamMember[];
 };
 
-const getTeamMember: GetTeamMemberFn = async (teamId: string, id: string) => {
+const getTeamMember: GetTeamMemberFn = async ({ teamId, id }) => {
   const data = await teams.getMembership(teamId, id);
 
   return {
@@ -185,7 +185,7 @@ const getTeamMember: GetTeamMemberFn = async (teamId: string, id: string) => {
   } as TeamMember;
 };
 
-const createTeamMember: CreateTeamMemberFn = async (teamMember: TeamMember) => {
+const createTeamMember: CreateTeamMemberFn = async ({ teamMember }) => {
   let data = await teams.createMembership(
     teamMember.team_id,
     [teamMember.role],
@@ -211,7 +211,7 @@ const createTeamMember: CreateTeamMemberFn = async (teamMember: TeamMember) => {
   } as TeamMember;
 };
 
-const updateTeamMember: UpdateTeamMemberFn = async (teamMember: TeamMember) => {
+const updateTeamMember: UpdateTeamMemberFn = async ({ teamMember }) => {
   let data = await teams.updateMembership(teamMember.team_id, teamMember.id, [
     teamMember.role,
   ]);
@@ -234,16 +234,13 @@ const updateTeamMember: UpdateTeamMemberFn = async (teamMember: TeamMember) => {
   } as TeamMember;
 };
 
-const deleteTeamMember: DeleteTeamMemberFn = async (
-  teamId: string,
-  id: string,
-) => {
+const deleteTeamMember: DeleteTeamMemberFn = async ({ teamId, id }) => {
   await teams.deleteMembership(teamId, id);
 };
 
 ///////////////////////////////////////////////////////////////
 
-const getProjects: GetProjectsFn = async () => {
+const getProjects: GetProjectsFn = async ({}) => {
   const data = await databases.listDocuments(
     DATABASE_ID,
     PROJECTS_COLLECTION_ID,
@@ -263,7 +260,7 @@ const getProjects: GetProjectsFn = async () => {
   })) as Project[];
 };
 
-const getProject: GetProjectFn = async (id: string) => {
+const getProject: GetProjectFn = async ({ id }) => {
   const data = await databases.getDocument(
     DATABASE_ID,
     PROJECTS_COLLECTION_ID,
@@ -284,7 +281,7 @@ const getProject: GetProjectFn = async (id: string) => {
   } as Project;
 };
 
-const createProject: CreateProjectFn = async (project: Project) => {
+const createProject: CreateProjectFn = async ({ project }) => {
   const data = await databases.createDocument(
     DATABASE_ID,
     PROJECTS_COLLECTION_ID,
@@ -313,7 +310,7 @@ const createProject: CreateProjectFn = async (project: Project) => {
   } as Project;
 };
 
-const updateProject: UpdateProjectFn = async (project: Project) => {
+const updateProject: UpdateProjectFn = async ({ project }) => {
   const data = await databases.updateDocument(
     DATABASE_ID,
     PROJECTS_COLLECTION_ID,
@@ -342,7 +339,7 @@ const updateProject: UpdateProjectFn = async (project: Project) => {
   } as Project;
 };
 
-const deleteProject: DeleteProjectFn = async (id: string) => {
+const deleteProject: DeleteProjectFn = async ({ id }) => {
   await databases.deleteDocument(DATABASE_ID, PROJECTS_COLLECTION_ID, id);
 };
 

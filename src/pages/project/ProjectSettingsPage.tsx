@@ -34,10 +34,12 @@ export const ProjectSettingsPage: FC = () => {
         defaultData={project}
         onSubmitForm={({ id, name, description }) => {
           updateProject({
-            ...project,
-            id,
-            name,
-            description,
+            project: {
+              ...project,
+              id,
+              name,
+              description,
+            },
           })
             .unwrap()
             .then(() => {

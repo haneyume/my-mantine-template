@@ -21,7 +21,7 @@ export const AuthProtectedPage: FC<AuthProtectedPageProps> = ({ children }) => {
 
   useEffect(() => {
     if (!initialized) {
-      auth_checkAuthed();
+      auth_checkAuthed({});
     }
 
     if (initialized && !currentUserId) {

@@ -34,10 +34,12 @@ export const TeamSettingsPage: FC = () => {
         defaultData={team}
         onSubmitForm={({ id, name, description }) => {
           updateTeam({
-            ...team,
-            id,
-            name,
-            description,
+            team: {
+              ...team,
+              id,
+              name,
+              description,
+            },
           })
             .unwrap()
             .then(() => {

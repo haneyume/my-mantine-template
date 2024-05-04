@@ -1,4 +1,4 @@
-import type { User, Team, TeamMember, Project } from '@/types';
+import type { Project } from '@/types';
 import type {
   GetUsersFn,
   GetUserFn,
@@ -29,103 +29,105 @@ import { axios } from './providers/api_';
 
 ///////////////////////////////////////////////////////////////
 
-const getUsers: GetUsersFn = async () => {
+const getUsers: GetUsersFn = async ({}) => {
   return [];
 };
 
-const getUser: GetUserFn = async (id: string) => {
+const getUser: GetUserFn = async ({ id }) => {
   console.log(id);
 
   return undefined;
 };
 
-const createUser: CreateUserFn = async (user: User) => {
+const createUser: CreateUserFn = async ({ user }) => {
   return user;
 };
 
-const updateUser: UpdateUserFn = async (user: User) => {
+const updateUser: UpdateUserFn = async ({ user }) => {
   return user;
 };
 
-const deleteUser: DeleteUserFn = async (id: string) => {
+const deleteUser: DeleteUserFn = async ({ id }) => {
   console.log(id);
 };
 
 ///////////////////////////////////////////////////////////////
 
-const getTeams: GetTeamsFn = async () => {
+const getTeams: GetTeamsFn = async ({}) => {
   return [];
 };
 
-const getTeam: GetTeamFn = async (id: string) => {
+const getTeam: GetTeamFn = async ({ id }) => {
   console.log(id);
 
   return undefined;
 };
 
-const createTeam: CreateTeamFn = async (team: Team) => {
+const createTeam: CreateTeamFn = async ({ team }) => {
   return team;
 };
 
-const updateTeam: UpdateTeamFn = async (team: Team) => {
+const updateTeam: UpdateTeamFn = async ({ team }) => {
   return team;
 };
 
-const deleteTeam: DeleteTeamFn = async (id: string) => {
+const deleteTeam: DeleteTeamFn = async ({ id }) => {
   console.log(id);
 };
 
 ///////////////////////////////////////////////////////////////
 
-const getTeamMembers: GetTeamMembersFn = async () => {
+const getTeamMembers: GetTeamMembersFn = async ({ teamId }) => {
+  console.log(teamId);
+
   return [];
 };
 
-const getTeamMember: GetTeamMemberFn = async (id: string) => {
-  console.log(id);
+const getTeamMember: GetTeamMemberFn = async ({ teamId, id }) => {
+  console.log(teamId, id);
 
   return undefined;
 };
 
-const createTeamMember: CreateTeamMemberFn = async (teamMember: TeamMember) => {
+const createTeamMember: CreateTeamMemberFn = async ({ teamMember }) => {
   return teamMember;
 };
 
-const updateTeamMember: UpdateTeamMemberFn = async (teamMember: TeamMember) => {
+const updateTeamMember: UpdateTeamMemberFn = async ({ teamMember }) => {
   return teamMember;
 };
 
-const deleteTeamMember: DeleteTeamMemberFn = async (id: string) => {
-  console.log(id);
+const deleteTeamMember: DeleteTeamMemberFn = async ({ teamId, id }) => {
+  console.log(teamId, id);
 };
 
 ///////////////////////////////////////////////////////////////
 
-const getProjects: GetProjectsFn = async () => {
+const getProjects: GetProjectsFn = async ({}) => {
   const res = await axios.get(`/api/projects`);
 
   return res.data as Project[];
 };
 
-const getProject: GetProjectFn = async (id: string) => {
+const getProject: GetProjectFn = async ({ id }) => {
   const res = await axios.get(`/api/projects/${id}`);
 
   return res.data as Project | undefined;
 };
 
-const createProject: CreateProjectFn = async (project: Project) => {
+const createProject: CreateProjectFn = async ({ project }) => {
   console.log(project);
 
   return project;
 };
 
-const updateProject: UpdateProjectFn = async (project: Project) => {
+const updateProject: UpdateProjectFn = async ({ project }) => {
   await axios.put(`/api/projects/${project.id}`, project);
 
   return project;
 };
 
-const deleteProject: DeleteProjectFn = async (id: string) => {
+const deleteProject: DeleteProjectFn = async ({ id }) => {
   await axios.delete(`/api/projects/${id}`);
 };
 

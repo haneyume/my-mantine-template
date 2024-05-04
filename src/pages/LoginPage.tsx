@@ -26,7 +26,7 @@ export const LoginPage: FC = () => {
 
   useEffect(() => {
     if (!initialized) {
-      auth_checkAuthed();
+      auth_checkAuthed({});
     }
 
     if (initialized && currentUserId) {
@@ -55,7 +55,7 @@ export const LoginPage: FC = () => {
 
         <Button
           onClick={() => {
-            auth_login(email, password);
+            auth_login({ email, password });
           }}
         >
           Login

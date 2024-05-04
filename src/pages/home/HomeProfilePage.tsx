@@ -37,10 +37,12 @@ export const HomeProfilePage: FC = () => {
         }}
         onSubmitForm={({ email, nickname, introduction }) => {
           updateUser({
-            ...user,
-            email,
-            nickname,
-            introduction,
+            user: {
+              ...user,
+              email,
+              nickname,
+              introduction,
+            },
           })
             .unwrap()
             .then(() => {
