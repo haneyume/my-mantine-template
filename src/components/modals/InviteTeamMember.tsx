@@ -48,6 +48,7 @@ export const InviteTeamMember: FC<InviteTeamMemberProps> = ({
         <Select
           label={tr('Role')}
           placeholder={tr('Please select role')}
+          required
           data={[
             {
               value: 'manager',

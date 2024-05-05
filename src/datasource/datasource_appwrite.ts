@@ -97,8 +97,8 @@ const getTeams: GetTeamsFn = async ({}) => {
     id: team.$id,
     name: team.name,
     description: team.prefs.description || '',
-    created_at: team.$createdAt,
-    updated_at: team.$updatedAt,
+    createdAt: team.$createdAt,
+    updatedAt: team.$updatedAt,
   })) as Team[];
 
   return {
@@ -114,8 +114,8 @@ const getTeam: GetTeamFn = async ({ id }) => {
     id: data.$id,
     name: data.name,
     description: data.prefs.description || '',
-    created_at: data.$createdAt,
-    updated_at: data.$updatedAt,
+    createdAt: data.$createdAt,
+    updatedAt: data.$updatedAt,
   } as Team;
 };
 
@@ -135,8 +135,8 @@ const createTeam: CreateTeamFn = async ({ team }) => {
     id: data.$id,
     name: data.name,
     description: data.prefs?.description || '',
-    created_at: data.$createdAt,
-    updated_at: data.$updatedAt,
+    createdAt: data.$createdAt,
+    updatedAt: data.$updatedAt,
   } as Team;
 };
 
@@ -156,8 +156,8 @@ const updateTeam: UpdateTeamFn = async ({ team }) => {
     id: data.$id,
     name: data.name,
     description: data.prefs?.description || '',
-    created_at: data.$createdAt,
-    updated_at: data.$updatedAt,
+    createdAt: data.$createdAt,
+    updatedAt: data.$updatedAt,
   } as Team;
 };
 
@@ -172,11 +172,11 @@ const getTeamMembers: GetTeamMembersFn = async ({ teamId }) => {
 
   const data = res.memberships.map((membership) => ({
     id: membership.$id,
-    team_id: membership.teamId,
-    user_id: membership.userId,
+    teamId: membership.teamId,
+    userId: membership.userId,
     role: membership.roles[0],
-    created_at: membership.$createdAt,
-    updated_at: membership.$updatedAt,
+    createdAt: membership.$createdAt,
+    updatedAt: membership.$updatedAt,
     //
     user: {
       id: membership.userId,
@@ -198,11 +198,11 @@ const getTeamMember: GetTeamMemberFn = async ({ teamId, id }) => {
 
   return {
     id: data.$id,
-    team_id: data.teamId,
-    user_id: data.userId,
+    teamId: data.teamId,
+    userId: data.userId,
     role: data.roles[0],
-    created_at: data.$createdAt,
-    updated_at: data.$updatedAt,
+    createdAt: data.$createdAt,
+    updatedAt: data.$updatedAt,
     //
     user: {
       id: data.userId,
@@ -216,19 +216,19 @@ const getTeamMember: GetTeamMemberFn = async ({ teamId, id }) => {
 
 const createTeamMember: CreateTeamMemberFn = async ({ teamMember }) => {
   let data = await teams.createMembership(
-    teamMember.team_id,
+    teamMember.teamId,
     [teamMember.role],
     undefined,
-    teamMember.user_id,
+    teamMember.userId,
   );
 
   return {
     id: data.$id,
-    team_id: data.teamId,
-    user_id: data.userId,
+    teamId: data.teamId,
+    userId: data.userId,
     role: data.roles[0],
-    created_at: data.$createdAt,
-    updated_at: data.$updatedAt,
+    createdAt: data.$createdAt,
+    updatedAt: data.$updatedAt,
     //
     user: {
       id: data.userId,
@@ -241,17 +241,17 @@ const createTeamMember: CreateTeamMemberFn = async ({ teamMember }) => {
 };
 
 const updateTeamMember: UpdateTeamMemberFn = async ({ teamMember }) => {
-  let data = await teams.updateMembership(teamMember.team_id, teamMember.id, [
+  let data = await teams.updateMembership(teamMember.teamId, teamMember.id, [
     teamMember.role,
   ]);
 
   return {
     id: data.$id,
-    team_id: data.teamId,
-    user_id: data.userId,
+    teamId: data.teamId,
+    userId: data.userId,
     role: data.roles[0],
-    created_at: data.$createdAt,
-    updated_at: data.$updatedAt,
+    createdAt: data.$createdAt,
+    updatedAt: data.$updatedAt,
     //
     user: {
       id: data.userId,
@@ -277,13 +277,13 @@ const getProjects: GetProjectsFn = async ({}) => {
 
   const data = res.documents.map((doc) => ({
     id: doc.$id,
-    team_id: doc.teamId,
-    is_draft: doc.isDraft,
-    is_public: doc.isPublic,
+    teamId: doc.teamId,
+    isDraft: doc.isDraft,
+    isPublic: doc.isPublic,
     name: doc.name,
     description: doc.description,
-    created_at: doc.$createdAt,
-    updated_at: doc.$updatedAt,
+    createdAt: doc.$createdAt,
+    updatedAt: doc.$updatedAt,
     //
     data: doc.data,
   })) as Project[];
@@ -303,13 +303,13 @@ const getProject: GetProjectFn = async ({ id }) => {
 
   return {
     id: data.$id,
-    team_id: data.teamId,
-    is_draft: data.isDraft,
-    is_public: data.isPublic,
+    teamId: data.teamId,
+    isDraft: data.isDraft,
+    isPublic: data.isPublic,
     name: data.name,
     description: data.description,
-    created_at: data.$createdAt,
-    updated_at: data.$updatedAt,
+    createdAt: data.$createdAt,
+    updatedAt: data.$updatedAt,
     //
     data: data.data,
   } as Project;
@@ -321,29 +321,29 @@ const createProject: CreateProjectFn = async ({ project }) => {
     PROJECTS_COLLECTION_ID,
     ID.unique(),
     {
-      teamId: project.team_id,
-      isDraft: project.is_draft,
-      isPublic: project.is_public,
+      teamId: project.teamId,
+      isDraft: project.isDraft,
+      isPublic: project.isPublic,
       name: project.name,
       description: project.description,
       data: project.data,
     },
     [
-      Permission.read(Role.team(project.team_id)),
-      Permission.update(Role.team(project.team_id)),
-      Permission.delete(Role.team(project.team_id, 'owner')),
+      Permission.read(Role.team(project.teamId)),
+      Permission.update(Role.team(project.teamId)),
+      Permission.delete(Role.team(project.teamId, 'owner')),
     ],
   );
 
   return {
     id: data.$id,
-    team_id: data.teamId,
-    is_draft: data.isDraft,
-    is_public: data.isPublic,
+    teamId: data.teamId,
+    isDraft: data.isDraft,
+    isPublic: data.isPublic,
     name: data.name,
     description: data.description,
-    created_at: data.$createdAt,
-    updated_at: data.$updatedAt,
+    createdAt: data.$createdAt,
+    updatedAt: data.$updatedAt,
     //
     data: data.data,
   } as Project;
@@ -355,9 +355,9 @@ const updateProject: UpdateProjectFn = async ({ project }) => {
     PROJECTS_COLLECTION_ID,
     project.id,
     {
-      teamId: project.team_id,
-      isDraft: project.is_draft,
-      isPublic: project.is_public,
+      teamId: project.teamId,
+      isDraft: project.isDraft,
+      isPublic: project.isPublic,
       name: project.name,
       description: project.description,
       data: project.data,
@@ -366,13 +366,13 @@ const updateProject: UpdateProjectFn = async ({ project }) => {
 
   return {
     id: data.$id,
-    team_id: data.teamId,
-    is_draft: data.isDraft,
-    is_public: data.isPublic,
+    teamId: data.teamId,
+    isDraft: data.isDraft,
+    isPublic: data.isPublic,
     name: data.name,
     description: data.description,
-    created_at: data.$createdAt,
-    updated_at: data.$updatedAt,
+    createdAt: data.$createdAt,
+    updatedAt: data.$updatedAt,
     //
     data: data.data,
   } as Project;

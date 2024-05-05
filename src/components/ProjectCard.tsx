@@ -9,7 +9,7 @@ export interface ProjectCardProps {
   name: string;
   description: string;
   thumbnail: string;
-  created_at: string;
+  createdAt: string;
   onClick: () => void;
 }
 
@@ -17,7 +17,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({
   name,
   description,
   thumbnail,
-  created_at,
+  createdAt,
   onClick,
 }) => {
   const { t: tr } = useTranslation();
@@ -38,7 +38,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({
 
           <div className="flex-1" />
 
-          <Badge color="gray">{dayjs().from(dayjs(created_at))}</Badge>
+          <Badge color="gray">{dayjs().from(dayjs(createdAt))}</Badge>
         </Group>
 
         <Text size="sm">{description}</Text>

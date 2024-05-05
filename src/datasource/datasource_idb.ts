@@ -110,7 +110,7 @@ const getTeamMembers: GetTeamMembersFn = async ({ teamId }) => {
 
   let data = await db.getAll('teamMembers');
 
-  data = data.filter((teamMember) => teamMember.team_id === teamId);
+  data = data.filter((teamMember) => teamMember.teamId === teamId);
 
   return { data, total: data.length };
 };
@@ -127,7 +127,7 @@ const createTeamMember: CreateTeamMemberFn = async ({ teamMember }) => {
   await db.put(
     'teamMembers',
     teamMember,
-    `${teamMember.team_id}-${teamMember.id}`,
+    `${teamMember.teamId}-${teamMember.id}`,
   );
 
   return teamMember;
@@ -139,7 +139,7 @@ const updateTeamMember: UpdateTeamMemberFn = async ({ teamMember }) => {
   await db.put(
     'teamMembers',
     teamMember,
-    `${teamMember.team_id}-${teamMember.id}`,
+    `${teamMember.teamId}-${teamMember.id}`,
   );
 
   return teamMember;

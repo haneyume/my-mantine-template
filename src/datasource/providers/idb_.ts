@@ -17,22 +17,22 @@ interface MyDB extends DBSchema {
     value: Team;
     key: string;
     indexes: {
-      by_created_at: string;
+      by_createdAt: string;
     };
   };
   teamMembers: {
     value: TeamMember;
     key: string;
     indexes: {
-      by_created_at: string;
+      by_createdAt: string;
     };
   };
   projects: {
     value: Project;
     key: string;
     indexes: {
-      by_team_id: string;
-      by_created_at: string;
+      by_teamId: string;
+      by_createdAt: string;
     };
   };
 }
@@ -49,14 +49,14 @@ async function initDB() {
       console.log(userStore);
 
       const teamStore = db.createObjectStore('teams');
-      teamStore.createIndex('by_created_at', 'created_at');
+      teamStore.createIndex('by_createdAt', 'createdAt');
 
       const teamMemberStore = db.createObjectStore('teamMembers');
-      teamMemberStore.createIndex('by_created_at', 'created_at');
+      teamMemberStore.createIndex('by_createdAt', 'createdAt');
 
       const projectStore = db.createObjectStore('projects');
-      projectStore.createIndex('by_team_id', 'team_id');
-      projectStore.createIndex('by_created_at', 'created_at');
+      projectStore.createIndex('by_teamId', 'teamId');
+      projectStore.createIndex('by_createdAt', 'createdAt');
 
       // fake data
       {
@@ -76,17 +76,17 @@ async function initDB() {
           id: defaultTeamId,
           name: 'Default Team',
           description: '',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
         };
 
         const defaultTeamMember: TeamMember = {
           id: defaultTeamMemberId,
-          team_id: defaultTeamId,
-          user_id: defaultUserId,
+          teamId: defaultTeamId,
+          userId: defaultUserId,
           role: 'owner',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
           user: defaultUser,
         };
 

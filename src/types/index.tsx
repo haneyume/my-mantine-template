@@ -10,17 +10,17 @@ type Team = {
   id: string;
   name: string;
   description: string;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 type TeamMember = {
   id: string;
-  team_id: string;
-  user_id: string;
+  teamId: string;
+  userId: string;
   role: 'owner' | 'manager' | 'member';
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 
   // user
   user: User;
@@ -28,13 +28,13 @@ type TeamMember = {
 
 type Project = {
   id: string;
-  team_id: string;
-  is_draft: boolean;
-  is_public: boolean;
+  teamId: string;
+  isDraft: boolean;
+  isPublic: boolean;
   name: string;
   description: string;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 
   // data
   data: string;

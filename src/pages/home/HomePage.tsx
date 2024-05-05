@@ -63,13 +63,13 @@ const TeamSection = ({
     createProject({
       project: {
         id: crypto.randomUUID(),
-        team_id: teamId,
-        is_draft: true,
-        is_public: false,
+        teamId: teamId,
+        isDraft: true,
+        isPublic: false,
         name: name,
         description: description || '',
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
 
         data: '',
       },
@@ -131,7 +131,7 @@ const TeamSection = ({
       <SimpleGrid cols={3}>
         {projects.data
           .filter((project) => {
-            return project.team_id === teamId;
+            return project.teamId === teamId;
           })
           .filter((project) => {
             return project.name.toLowerCase().includes(search.toLowerCase());
@@ -143,7 +143,7 @@ const TeamSection = ({
                 name={project.name}
                 description={project.description}
                 thumbnail="/img/project-bg.jpg"
-                created_at={project.created_at}
+                createdAt={project.createdAt}
                 onClick={() => navigate(`/project/${project.id}`)}
               />
             );

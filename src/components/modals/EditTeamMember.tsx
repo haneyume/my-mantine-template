@@ -46,6 +46,7 @@ export const EditTeamMember: FC<EditTeamMemberProps> = ({ onSubmitForm }) => {
         <Select
           label={tr('Role')}
           placeholder={tr('Please select role')}
+          required
           data={[
             {
               value: 'admin',

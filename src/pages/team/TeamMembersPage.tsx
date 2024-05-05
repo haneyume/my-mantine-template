@@ -60,9 +60,21 @@ export const TeamMembersPage: FC = () => {
       accessor: 'role',
       noWrap: true,
       sortable: true,
+      render: (record: any) => {
+        switch (record.role) {
+          case 'owner':
+            return <div>{tr('Owner')}</div>;
+          case 'manager':
+            return <div>{tr('Manager')}</div>;
+          case 'member':
+            return <div>{tr('Member')}</div>;
+          default:
+            return <div />;
+        }
+      },
     },
     {
-      accessor: 'created_at',
+      accessor: 'createdAt',
       noWrap: true,
       sortable: true,
     },

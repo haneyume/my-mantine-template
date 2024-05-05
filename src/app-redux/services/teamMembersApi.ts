@@ -85,13 +85,13 @@ export const teamMembersApi = createApi({
         }
       },
       onQueryStarted: async (
-        { teamMember: { team_id, id }, ...patch },
+        { teamMember: { teamId, id }, ...patch },
         { dispatch, queryFulfilled },
       ) => {
         const patchResult = dispatch(
           teamMembersApi.util.updateQueryData(
             'getTeamMemberById',
-            { teamId: team_id, id },
+            { teamId, id },
             (draft) => {
               Object.assign(draft || {}, patch);
             },
