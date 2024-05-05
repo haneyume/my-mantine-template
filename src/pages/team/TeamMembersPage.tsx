@@ -27,8 +27,8 @@ export const TeamMembersPage: FC = () => {
 
   const { data: teamMembers } = useGetTeamMembersQuery({ teamId });
 
-  const totalRecords = teamMembers?.length || 0;
-  const displayData = (teamMembers || []).slice(
+  const totalRecords = teamMembers?.total || 0;
+  const displayData = (teamMembers?.data || []).slice(
     (page - 1) * PAGE_SIZE,
     page * PAGE_SIZE,
   );

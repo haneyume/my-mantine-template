@@ -32,7 +32,9 @@ import { getDB } from './providers/idb_';
 const getUsers: GetUsersFn = async ({}) => {
   const db = await getDB();
 
-  return await db.getAll('users');
+  const data = await db.getAll('users');
+
+  return { data, total: data.length };
 };
 
 const getUser: GetUserFn = async ({ id }) => {
@@ -68,7 +70,9 @@ const deleteUser: DeleteUserFn = async ({ id }) => {
 const getTeams: GetTeamsFn = async ({}) => {
   const db = await getDB();
 
-  return await db.getAll('teams');
+  const data = await db.getAll('teams');
+
+  return { data, total: data.length };
 };
 
 const getTeam: GetTeamFn = async ({ id }) => {
@@ -104,9 +108,11 @@ const deleteTeam: DeleteTeamFn = async ({ id }) => {
 const getTeamMembers: GetTeamMembersFn = async ({ teamId }) => {
   const db = await getDB();
 
-  const data = await db.getAll('teamMembers');
+  let data = await db.getAll('teamMembers');
 
-  return data.filter((teamMember) => teamMember.team_id === teamId);
+  data = data.filter((teamMember) => teamMember.team_id === teamId);
+
+  return { data, total: data.length };
 };
 
 const getTeamMember: GetTeamMemberFn = async ({ teamId, id }) => {
@@ -150,7 +156,9 @@ const deleteTeamMember: DeleteTeamMemberFn = async ({ teamId, id }) => {
 const getProjects: GetProjectsFn = async ({}) => {
   const db = await getDB();
 
-  return await db.getAll('projects');
+  const data = await db.getAll('projects');
+
+  return { data, total: data.length };
 };
 
 const getProject: GetProjectFn = async ({ id }) => {

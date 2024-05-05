@@ -27,13 +27,13 @@ import {
 export const HomePage: FC<{}> = () => {
   const { data: teams } = useGetTeamsQuery({});
 
-  if (!teams) {
+  if (!teams?.data) {
     return <div>Loading...</div>;
   }
 
   return (
     <Stack p="md">
-      {teams.map((team) => {
+      {teams.data.map((team) => {
         return (
           <TeamSection key={team.id} teamId={team.id} teamName={team.name} />
         );
@@ -90,7 +90,7 @@ const TeamSection = ({
       });
   };
 
-  if (!projects) {
+  if (!projects?.data) {
     return <div>Loading...</div>;
   }
 
@@ -129,8 +129,8 @@ const TeamSection = ({
       </Group>
 
       <SimpleGrid cols={3}>
-        {projects
-          ?.filter((project) => {
+        {projects.data
+          .filter((project) => {
             return project.team_id === teamId;
           })
           .filter((project) => {

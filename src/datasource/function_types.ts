@@ -17,7 +17,7 @@ type CheckAuthedFn = (
 //
 
 type GetUsersFnParams = {};
-type GetUsersFnReturn = User[];
+type GetUsersFnReturn = { data: User[]; total: number };
 type GetUsersFn = (params: GetUsersFnParams) => Promise<GetUsersFnReturn>;
 
 type GetUserFnParams = { id: string };
@@ -39,7 +39,7 @@ type DeleteUserFn = (params: DeleteUserFnParams) => Promise<DeleteUserFnReturn>;
 //
 
 type GetTeamsFnParams = {};
-type GetTeamsFnReturn = Team[];
+type GetTeamsFnReturn = { data: Team[]; total: number };
 type GetTeamsFn = (params: GetTeamsFnParams) => Promise<GetTeamsFnReturn>;
 
 type GetTeamFnParams = { id: string };
@@ -61,7 +61,7 @@ type DeleteTeamFn = (params: DeleteTeamFnParams) => Promise<DeleteTeamFnReturn>;
 //
 
 type GetTeamMembersFnParams = { teamId: string };
-type GetTeamMembersFnReturn = TeamMember[];
+type GetTeamMembersFnReturn = { data: TeamMember[]; total: number };
 type GetTeamMembersFn = (
   params: GetTeamMembersFnParams,
 ) => Promise<GetTeamMembersFnReturn>;
@@ -93,7 +93,7 @@ type DeleteTeamMemberFn = (
 //
 
 type GetProjectsFnParams = {};
-type GetProjectsFnReturn = Project[];
+type GetProjectsFnReturn = { data: Project[]; total: number };
 type GetProjectsFn = (
   params: GetProjectsFnParams,
 ) => Promise<GetProjectsFnReturn>;

@@ -30,7 +30,7 @@ import { axios } from './providers/api_';
 ///////////////////////////////////////////////////////////////
 
 const getUsers: GetUsersFn = async ({}) => {
-  return [];
+  return { data: [], total: 0 };
 };
 
 const getUser: GetUserFn = async ({ id }) => {
@@ -54,7 +54,7 @@ const deleteUser: DeleteUserFn = async ({ id }) => {
 ///////////////////////////////////////////////////////////////
 
 const getTeams: GetTeamsFn = async ({}) => {
-  return [];
+  return { data: [], total: 0 };
 };
 
 const getTeam: GetTeamFn = async ({ id }) => {
@@ -80,7 +80,7 @@ const deleteTeam: DeleteTeamFn = async ({ id }) => {
 const getTeamMembers: GetTeamMembersFn = async ({ teamId }) => {
   console.log(teamId);
 
-  return [];
+  return { data: [], total: 0 };
 };
 
 const getTeamMember: GetTeamMemberFn = async ({ teamId, id }) => {
@@ -106,7 +106,9 @@ const deleteTeamMember: DeleteTeamMemberFn = async ({ teamId, id }) => {
 const getProjects: GetProjectsFn = async ({}) => {
   const res = await axios.get(`/api/projects`);
 
-  return res.data as Project[];
+  const data = res.data as Project[];
+
+  return { data, total: data.length };
 };
 
 const getProject: GetProjectFn = async ({ id }) => {

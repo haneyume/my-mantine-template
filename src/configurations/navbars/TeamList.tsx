@@ -75,7 +75,7 @@ export const TeamList: FC<TeamListProps> = ({ onNavigate }) => {
       </Group>
 
       <Stack gap={0}>
-        {teams?.map((team) => {
+        {teams?.data?.map((team) => {
           return (
             <NavLink
               className="rounded-lg"

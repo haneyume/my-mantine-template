@@ -82,15 +82,20 @@ const deleteUser: DeleteUserFn = async () => {
 ///////////////////////////////////////////////////////////////
 
 const getTeams: GetTeamsFn = async ({}) => {
-  const data = await teams.list();
+  const res = await teams.list();
 
-  return data.teams.map((team) => ({
+  const data = res.teams.map((team) => ({
     id: team.$id,
     name: team.name,
     description: team.prefs.description || '',
     created_at: team.$createdAt,
     updated_at: team.$updatedAt,
   })) as Team[];
+
+  return {
+    data,
+    total: res.total,
+  };
 };
 
 const getTeam: GetTeamFn = async ({ id }) => {
@@ -144,9 +149,9 @@ const deleteTeam: DeleteTeamFn = async ({ id }) => {
 ///////////////////////////////////////////////////////////////
 
 const getTeamMembers: GetTeamMembersFn = async ({ teamId }) => {
-  const data = await teams.listMemberships(teamId);
+  const res = await teams.listMemberships(teamId);
 
-  return data.memberships.map((membership) => ({
+  const data = res.memberships.map((membership) => ({
     id: membership.$id,
     team_id: membership.teamId,
     user_id: membership.userId,
@@ -162,6 +167,11 @@ const getTeamMembers: GetTeamMembersFn = async ({ teamId }) => {
       introduction: '',
     },
   })) as TeamMember[];
+
+  return {
+    data,
+    total: res.total,
+  };
 };
 
 const getTeamMember: GetTeamMemberFn = async ({ teamId, id }) => {
@@ -241,12 +251,12 @@ const deleteTeamMember: DeleteTeamMemberFn = async ({ teamId, id }) => {
 ///////////////////////////////////////////////////////////////
 
 const getProjects: GetProjectsFn = async ({}) => {
-  const data = await databases.listDocuments(
+  const res = await databases.listDocuments(
     DATABASE_ID,
     PROJECTS_COLLECTION_ID,
   );
 
-  return data.documents.map((doc) => ({
+  const data = res.documents.map((doc) => ({
     id: doc.$id,
     team_id: doc.teamId,
     is_draft: doc.isDraft,
@@ -258,6 +268,11 @@ const getProjects: GetProjectsFn = async ({}) => {
     //
     data: doc.data,
   })) as Project[];
+
+  return {
+    data,
+    total: res.total,
+  };
 };
 
 const getProject: GetProjectFn = async ({ id }) => {
