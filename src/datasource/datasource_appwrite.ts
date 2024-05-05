@@ -30,6 +30,8 @@ import {
   teams,
   databases,
   ID,
+  Role,
+  Permission,
   DATABASE_ID,
   PROJECTS_COLLECTION_ID,
 } from './providers/appwrite_';
@@ -111,11 +113,20 @@ const getTeam: GetTeamFn = async ({ id }) => {
 };
 
 const createTeam: CreateTeamFn = async ({ team }) => {
-  let data = await teams.create(ID.unique(), team.name);
+  let data = await teams.create(ID.unique(), team.name, [
+    'owner',
+    'manager',
+    'member',
+  ]);
 
-  data = await teams.updatePrefs(data.$id, {
-    description: team.description,
-  });
+  let prefs: Record<string, any> = {};
+  if (team.description !== '') {
+    prefs.description = team.description;
+  }
+
+  if (Object.keys(prefs).length > 0) {
+    data = await teams.updatePrefs(data.$id, prefs);
+  }
 
   return {
     id: data.$id,
@@ -129,9 +140,14 @@ const createTeam: CreateTeamFn = async ({ team }) => {
 const updateTeam: UpdateTeamFn = async ({ team }) => {
   let data = await teams.updateName(team.id, team.name);
 
-  data = await teams.updatePrefs(data.$id, {
-    description: team.description,
-  });
+  let prefs: Record<string, any> = {};
+  if (team.description !== '') {
+    prefs.description = team.description;
+  }
+
+  if (Object.keys(prefs).length > 0) {
+    data = await teams.updatePrefs(data.$id, prefs);
+  }
 
   return {
     id: data.$id,
@@ -309,6 +325,11 @@ const createProject: CreateProjectFn = async ({ project }) => {
       description: project.description,
       data: project.data,
     },
+    [
+      Permission.read(Role.team(project.team_id)),
+      Permission.update(Role.team(project.team_id)),
+      Permission.delete(Role.team(project.team_id, 'owner')),
+    ],
   );
 
   return {

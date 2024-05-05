@@ -50,8 +50,8 @@ export const InviteTeamMember: FC<InviteTeamMemberProps> = ({
           placeholder={tr('Please select role')}
           data={[
             {
-              value: 'admin',
-              label: tr('Admin'),
+              value: 'manager',
+              label: tr('Manager'),
             },
             {
               value: 'member',
