@@ -23,3 +23,5 @@ export { ID, Role, Permission };
 export const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 export const PROJECTS_COLLECTION_ID = import.meta.env
   .VITE_APPWRITE_PROJECTS_COLLECTION_ID;
+
+console.log('🐳', 'using provider - appwrite');

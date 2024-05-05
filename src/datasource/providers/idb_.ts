@@ -107,3 +107,5 @@ async function getDB() {
 }
 
 export { getDB };
+
+console.log('🐳', 'using provider - idb');
