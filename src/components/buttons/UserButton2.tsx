@@ -27,9 +27,13 @@ export const UserButton: FC<UserButtonProps> = ({ icon, onClick }) => {
   return (
     <UnstyledButton onClick={onClick}>
       <Group>
-        <Avatar color="yellow" radius="xl">
-          {user.nickname.charAt(0)}
-        </Avatar>
+        {user.avatar !== '' ? (
+          <Avatar radius="xl" bg="white" src={user.avatar} />
+        ) : (
+          <Avatar radius="xl" color="yellow">
+            {user.nickname.charAt(0)}
+          </Avatar>
+        )}
 
         <div className="flex-1">
           <Text size="sm">{user.nickname}</Text>

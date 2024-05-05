@@ -63,17 +63,24 @@ const createUser: CreateUserFn = async ({}) => {
 const updateUser: UpdateUserFn = async ({ user }) => {
   let data = await account.updateName(user.nickname);
 
-  data = await account.updatePrefs({
-    avatar: user.avatar,
-    intro: user.introduction,
-  });
+  let prefs: Record<string, any> = {};
+  if (user.avatar) {
+    prefs.avatar = user.avatar;
+  }
+  if (user.introduction) {
+    prefs.introduction = user.introduction;
+  }
+
+  if (Object.keys(prefs).length > 0) {
+    data = await account.updatePrefs(prefs);
+  }
 
   return {
     id: data.$id,
-    avatar: data.prefs.avatar || '',
+    avatar: data.prefs?.avatar || '',
     email: data.email,
     nickname: data.name,
-    introduction: data.prefs.intro || '',
+    introduction: data.prefs?.intro || '',
   } as User;
 };
 
@@ -113,11 +120,7 @@ const getTeam: GetTeamFn = async ({ id }) => {
 };
 
 const createTeam: CreateTeamFn = async ({ team }) => {
-  let data = await teams.create(ID.unique(), team.name, [
-    'owner',
-    'manager',
-    'member',
-  ]);
+  let data = await teams.create(ID.unique(), team.name, ['owner']);
 
   let prefs: Record<string, any> = {};
   if (team.description !== '') {
@@ -131,7 +134,7 @@ const createTeam: CreateTeamFn = async ({ team }) => {
   return {
     id: data.$id,
     name: data.name,
-    description: data.prefs.description || '',
+    description: data.prefs?.description || '',
     created_at: data.$createdAt,
     updated_at: data.$updatedAt,
   } as Team;
@@ -152,7 +155,7 @@ const updateTeam: UpdateTeamFn = async ({ team }) => {
   return {
     id: data.$id,
     name: data.name,
-    description: data.prefs.description || '',
+    description: data.prefs?.description || '',
     created_at: data.$createdAt,
     updated_at: data.$updatedAt,
   } as Team;
