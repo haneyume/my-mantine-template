@@ -1,91 +1,124 @@
 import type { User, Team, TeamMember, Project } from '@/types';
 
 type LoginFnParams = { email: string; password: string };
-type LoginFn = (params: LoginFnParams) => Promise<boolean>;
+type LoginFnReturn = boolean;
+type LoginFn = (params: LoginFnParams) => Promise<LoginFnReturn>;
 
 type LogoutFnParams = {};
-type LogoutFn = (params: LogoutFnParams) => Promise<void>;
+type LogoutFnReturn = void;
+type LogoutFn = (params: LogoutFnParams) => Promise<LogoutFnReturn>;
 
 type CheckAuthedFnParams = {};
-type CheckAuthedFn = (params: CheckAuthedFnParams) => Promise<void>;
+type CheckAuthedFnReturn = void;
+type CheckAuthedFn = (
+  params: CheckAuthedFnParams,
+) => Promise<CheckAuthedFnReturn>;
 
 //
 
 type GetUsersFnParams = {};
-type GetUsersFn = (params: GetUsersFnParams) => Promise<User[]>;
+type GetUsersFnReturn = User[];
+type GetUsersFn = (params: GetUsersFnParams) => Promise<GetUsersFnReturn>;
 
 type GetUserFnParams = { id: string };
-type GetUserFn = (params: GetUserFnParams) => Promise<User | undefined>;
+type GetUserFnReturn = User | undefined;
+type GetUserFn = (params: GetUserFnParams) => Promise<GetUserFnReturn>;
 
 type CreateUserFnParams = { user: User };
-type CreateUserFn = (params: CreateUserFnParams) => Promise<User>;
+type CreateUserFnReturn = User;
+type CreateUserFn = (params: CreateUserFnParams) => Promise<CreateUserFnReturn>;
 
 type UpdateUserFnParams = { user: User };
-type UpdateUserFn = (params: UpdateUserFnParams) => Promise<User>;
+type UpdateUserFnReturn = User;
+type UpdateUserFn = (params: UpdateUserFnParams) => Promise<UpdateUserFnReturn>;
 
 type DeleteUserFnParams = { id: string };
-type DeleteUserFn = (params: DeleteUserFnParams) => Promise<void>;
+type DeleteUserFnReturn = void;
+type DeleteUserFn = (params: DeleteUserFnParams) => Promise<DeleteUserFnReturn>;
 
 //
 
 type GetTeamsFnParams = {};
-type GetTeamsFn = (params: GetTeamsFnParams) => Promise<Team[]>;
+type GetTeamsFnReturn = Team[];
+type GetTeamsFn = (params: GetTeamsFnParams) => Promise<GetTeamsFnReturn>;
 
 type GetTeamFnParams = { id: string };
-type GetTeamFn = (params: GetTeamFnParams) => Promise<Team | undefined>;
+type GetTeamFnReturn = Team | undefined;
+type GetTeamFn = (params: GetTeamFnParams) => Promise<GetTeamFnReturn>;
 
 type CreateTeamFnParams = { team: Team };
-type CreateTeamFn = (params: CreateTeamFnParams) => Promise<Team>;
+type CreateTeamFnReturn = Team;
+type CreateTeamFn = (params: CreateTeamFnParams) => Promise<CreateTeamFnReturn>;
 
 type UpdateTeamFnParams = { team: Team };
-type UpdateTeamFn = (params: UpdateTeamFnParams) => Promise<Team>;
+type UpdateTeamFnReturn = Team;
+type UpdateTeamFn = (params: UpdateTeamFnParams) => Promise<UpdateTeamFnReturn>;
 
 type DeleteTeamFnParams = { id: string };
-type DeleteTeamFn = (params: DeleteTeamFnParams) => Promise<void>;
+type DeleteTeamFnReturn = void;
+type DeleteTeamFn = (params: DeleteTeamFnParams) => Promise<DeleteTeamFnReturn>;
 
 //
 
 type GetTeamMembersFnParams = { teamId: string };
+type GetTeamMembersFnReturn = TeamMember[];
 type GetTeamMembersFn = (
   params: GetTeamMembersFnParams,
-) => Promise<TeamMember[]>;
+) => Promise<GetTeamMembersFnReturn>;
 
 type GetTeamMemberFnParams = { teamId: string; id: string };
+type GetTeamMemberFnReturn = TeamMember | undefined;
 type GetTeamMemberFn = (
   params: GetTeamMemberFnParams,
-) => Promise<TeamMember | undefined>;
+) => Promise<GetTeamMemberFnReturn>;
 
 type CreateTeamMemberFnParams = { teamMember: TeamMember };
+type CreateTeamMemberFnReturn = TeamMember;
 type CreateTeamMemberFn = (
   params: CreateTeamMemberFnParams,
-) => Promise<TeamMember>;
+) => Promise<CreateTeamMemberFnReturn>;
 
 type UpdateTeamMemberFnParams = { teamMember: TeamMember };
+type UpdateTeamMemberFnReturn = TeamMember;
 type UpdateTeamMemberFn = (
   params: UpdateTeamMemberFnParams,
-) => Promise<TeamMember>;
+) => Promise<UpdateTeamMemberFnReturn>;
 
 type DeleteTeamMemberFnParams = { teamId: string; id: string };
-type DeleteTeamMemberFn = (params: DeleteTeamMemberFnParams) => Promise<void>;
+type DeleteTeamMemberFnReturn = void;
+type DeleteTeamMemberFn = (
+  params: DeleteTeamMemberFnParams,
+) => Promise<DeleteTeamMemberFnReturn>;
 
 //
 
 type GetProjectsFnParams = {};
-type GetProjectsFn = (params: GetProjectsFnParams) => Promise<Project[]>;
+type GetProjectsFnReturn = Project[];
+type GetProjectsFn = (
+  params: GetProjectsFnParams,
+) => Promise<GetProjectsFnReturn>;
 
 type GetProjectFnParams = { id: string };
-type GetProjectFn = (
-  params: GetProjectFnParams,
-) => Promise<Project | undefined>;
+type GetProjectFnReturn = Project | undefined;
+type GetProjectFn = (params: GetProjectFnParams) => Promise<GetProjectFnReturn>;
 
 type CreateProjectFnParams = { project: Project };
-type CreateProjectFn = (params: CreateProjectFnParams) => Promise<Project>;
+type CreateProjectFnReturn = Project;
+type CreateProjectFn = (
+  params: CreateProjectFnParams,
+) => Promise<CreateProjectFnReturn>;
 
 type UpdateProjectFnParams = { project: Project };
-type UpdateProjectFn = (params: UpdateProjectFnParams) => Promise<Project>;
+type UpdateProjectFnReturn = Project;
+type UpdateProjectFn = (
+  params: UpdateProjectFnParams,
+) => Promise<UpdateProjectFnReturn>;
 
 type DeleteProjectFnParams = { id: string };
-type DeleteProjectFn = (params: DeleteProjectFnParams) => Promise<void>;
+type DeleteProjectFnReturn = void;
+type DeleteProjectFn = (
+  params: DeleteProjectFnParams,
+) => Promise<DeleteProjectFnReturn>;
 
 //
 
@@ -147,4 +180,34 @@ export type {
   CreateProjectFnParams,
   UpdateProjectFnParams,
   DeleteProjectFnParams,
+};
+
+export type {
+  LoginFnReturn,
+  LogoutFnReturn,
+  CheckAuthedFnReturn,
+  //
+  GetUsersFnReturn,
+  GetUserFnReturn,
+  CreateUserFnReturn,
+  UpdateUserFnReturn,
+  DeleteUserFnReturn,
+  //
+  GetTeamsFnReturn,
+  GetTeamFnReturn,
+  CreateTeamFnReturn,
+  UpdateTeamFnReturn,
+  DeleteTeamFnReturn,
+  //
+  GetTeamMembersFnReturn,
+  GetTeamMemberFnReturn,
+  CreateTeamMemberFnReturn,
+  UpdateTeamMemberFnReturn,
+  DeleteTeamMemberFnReturn,
+  //
+  GetProjectsFnReturn,
+  GetProjectFnReturn,
+  CreateProjectFnReturn,
+  UpdateProjectFnReturn,
+  DeleteProjectFnReturn,
 };

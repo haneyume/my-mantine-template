@@ -13,15 +13,20 @@ import type {
   CreateUserFnParams,
   UpdateUserFnParams,
   DeleteUserFnParams,
+  //
+  GetUsersFnReturn,
+  GetUserFnReturn,
+  CreateUserFnReturn,
+  UpdateUserFnReturn,
+  DeleteUserFnReturn,
 } from '@/datasource/function_types';
-import type { User } from '@/types';
 
 export const usersApi = createApi({
   reducerPath: 'usersApi',
   baseQuery: fakeBaseQuery(),
   tagTypes: ['users'],
   endpoints: (builder) => ({
-    getUsers: builder.query<User[], GetUsersFnParams>({
+    getUsers: builder.query<GetUsersFnReturn, GetUsersFnParams>({
       queryFn: async (arg) => {
         try {
           const res = await getUsers(arg);
@@ -33,7 +38,7 @@ export const usersApi = createApi({
       },
       providesTags: ['users'],
     }),
-    getUserById: builder.query<User, GetUserFnParams>({
+    getUserById: builder.query<GetUserFnReturn, GetUserFnParams>({
       queryFn: async (arg) => {
         try {
           const res = await getUser(arg);
@@ -45,7 +50,7 @@ export const usersApi = createApi({
       },
       providesTags: ['users'],
     }),
-    createUser: builder.mutation<User, CreateUserFnParams>({
+    createUser: builder.mutation<CreateUserFnReturn, CreateUserFnParams>({
       queryFn: async (arg) => {
         try {
           const res = await createUser(arg);
@@ -57,7 +62,7 @@ export const usersApi = createApi({
       },
       invalidatesTags: ['users'],
     }),
-    updateUser: builder.mutation<User, UpdateUserFnParams>({
+    updateUser: builder.mutation<UpdateUserFnReturn, UpdateUserFnParams>({
       queryFn: async (arg) => {
         try {
           const res = await updateUser(arg);
@@ -67,15 +72,16 @@ export const usersApi = createApi({
           return { error };
         }
       },
-      async onQueryStarted(
+      onQueryStarted: async (
         { user: { id }, ...patch },
         { dispatch, queryFulfilled },
-      ) {
+      ) => {
         const patchResult = dispatch(
           usersApi.util.updateQueryData('getUserById', { id }, (draft) => {
-            Object.assign(draft, patch);
+            Object.assign(draft || {}, patch);
           }),
         );
+
         try {
           await queryFulfilled;
         } catch {
@@ -84,11 +90,21 @@ export const usersApi = createApi({
       },
       invalidatesTags: ['users'],
     }),
-    deleteUser: builder.mutation<void, DeleteUserFnParams>({
+    deleteUser: builder.mutation<DeleteUserFnReturn, DeleteUserFnParams>({
       queryFn: async (arg) => {
         try {
           await deleteUser(arg);
 
+          return { data: undefined };
+        } catch (error: any) {
+          return { error };
+        }
+      },
+      invalidatesTags: ['users'],
+    }),
+    refetchUsers: builder.mutation<void, void>({
+      queryFn: async () => {
+        try {
           return { data: undefined };
         } catch (error: any) {
           return { error };
@@ -105,4 +121,5 @@ export const {
   useCreateUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
+  useRefetchUsersMutation,
 } = usersApi;

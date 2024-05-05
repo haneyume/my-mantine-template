@@ -13,15 +13,20 @@ import type {
   CreateProjectFnParams,
   UpdateProjectFnParams,
   DeleteProjectFnParams,
+  //
+  GetProjectsFnReturn,
+  GetProjectFnReturn,
+  CreateProjectFnReturn,
+  UpdateProjectFnReturn,
+  DeleteProjectFnReturn,
 } from '@/datasource/function_types';
-import type { Project } from '@/types';
 
 export const projectsApi = createApi({
   reducerPath: 'projectsApi',
   baseQuery: fakeBaseQuery(),
   tagTypes: ['projects'],
   endpoints: (builder) => ({
-    getProjects: builder.query<Project[], GetProjectsFnParams>({
+    getProjects: builder.query<GetProjectsFnReturn, GetProjectsFnParams>({
       queryFn: async (arg) => {
         try {
           const res = await getProjects(arg);
@@ -33,7 +38,7 @@ export const projectsApi = createApi({
       },
       providesTags: ['projects'],
     }),
-    getProjectById: builder.query<Project, GetProjectFnParams>({
+    getProjectById: builder.query<GetProjectFnReturn, GetProjectFnParams>({
       queryFn: async (arg) => {
         try {
           const res = await getProject(arg);
@@ -45,7 +50,10 @@ export const projectsApi = createApi({
       },
       providesTags: ['projects'],
     }),
-    createProject: builder.mutation<Project, CreateProjectFnParams>({
+    createProject: builder.mutation<
+      CreateProjectFnReturn,
+      CreateProjectFnParams
+    >({
       queryFn: async (arg) => {
         try {
           const res = await createProject(arg);
@@ -57,7 +65,10 @@ export const projectsApi = createApi({
       },
       invalidatesTags: ['projects'],
     }),
-    updateProject: builder.mutation<Project, UpdateProjectFnParams>({
+    updateProject: builder.mutation<
+      UpdateProjectFnReturn,
+      UpdateProjectFnParams
+    >({
       queryFn: async (arg) => {
         try {
           const res = await updateProject(arg);
@@ -67,19 +78,20 @@ export const projectsApi = createApi({
           return { error };
         }
       },
-      async onQueryStarted(
+      onQueryStarted: async (
         { project: { id }, ...patch },
         { dispatch, queryFulfilled },
-      ) {
+      ) => {
         const patchResult = dispatch(
           projectsApi.util.updateQueryData(
             'getProjectById',
             { id },
             (draft) => {
-              Object.assign(draft, patch);
+              Object.assign(draft || {}, patch);
             },
           ),
         );
+
         try {
           await queryFulfilled;
         } catch {
@@ -88,11 +100,24 @@ export const projectsApi = createApi({
       },
       invalidatesTags: ['projects'],
     }),
-    deleteProject: builder.mutation<void, DeleteProjectFnParams>({
+    deleteProject: builder.mutation<
+      DeleteProjectFnReturn,
+      DeleteProjectFnParams
+    >({
       queryFn: async (arg) => {
         try {
           await deleteProject(arg);
 
+          return { data: undefined };
+        } catch (error: any) {
+          return { error };
+        }
+      },
+      invalidatesTags: ['projects'],
+    }),
+    refetchProjects: builder.mutation<void, void>({
+      queryFn: async () => {
+        try {
           return { data: undefined };
         } catch (error: any) {
           return { error };
@@ -109,4 +134,5 @@ export const {
   useCreateProjectMutation,
   useUpdateProjectMutation,
   useDeleteProjectMutation,
+  useRefetchProjectsMutation,
 } = projectsApi;

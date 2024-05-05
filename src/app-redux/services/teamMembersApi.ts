@@ -13,15 +13,23 @@ import type {
   CreateTeamMemberFnParams,
   UpdateTeamMemberFnParams,
   DeleteTeamMemberFnParams,
+  //
+  GetTeamMembersFnReturn,
+  GetTeamMemberFnReturn,
+  CreateTeamMemberFnReturn,
+  UpdateTeamMemberFnReturn,
+  DeleteTeamMemberFnReturn,
 } from '@/datasource/function_types';
-import type { TeamMember } from '@/types';
 
 export const teamMembersApi = createApi({
   reducerPath: 'teamMembersApi',
   baseQuery: fakeBaseQuery(),
   tagTypes: ['teamMembers'],
   endpoints: (builder) => ({
-    getTeamMembers: builder.query<TeamMember[], GetTeamMembersFnParams>({
+    getTeamMembers: builder.query<
+      GetTeamMembersFnReturn,
+      GetTeamMembersFnParams
+    >({
       queryFn: async (arg) => {
         try {
           const res = await getTeamMembers(arg);
@@ -33,7 +41,10 @@ export const teamMembersApi = createApi({
       },
       providesTags: ['teamMembers'],
     }),
-    getTeamMemberById: builder.query<TeamMember, GetTeamMemberFnParams>({
+    getTeamMemberById: builder.query<
+      GetTeamMemberFnReturn,
+      GetTeamMemberFnParams
+    >({
       queryFn: async (arg) => {
         try {
           const res = await getTeamMember(arg);
@@ -45,7 +56,10 @@ export const teamMembersApi = createApi({
       },
       providesTags: ['teamMembers'],
     }),
-    createTeamMember: builder.mutation<TeamMember, CreateTeamMemberFnParams>({
+    createTeamMember: builder.mutation<
+      CreateTeamMemberFnReturn,
+      CreateTeamMemberFnParams
+    >({
       queryFn: async (arg) => {
         try {
           const res = await createTeamMember(arg);
@@ -57,7 +71,10 @@ export const teamMembersApi = createApi({
       },
       invalidatesTags: ['teamMembers'],
     }),
-    updateTeamMember: builder.mutation<TeamMember, UpdateTeamMemberFnParams>({
+    updateTeamMember: builder.mutation<
+      UpdateTeamMemberFnReturn,
+      UpdateTeamMemberFnParams
+    >({
       queryFn: async (arg) => {
         try {
           const res = await updateTeamMember(arg);
@@ -67,19 +84,20 @@ export const teamMembersApi = createApi({
           return { error };
         }
       },
-      async onQueryStarted(
+      onQueryStarted: async (
         { teamMember: { team_id, id }, ...patch },
         { dispatch, queryFulfilled },
-      ) {
+      ) => {
         const patchResult = dispatch(
           teamMembersApi.util.updateQueryData(
             'getTeamMemberById',
             { teamId: team_id, id },
             (draft) => {
-              Object.assign(draft, patch);
+              Object.assign(draft || {}, patch);
             },
           ),
         );
+
         try {
           await queryFulfilled;
         } catch {
@@ -88,11 +106,24 @@ export const teamMembersApi = createApi({
       },
       invalidatesTags: ['teamMembers'],
     }),
-    deleteTeamMember: builder.mutation<void, DeleteTeamMemberFnParams>({
+    deleteTeamMember: builder.mutation<
+      DeleteTeamMemberFnReturn,
+      DeleteTeamMemberFnParams
+    >({
       queryFn: async (arg) => {
         try {
           await deleteTeamMember(arg);
 
+          return { data: undefined };
+        } catch (error: any) {
+          return { error };
+        }
+      },
+      invalidatesTags: ['teamMembers'],
+    }),
+    refetchTeamMembers: builder.mutation<void, void>({
+      queryFn: async () => {
+        try {
           return { data: undefined };
         } catch (error: any) {
           return { error };
@@ -109,4 +140,5 @@ export const {
   useCreateTeamMemberMutation,
   useUpdateTeamMemberMutation,
   useDeleteTeamMemberMutation,
+  useRefetchTeamMembersMutation,
 } = teamMembersApi;
