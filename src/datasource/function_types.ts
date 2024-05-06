@@ -1,5 +1,7 @@
 import type { User, Team, TeamMember, Project } from '@/types';
 
+// Auth
+
 type LoginFnParams = { email: string; password: string };
 type LoginFnReturn = boolean;
 type LoginFn = (params: LoginFnParams) => Promise<LoginFnReturn>;
@@ -14,7 +16,7 @@ type CheckAuthedFn = (
   params: CheckAuthedFnParams,
 ) => Promise<CheckAuthedFnReturn>;
 
-//
+// Users
 
 type GetUsersFnParams = {};
 type GetUsersFnReturn = { data: User[]; total: number };
@@ -36,7 +38,7 @@ type DeleteUserFnParams = { id: string };
 type DeleteUserFnReturn = void;
 type DeleteUserFn = (params: DeleteUserFnParams) => Promise<DeleteUserFnReturn>;
 
-//
+// Teams
 
 type GetTeamsFnParams = {};
 type GetTeamsFnReturn = { data: Team[]; total: number };
@@ -58,7 +60,7 @@ type DeleteTeamFnParams = { id: string };
 type DeleteTeamFnReturn = void;
 type DeleteTeamFn = (params: DeleteTeamFnParams) => Promise<DeleteTeamFnReturn>;
 
-//
+// Team Members
 
 type GetTeamMembersFnParams = { teamId: string };
 type GetTeamMembersFnReturn = { data: TeamMember[]; total: number };
@@ -90,7 +92,7 @@ type DeleteTeamMemberFn = (
   params: DeleteTeamMemberFnParams,
 ) => Promise<DeleteTeamMemberFnReturn>;
 
-//
+// Projects
 
 type GetProjectsFnParams = {};
 type GetProjectsFnReturn = { data: Project[]; total: number };
@@ -120,94 +122,111 @@ type DeleteProjectFn = (
   params: DeleteProjectFnParams,
 ) => Promise<DeleteProjectFnReturn>;
 
+// Misc
+
+type InviteMemberFnParams = { teamId: string; email: string; role: string };
+type InviteMemberFnReturn = void;
+type InviteMemberFn = (
+  params: InviteMemberFnParams,
+) => Promise<InviteMemberFnReturn>;
+
 //
 
 export type {
+  // Auth
   LoginFn,
   LogoutFn,
   CheckAuthedFn,
-  //
+  // Users
   GetUsersFn,
   GetUserFn,
   CreateUserFn,
   UpdateUserFn,
   DeleteUserFn,
-  //
+  // Teams
   GetTeamsFn,
   GetTeamFn,
   CreateTeamFn,
   UpdateTeamFn,
   DeleteTeamFn,
-  //
+  // Team Members
   GetTeamMembersFn,
   GetTeamMemberFn,
   CreateTeamMemberFn,
   UpdateTeamMemberFn,
   DeleteTeamMemberFn,
-  //
+  // Projects
   GetProjectsFn,
   GetProjectFn,
   CreateProjectFn,
   UpdateProjectFn,
   DeleteProjectFn,
+  // Misc
+  InviteMemberFn,
 };
 
 export type {
+  // Auth
   LoginFnParams,
   LogoutFnParams,
   CheckAuthedFnParams,
-  //
+  // Users
   GetUsersFnParams,
   GetUserFnParams,
   CreateUserFnParams,
   UpdateUserFnParams,
   DeleteUserFnParams,
-  //
+  // Teams
   GetTeamsFnParams,
   GetTeamFnParams,
   CreateTeamFnParams,
   UpdateTeamFnParams,
   DeleteTeamFnParams,
-  //
+  // Team Members
   GetTeamMembersFnParams,
   GetTeamMemberFnParams,
   CreateTeamMemberFnParams,
   UpdateTeamMemberFnParams,
   DeleteTeamMemberFnParams,
-  //
+  // Projects
   GetProjectsFnParams,
   GetProjectFnParams,
   CreateProjectFnParams,
   UpdateProjectFnParams,
   DeleteProjectFnParams,
+  // Misc
+  InviteMemberFnParams,
 };
 
 export type {
+  // Auth
   LoginFnReturn,
   LogoutFnReturn,
   CheckAuthedFnReturn,
-  //
+  // Users
   GetUsersFnReturn,
   GetUserFnReturn,
   CreateUserFnReturn,
   UpdateUserFnReturn,
   DeleteUserFnReturn,
-  //
+  // Teams
   GetTeamsFnReturn,
   GetTeamFnReturn,
   CreateTeamFnReturn,
   UpdateTeamFnReturn,
   DeleteTeamFnReturn,
-  //
+  // Team Members
   GetTeamMembersFnReturn,
   GetTeamMemberFnReturn,
   CreateTeamMemberFnReturn,
   UpdateTeamMemberFnReturn,
   DeleteTeamMemberFnReturn,
-  //
+  // Projects
   GetProjectsFnReturn,
   GetProjectFnReturn,
   CreateProjectFnReturn,
   UpdateProjectFnReturn,
   DeleteProjectFnReturn,
+  // Misc
+  InviteMemberFnReturn,
 };

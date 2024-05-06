@@ -1,14 +1,10 @@
-// auth_handle_appwrite
-// auth_handle_idb
+// auth_appwrite
+// auth_idb
 
 // datasource_appwrite
 // datasource_idb
 
-export {
-  auth_login,
-  auth_logout,
-  auth_checkAuthed,
-} from './auth_handle_appwrite';
+export { auth_login, auth_logout, auth_checkAuthed } from './auth_appwrite';
 
 export {
   getUsers,
