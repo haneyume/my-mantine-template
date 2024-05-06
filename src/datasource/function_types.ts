@@ -122,6 +122,28 @@ type DeleteProjectFn = (
   params: DeleteProjectFnParams,
 ) => Promise<DeleteProjectFnReturn>;
 
+// Storage
+
+type GetFilesFnParams = { bucketId: string };
+type GetFilesFnReturn = void;
+type GetFilesFn = (params: GetFilesFnParams) => Promise<GetFilesFnReturn>;
+
+type GetFileFnParams = { bucketId: string; id: string };
+type GetFileFnReturn = void;
+type GetFileFn = (params: GetFileFnParams) => Promise<GetFileFnReturn>;
+
+type CreateFileFnParams = { bucketId: string; id: string };
+type CreateFileFnReturn = void;
+type CreateFileFn = (params: CreateFileFnParams) => Promise<CreateFileFnReturn>;
+
+type UpdateFileFnParams = { bucketId: string; id: string };
+type UpdateFileFnReturn = void;
+type UpdateFileFn = (params: UpdateFileFnParams) => Promise<UpdateFileFnReturn>;
+
+type DeleteFileFnParams = { bucketId: string; id: string };
+type DeleteFileFnReturn = void;
+type DeleteFileFn = (params: DeleteFileFnParams) => Promise<DeleteFileFnReturn>;
+
 // Misc
 
 type InviteMemberFnParams = { teamId: string; email: string; role: string };
@@ -161,6 +183,12 @@ export type {
   CreateProjectFn,
   UpdateProjectFn,
   DeleteProjectFn,
+  // Storage
+  GetFilesFn,
+  GetFileFn,
+  CreateFileFn,
+  UpdateFileFn,
+  DeleteFileFn,
   // Misc
   InviteMemberFn,
 };
@@ -194,6 +222,12 @@ export type {
   CreateProjectFnParams,
   UpdateProjectFnParams,
   DeleteProjectFnParams,
+  // Storage
+  GetFilesFnParams,
+  GetFileFnParams,
+  CreateFileFnParams,
+  UpdateFileFnParams,
+  DeleteFileFnParams,
   // Misc
   InviteMemberFnParams,
 };
@@ -227,6 +261,12 @@ export type {
   CreateProjectFnReturn,
   UpdateProjectFnReturn,
   DeleteProjectFnReturn,
+  // Storage
+  GetFilesFnReturn,
+  GetFileFnReturn,
+  CreateFileFnReturn,
+  UpdateFileFnReturn,
+  DeleteFileFnReturn,
   // Misc
   InviteMemberFnReturn,
 };
