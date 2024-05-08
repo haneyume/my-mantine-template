@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import type { Database } from './supabase_type';
+import type { Database } from './_supabase_type';
 
 import { store, setInitialized, setCurrentUserId } from '@/app-redux';
 

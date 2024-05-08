@@ -4,7 +4,7 @@ import type {
   CreateFileFn,
   UpdateFileFn,
   DeleteFileFn,
-} from './function_types';
+} from '../../function_types';
 
 const getFiles: GetFilesFn = async ({}) => {
   throw new Error('Not implemented');

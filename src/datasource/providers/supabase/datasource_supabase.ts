@@ -23,9 +23,9 @@ import type {
   CreateProjectFn,
   UpdateProjectFn,
   DeleteProjectFn,
-} from './function_types';
+} from '../../function_types';
 
-import { axios } from './providers/api_';
+import { axios } from '../api/_api';
 
 ///////////////////////////////////////////////////////////////
 

@@ -23,7 +23,7 @@ import type {
   CreateProjectFn,
   UpdateProjectFn,
   DeleteProjectFn,
-} from './function_types';
+} from '../../function_types';
 
 import {
   account,
@@ -34,7 +34,7 @@ import {
   Permission,
   DATABASE_ID,
   PROJECTS_COLLECTION_ID,
-} from './providers/appwrite_';
+} from './_appwrite';
 
 ///////////////////////////////////////////////////////////////
 

@@ -1,8 +1,8 @@
 import { store, setInitialized, setCurrentUserId } from '@/app-redux';
 
-import { LoginFn, LogoutFn, CheckAuthedFn } from './function_types';
+import { LoginFn, LogoutFn, CheckAuthedFn } from '../../function_types';
 
-import { account } from './providers/appwrite_';
+import { account } from '../appwrite/_appwrite';
 
 const auth_login: LoginFn = async ({ email, password }) => {
   try {
