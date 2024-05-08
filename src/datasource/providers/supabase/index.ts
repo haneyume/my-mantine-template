@@ -7,18 +7,6 @@ export {
   updateUser,
   deleteUser,
   //
-  getTeams,
-  getTeam,
-  createTeam,
-  updateTeam,
-  deleteTeam,
-  //
-  getTeamMembers,
-  getTeamMember,
-  createTeamMember,
-  updateTeamMember,
-  deleteTeamMember,
-  //
   getProjects,
   getProject,
   createProject,
@@ -34,4 +22,18 @@ export {
   deleteFile,
 } from './storage_supabase';
 
-export { inviteMember } from './misc_supabase';
+export {
+  getTeams,
+  getTeam,
+  createTeam,
+  updateTeam,
+  deleteTeam,
+  //
+  getTeamMembers,
+  getTeamMember,
+  createTeamMember,
+  updateTeamMember,
+  deleteTeamMember,
+  //
+  inviteMember,
+} from './team_supabase';

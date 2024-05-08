@@ -1,4 +1,4 @@
-import type { User, Team, TeamMember, Project } from '@/types';
+import type { User, Team, TeamMember, Project } from './basic_types';
 
 // Auth
 

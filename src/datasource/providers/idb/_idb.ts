@@ -1,6 +1,6 @@
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb';
 
-import type { User, Team, TeamMember, Project } from '@/types';
+import type { User, Team, TeamMember, Project } from '../../basic_types';
 
 ///////////////////////////////////////////////////////////////
 

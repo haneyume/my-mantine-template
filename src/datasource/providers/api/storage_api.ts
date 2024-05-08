@@ -1,3 +1,4 @@
+import type {} from '../../basic_types';
 import type {
   GetFilesFn,
   GetFileFn,
@@ -5,6 +6,8 @@ import type {
   UpdateFileFn,
   DeleteFileFn,
 } from '../../function_types';
+
+///////////////////////////////////////////////////////////////
 
 const getFiles: GetFilesFn = async ({}) => {
   throw new Error('Not implemented');
@@ -25,5 +28,7 @@ const updateFile: UpdateFileFn = async ({}) => {
 const deleteFile: DeleteFileFn = async ({}) => {
   throw new Error('Not implemented');
 };
+
+///////////////////////////////////////////////////////////////
 
 export { getFiles, getFile, createFile, updateFile, deleteFile };

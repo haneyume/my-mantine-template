@@ -1,8 +1,11 @@
 import { store, setInitialized, setCurrentUserId } from '@/app-redux';
 
+import type {} from '../../basic_types';
 import { LoginFn, LogoutFn, CheckAuthedFn } from '../../function_types';
 
 import { account } from './_appwrite';
+
+///////////////////////////////////////////////////////////////
 
 const auth_login: LoginFn = async ({ email, password }) => {
   try {
@@ -35,5 +38,7 @@ const auth_checkAuthed: CheckAuthedFn = async ({}) => {
 
   store.dispatch(setInitialized(true));
 };
+
+///////////////////////////////////////////////////////////////
 
 export { auth_login, auth_logout, auth_checkAuthed };
